@@ -1,0 +1,23 @@
+SETTING UP POSTGRESQL
+
+cd to bulletin directory
+you have to create a user to access db (specified in database.yml)
+createuser -P postgres
+password: postgresql
+
+createdb -O postgres openT_development
+
+create relations:
+
+bundle exec rake db:migrate
+
+if you get problems with this command, make sure all gems are updated with 'bundle update'. also try:
+gem uninstall pg
+gem install pg
+
+SEARCHING POSTGRES DB
+
+psql openT_development
+\l --> lists databases
+\d --> list tables
+\l SELECT * FROM name --> list table for table name
