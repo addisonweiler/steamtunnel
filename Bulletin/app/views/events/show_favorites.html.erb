@@ -1,0 +1,19 @@
+<% javascript "events/events.js", "events/show_favorites.js" %>
+
+<div class="left main">
+  <div class='page'>
+    <%= render @events %>
+  </div>
+<br />
+</div>
+
+<div id="Panel" >
+  <div class="right details">
+    <h3 id="detailsTitle"> Click an Event to See Details </h3><br />
+    <div id="detailsLinks"></div><br />
+    <div id="detailsLocation"></div><br />
+    <p id="detailsDescription"> </p>
+    <div id="detailsInfo"></div>
+    <p id="detailsGroup"></p>
+  </div>
+</div>

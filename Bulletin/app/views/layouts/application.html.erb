@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= yield(:head) %>
+  <meta name="google-site-verification" content="PEP5adCpmu2vE4ow4IKm1p0zIH_xszdJ0xfl5IWbmao" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>SteamTunneling</title>
+	<meta name="author" content="Alexander Atallah">
+	<!-- Date: 2011-09-20 -->
+  <!-- Google Analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29079055-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+	
+	<div id="wrapper">
+			<div id="header">
+        <!-- TODO find a place for this devise stuff -->
+        <%=raw "<p class='notice'>#{notice}</p>" if notice and notice.length > 0 %>
+        <%=raw "<p class='alert'>#{alert}</p>" if alert and alert.length > 0 %>
+			</div>
+			<div class="main">
+
+        <%= yield %>
+
+			</div>
+	  </div>
+    <div id="boilerplate">
+      <%= link_to "Privacy Policy", "#{root_url}static/privacy" %> |
+      <%= link_to "Terms of Service", "#{root_url}static/terms" %>
+    </div>
+</body>
+</html>

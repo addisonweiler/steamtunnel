@@ -1,0 +1,152 @@
+h1 {
+	visibility: hidden;
+}
+
+
+.new_event{
+	margin-top: 6%;
+    margin-left:44%;
+}
+
+label {
+	 font-size: 120%;
+	 margin-left: 0%%;
+	 padding:15px;
+     font-family: "HelveticaNeue-Bold", "Helvetica Neue Light";
+     color: #27AAE2;
+}
+
+#group_name{
+	margin-left:2%;
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+}
+
+#event_name{
+	margin-left:2%;
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+}
+
+#event_description{
+	margin-left: 2%;
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: auto;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+	
+}
+
+#event_location{
+	margin-left:2%;
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+	
+}
+
+#event_permalink{
+    margin-left:2%;
+    box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+    
+}
+
+#event_start_1i{
+	margin-left:2%;
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;	
+}
+
+#event_start_2i, #event_start_3i, #event_start_4i, #event_start_5i{
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+}
+
+#event_finish_1i{
+	margin-left: 2%;
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+}
+
+#event_finish_2i, #event_finish_3i,#event_finish_4i, #event_finish_5i{
+	box-shadow: #333 0px 4px 15px;
+    width: auto; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351
+	
+}
+
+input[name="commit"]{
+	margin-left: 2%;
+	box-shadow: #333 0px 4px 15px;
+    width: 8em; 
+    border-radius: 3px;
+    height: 2em;
+    color: #781351;
+    background: transparent;
+    border: 1px solid #781351;
+}
+
+#error_explanation{
+  margin-left: 2%;
+  margin-top: -30px;
+  color: #FF0000;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.field_with_errors{
+  background-color: transparent;
+  display: inline;
+  margin-right: 200px;
+}
+
+#error_explanation h2 {
+    visibility: hidden;
+}
+
+
+
+
+

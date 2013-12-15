@@ -1,0 +1,23 @@
+<%= stylesheet "specific/profile" %>
+<%= javascript "events/profile" %>
+
+<div class="GroupsContainer">
+  <h2> Select Groups to see their Events </h2>
+  <table>
+    <tr>
+      <td><%= button_tag "Select All", :id => "select_all", :class => "selection_button" %></td>
+      <td><%= button_tag "Deselect All", :id => "deselect_all", :class => "selection_button" %></td>
+      <td><%= button_tag "Save Selection", :class => "selection_button" %></td>
+    </tr>
+  </table>
+  <div class="groupSidebar">
+    <div>
+      <% @groups.each do |group| %>
+        <div class="GroupCheckBox" id=<%= "group-#{group.id}" %> >
+          <%= check_box_tag group.id, group.id, @selected_groups.include?(group) %>
+          <%= label_tag group.id, group.name, :class => "label" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

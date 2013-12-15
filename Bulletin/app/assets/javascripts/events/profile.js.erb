@@ -1,0 +1,53 @@
+$(document).ready( function() {
+  $(':checkbox').bind('click', postGroupSelection);
+  $('#select_all, #deselect_all').bind('click', affectAll);
+});
+
+// (De)Select All groups
+affectAll = function() {
+  var select = (this.id == "select_all")
+  $('input[type="checkbox"]').prop('checked', select)
+  /* Hide/Show all
+  if(select) {
+    $('.event').show()
+  } else {
+    $('.event').hide()
+  }
+  */
+  var groups = {"selection_data": {"all": select}};
+  // Post so cookie can store checked routes
+  <% url = Rails.application.routes.url_helpers %>
+  var path = "<%= url.select_groups_events_path %>";
+  $.post(path, groups);
+}
+
+toggleGroupEvents = function() {
+  /* TODO infinite scrolling
+  $.ajax({
+        url: '/events',
+        type: 'get',
+        dataType: 'script',
+        success: function() {
+          $(window).sausage('draw');
+          //$(':checkbox').each(toggleGroupEvents); // Hide all deselected groups
+        }
+      });
+  */
+  var groupClass = "." + $(this).parent()[0].id // class of all events from that group
+  if(this.checked)
+    $(groupClass).show();
+  else
+    $(groupClass).hide();
+  
+}
+
+postGroupSelection = function() {
+  var key = String(this.id)
+  var data = {}
+  data[key] = this.checked;
+  var groups = {"selection_data": data};
+  // Post so cookie can store checked routes
+  <% url = Rails.application.routes.url_helpers %>
+  var path = "<%= url.select_groups_events_path %>";
+  $.post(path, groups);
+}

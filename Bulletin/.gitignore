@@ -1,0 +1,11 @@
+.bundle
+db/*.sqlite3
+db/sphinx/*
+log/*.log
+tmp/*
+.sass-cache/*
+public/system/*
+!public/system/paperclip_attachments.yml
+.tm_properties
+lib/passwords.rb
+config/database.yml

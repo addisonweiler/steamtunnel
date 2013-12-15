@@ -1,0 +1,1 @@
+$(document).ready(function(){$(".unfavorite").bind("click",function(){$(this).parent().parent().parent().hide()})})

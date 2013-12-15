@@ -1,0 +1,6 @@
+<% if @date_changed %>
+  $(".page").html("<%= escape_javascript(render(@events)) %>");
+<% else %>
+  $(".main").append("<div class='page'><%= escape_javascript(render(@events)) %></div>");
+<% end %>
+bindEvents();

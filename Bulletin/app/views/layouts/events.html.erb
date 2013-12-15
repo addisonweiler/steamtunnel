@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag "specific/events" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "jquery.sausage.js" %>
+  <%= csrf_meta_tags %>
+  <%= yield(:head) %>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>SteamTunneling</title>
+  <meta name="author" content="Steven Diamond, Konstantine Buhler">
+  <!-- Date: 2011-09-20 
+  
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+      searcher = new Searcher();
+    });
+  </script>-->
+  <!-- Google Analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29079055-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+  
+  <div id="wrapper">
+      <div id="header">
+        <div id="nav">
+          <table><tr>
+          <td><%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %></td>
+          <td><%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %></td>
+          <td><%= link_to 'Create Event', new_event_path, :class => "nav_link"  %></td>
+          <td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), 
+          :class => "nav_link"  %></td>
+          <td><%= link_to "Feedback", feedback_events_path, :class => "nav_link"  %></td>
+          <td><%= link_to('Logout', destroy_user_session_path, :method => :delete,
+           :class => "nav_link") %></td>
+          </tr></table>
+        </div>
+        <!-- TODO how to use search?
+        <div id="search-wrapper">
+          <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
+          <div id="results">
+          </div>
+        </div>
+        -->
+      </div>
+      <div id="content">
+        
+        <!-- TODO find a place for this devise stuff -->
+        <%=raw "<p class='notice'>#{notice}</p>" if notice %>
+        <%=raw "<p class='alert'>#{alert}</p>" if alert %>
+
+        <%= yield %>
+
+      </div>
+    </div>
+</body>
+</html>

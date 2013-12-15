@@ -1,0 +1,66 @@
+//# Place all the behaviors and hooks related to the matching controller here.
+//# All this logic will automatically be available in application.js.
+//# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+
+//# Change text when favorite link clicked on
+$(document).ready( function() {
+  bindEvents();
+  // Fading notices
+  $('p.notice, p.alert').delay(500).fadeIn('normal', function() {
+      $(this).delay(2500).fadeOut();
+   });
+  $('#date_selected').change(postDateSelection)
+});
+
+bindEvents = function() {
+  $('.favorite, .unfavorite').bind('click', toggleFavorite); // Favorites button in details panel
+  $('.event').bind('click', fillDetails);
+}
+
+// Details panel for event box clicked
+fillDetails = function(e) {
+  if($(e.target).is(".favorite") || $(e.target).is(".unfavorite")){
+    return;
+  }
+  var title = $(this).children(".title").text();
+  $("#detailsTitle").text(title)
+  var links = $(this).children(".footer").children(".links").html();
+  $("#detailsLinks").html(links)
+  var location = $(this).children(".footer").children(".location").html()
+  $("#detailsLocation").html(location)
+  var description = $(this).children(".description").text();
+  $("#detailsDescription").text(description)
+  var infolink = $(this).children(".info").html()
+  $("#detailsInfo").html(infolink)
+  var group = $(this).children(".footer").children(".group").text();
+  $("#detailsGroup").text(group)
+
+  $('#detailsLinks > a').click(toggleFavorite)
+}
+
+// Changes text of Favorite link, both in event stream and in details
+// TODO Favoriting detailed event should update link both in stream and in details
+toggleFavorite = function(e) {
+  if($(e.target).is("a") ){
+    var text = (e.target.innerHTML == "Favorite") ? "Unfavorite" : "Favorite"
+    e.target.innerHTML = text
+    e.target.className = 
+      e.target.className.replace( /(?:^|\s)favorite(?!\S)/ , text.toLowerCase() )
+  }
+}
+
+
+postDateSelection = function() {
+  elem = $(this).children(':selected')
+  var value = $(elem).text()
+  var date = {"date": value};
+  // Post so cookie can store checked routes
+  <% url = Rails.application.routes.url_helpers %>
+  var path = "<%= url.events_path %>";
+  $.ajax({
+        url: path + "?date=" + value,
+        type: 'get',
+        dataType: 'script',
+        success: bindEvents,
+      });
+}

@@ -1,0 +1,17 @@
+.GroupsContainer {
+  width: 25%;
+  left: 60%;
+  margin-top: 100px;
+  position: fixed;
+}
+
+  .groupSidebar {
+    width: 25%;
+    padding: 5px;
+    text-align: left;
+    height: 75%;
+    overflow-y: auto;
+    position: fixed;
+    padding: 10px;
+    font-size: 100%;
+  }

@@ -1,0 +1,9 @@
+<p>Welcome <%= @resource.email %>!</p>
+
+<p>You can confirm your account through the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+<p>If you are part of an organization and would like to post events for that organization, email us at feedback@steamtunneling.com and we will add this ability to your profile. </p>
+
+<p>-The SteamTunneling Team</p>

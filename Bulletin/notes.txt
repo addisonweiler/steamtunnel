@@ -1,0 +1,11 @@
+Sites to scrape
+
+General Events- http://events.stanford.edu/
+Art Events- http://livelyarts.stanford.edu/month_list.php?filter=publ
+CS Events- http://forum.stanford.edu/events/calendar.php
+Bases Events- http://bases.stanford.edu/events/
+Stanford In Government- http://www.stanford.edu/group/SIG/cgi-bin/index.php/events
+RamsHead (Under “Upcoming Events”)- http://ramshead.stanford.edu/
+Haas Center (Under “Upcoming Events”)-  http://studentaffairs.stanford.edu/haas
+Stanford ACM- http://stanfordacm.com/
+Stanford CDC (a lot of “junk” events though)- https://stanford-csm.symplicity.com/calendar/index.php?ss=ical_months&_ks1=1&s=

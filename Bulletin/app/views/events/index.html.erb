@@ -1,0 +1,25 @@
+<% javascript "events/events.js" %>
+
+<div class="left main">
+  <div class='page'>
+    <%= render @events %>
+  </div>
+<br />
+</div>
+
+<div id="Panel" >
+  <div id="DateSelector">
+    <select id="date_selected">
+     <%= options_for_select @dates.keys, :selected => @selected_date %>
+    </select>
+  </div>
+
+  <div class="right details">
+    <h3 id="detailsTitle"> Click an Event to See Details </h3><br />
+    <div id="detailsLinks"></div><br />
+    <div id="detailsLocation"></div><br />
+    <p id="detailsDescription"> </p>
+    <div id="detailsInfo"></div>
+    <p id="detailsGroup"></p>
+  </div>
+</div>

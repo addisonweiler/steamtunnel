@@ -1,0 +1,1 @@
+$(document).ready(function(){var a="/users/password/new";$("#error_explanation").children("ul").children().html("An Account Exists for this Email. Go to <a href="+a+">Reset Password</a> instead.")})

@@ -1,0 +1,13 @@
+$(document).ready( function(){
+  // Change Error Text
+  <% url = Rails.application.routes.url_helpers %>
+  var path = "<%= url.new_user_password_path %>";
+  $('#error_explanation').children('ul').children().each( function() {
+    var error = $(this).text()
+    if(error.indexOf("Email has already been taken") != -1){
+      var replacement = "An Account Exists for this Email. Go to <a href="+path+
+      ">Reset Password</a> instead.";
+      $(this).html(replacement)
+    }
+  });
+});
