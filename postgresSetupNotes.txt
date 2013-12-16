@@ -2,6 +2,11 @@ SETTING UP POSTGRESQL
 
 cd to bulletin directory
 you have to create a user to access db (specified in database.yml)
+
+//ensure postgres is installed
+gem install pg
+brew install postgresql
+
 createuser -P postgres
 password: postgresql
 
