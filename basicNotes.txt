@@ -1,0 +1,25 @@
+1.  Used GitHub to fork the project called Bulletin and used git clone in command line folled by the git read-only url
+
+Before you do anything with Ruby you have to load the correct version from command line 
+
+ rvm list   //lists the version that I have 
+ rvm use 1.9.2
+ Open the (Bulletien) folder in sublime text >> config>>database.yml (changed all usernames to postgres and passwords to postgresql accordingly to the pgsdmin)
+ bundle update
+ rails server
+// go to url: 0.0.0.0:3000 (default rails port)
+
+
+
+Scraper (lib>>tasks>>scrape.rake)
+ Open new terminal tab
+ Remember to be in Bulletin
+ rake  scrape_all //for all // bundle exec rake scrape_all //crashed
+ bundle exec rake scrape_sports   //may have issues with the thumbnails in which case call “bundle exec rake db:migrate”
+
+
+Heroku (while in Bulletin)
+ Run scrape command on Heroku   heroku  rake scrape_sports // in this case had to call “gem install heroku”
+ heroku rake bundle exec rake scrape_sports –-app steamroom
+
+ bundle exec rake db:seed //get default db data from db/seeds.rb
