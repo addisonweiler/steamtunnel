@@ -1,6 +1,15 @@
 <% if @date_changed %>
-  $(".page").html("<%= escape_javascript(render(@events)) %>");
+    <% if @events.empty? %>
+        $(".page").html("<div id=\"NoEventsFound\"> No events found </div>")
+    <%else %>
+        $(".page").html("<%= escape_javascript(render(@events)) %>");
+    <% end %>
 <% else %>
-  $(".main").append("<div class='page'><%= escape_javascript(render(@events)) %></div>");
+    <% if @events.empty? %>
+        $(".page").html("<div id=\"NoEventsFound\"> No events found </div>")
+    <%else %>
+        $(".main").append("<div class='page'><%= escape_javascript(render(@events)) %></div>");
+    <% end %>
 <% end %>
 bindEvents();
+

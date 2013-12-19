@@ -41,8 +41,8 @@
           <td><%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %></td>
           <td><%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %></td>
           <td><%= link_to 'Create Event', new_event_path, :class => "nav_link"  %></td>
-          <td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), 
-          :class => "nav_link"  %></td>
+          <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook),
+          :class => "nav_link"  %></td> -->
           <td><%= link_to "Feedback", feedback_events_path, :class => "nav_link"  %></td>
           <td><%= link_to('Logout', destroy_user_session_path, :method => :delete,
            :class => "nav_link") %></td>

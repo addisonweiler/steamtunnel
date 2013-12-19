@@ -137,7 +137,7 @@ body {
     width: 60%;
     margin-left: 5%;
     margin-top: 100px;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
     border-radius: 0px;
     background-color: white;
     border-style:solid;
@@ -147,20 +147,11 @@ body {
     box-shadow: #333 0px 4px 15px;
     font-size: 100%;
   }
-    
-  .event {
-      padding: 10px;
-      margin-top: 0px;
-      background: -moz-linear-gradient(270deg, #ffffff 0%, #ececec 100%) #ffffff;
-      background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ececec)) #ffffff;
-      border: 1px solid #707070;
-      text-shadow: 0 1px 0 #ffffff;
-      cursor: pointer;
-    }
-  
-  .event:hover {
+
+/*  .event:hover {
     background-color: red;
   }
+*/
 
   .label {
    font-size: 80%;
@@ -173,30 +164,55 @@ body {
     padding: 0px 0px 10px 0px;
   }
 
-    .event:first-of-type {
-      margin-top: 5px;
-    }
-      
-      .date {
-        background-color: #c8e1e7;
-        padding: 2px 5px;
-        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
-      }
-      
-      .event h4 {
-        font-size: 16px;
-        color: #4c4c4c;
-        font-family: "Gill Sans", Helvetica, sans-serif;
-      }
-      
-      .footer {
-        border-top: 1px ;
-        padding-top: 5px;
-        margin-top: 5px;
-        font-size: 100% ;
+  /* First event */
+  .event:first-of-type {
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
 
-      }
+    /* All but first event */
+    .event {
+        padding: 10px;
+        margin-top: 10px;
+        background: -moz-linear-gradient(270deg, #ffffff 0%, #ececec 100%) #ffffff;
+        background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ececec)) #ffffff;
+        border: 1px solid #707070;
+        text-shadow: 0 1px 0 #ffffff;
+        cursor: pointer;
+    }
+
+
+/* Date of event */
+  .date {
+    background-color: #c8e1e7;
+    padding: 2px 5px;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
+  }
+
+  /* Event title */
+  .event h4 {
+    font-size: 16px;
+    color: #4c4c4c;
+    font-family: "Gill Sans", Helvetica, sans-serif;
+  }
+
+  /* Encapsulation for event */
+  .footer {
+    border-top: 10px ;
+    padding-top: 5px;
+    margin-top: 5px;
+    font-size: 100% ;
+
+  }
+
+.right_details{
+   margin-top: 9px;
+   font-size: 100%;
+   margin-bottom: 10px;
+   overflow-y: scroll
+}
+
 
 		  

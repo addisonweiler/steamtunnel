@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-	<%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :id => "facebook" %>
+  <%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :id => "facebook" %>
   <%= link_to "Feedback", feedback_events_path, :id => "feedback" %>
   <%= link_to('Logout', destroy_user_session_path, :method => :delete, :id => "logout") %>
 <% end %>
