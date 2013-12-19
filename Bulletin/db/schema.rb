@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(:version => 20131219005529) do
     t.datetime "finish"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "location"
+    t.text     "location"
     t.integer  "group_id"
     t.integer  "fb_id",       :limit => 8
-    t.string   "permalink"
+    t.text     "permalink"
   end
 
   create_table "experiments", :force => true do |t|

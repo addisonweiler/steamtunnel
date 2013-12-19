@@ -15,10 +15,10 @@ task :scrape_all => :environment do
   #Rake::Task["scrape_sports"].invoke #TODO: Find an alternative site
   #Rake::Task["scrape_sig"].invoke
   #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
-  Rake::Task["scrape_cdc"].invoke
+  #Rake::Task["scrape_cdc"].invoke #TODO: Doesn't work, need alternative
   Rake::Task["scrape_events"].invoke
   Rake::Task["scrape_dept_groups"].invoke
-  #Rake::Task["scrape_student_groups"].invoke
+  Rake::Task["scrape_student_groups"].invoke
   Rake::Task["cleanup_event_unicode"].invoke
 end
 
@@ -345,7 +345,7 @@ task :scrape_acm => :environment do
         end
         curr = increment(curr.next)
         @description = curr.text
-      else # Talk #TODO: This is wrong, not all 'other' events are talks
+      else # Talk
         print "\n REACHED HERE2 \n"
         @title += " (" + curr.text + ")"
         #curr = increment(curr.next)
