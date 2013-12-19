@@ -26,3 +26,7 @@ psql openT_development
 \l --> lists databases
 \d --> list tables
 \l SELECT * FROM name --> list table for table name
+
+//upon doing OS updates, run this to restart DB:
+
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
