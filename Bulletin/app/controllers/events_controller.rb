@@ -235,6 +235,7 @@
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
+    @event = ["EVENT 1", "EVENT 2"]
   end
 
   # POST /events

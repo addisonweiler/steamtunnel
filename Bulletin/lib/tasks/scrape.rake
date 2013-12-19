@@ -10,12 +10,11 @@ require 'open-uri'
 
 # Collection of scrapes
 task :scrape_all => :environment do
-  Rake::Task["scrape_lively_arts"].invoke
-  Rake::Task["scrape_bases"].invoke
-  Rake::Task["scrape_sports"].invoke
-  #TODO fix this
+  Rake::Task["scrape_lively_arts"].invoke #Works fine
+  Rake::Task["scrape_bases"].invoke #Works fine
+  #Rake::Task["scrape_sports"].invoke #TODO: Find an alternative site
   #Rake::Task["scrape_sig"].invoke
-  Rake::Task["scrape_acm"].invoke
+  #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
   Rake::Task["scrape_cdc"].invoke
   Rake::Task["scrape_events"].invoke
   Rake::Task["scrape_dept_groups"].invoke
@@ -238,6 +237,7 @@ end
 
 # Scrape top sports events, create a group for each sport RSS http://www.gostanford.com/rss/rss-index.html
 task :scrape_sports => :environment do
+  #source = "http://www.gostanford.com/main/Schedule.dbml"
   source = "http://www.gostanford.com/event-toolbar-rss.xml" # url or local file
   content = "" # raw content of rss feed will be loaded here
   open(source) do |s| content = s.read end
@@ -321,46 +321,42 @@ end
 # Screen scrape Stanford ACM http://stanfordacm.com/
 # TODO better permalink?
 task :scrape_acm => :environment do
-  @group = Group.find_by_name("ACM")
-  agent = Mechanize.new
-  page = agent.get(@group.source)
-  times = page.search("time") # Each event/speaker begins with a time
-  times.each do |time|
-    date = time.text
-    if Time.parse(date) < Time.parse("Aug 31") # Set correct year
-      date += " 2012 "
-    end
-    curr = increment(time.next).children[0]
-    curr = increment(curr.next)
-    @title = curr.text
-    break if @title.include? "Slot is open"
-    puts @title
-    curr = increment(curr.next)
-    if curr.text.include? "AM" or curr.text.include? "PM" # Event vs. talk
-      data = curr.text.split("@")
-      @location = data[1]
-      if data[0].include? "-"
-        data = data[0].split("-")
-        @start = date + " " + data[0]
-        @finish = date + " " + data[1]
-      else
-        @start = date + " " + data[0]
+      date = time.text
+      if Time.parse(date) < Time.parse("Aug 31") # Set correct year
+        date += " 2013 "
+      end
+      curr = increment(time.next).children[0]
+      curr = increment(curr.next)
+      @title = curr.text
+      break if @title.include? "Slot is open"
+      puts @title
+      curr = increment(curr.next)
+      if curr.text.include? "AM" or curr.text.include? "PM" # Event vs. talk
+        print "\n REACHED HERE1 \n"
+        data = curr.text.split("@")
+        @location = data[1]
+        if data[0].include? "-"
+          data = data[0].split("-")
+          @start = date + " " + data[0]
+          @finish = date + " " + data[1]
+        else
+          @start = date + " " + data[0]
+          @finish = nil
+        end
+        curr = increment(curr.next)
+        @description = curr.text
+      else # Talk #TODO: This is wrong, not all 'other' events are talks
+        print "\n REACHED HERE2 \n"
+        @title += " (" + curr.text + ")"
+        #curr = increment(curr.next)
+        #@description = "Talk by " + @title
+        @title = curr.text
+        #curr = increment(curr.next)
+        #@description += "\n" + curr.text if !curr.nil?
+        #@location = "Gates 104"
+        @start = date + " 6 PM"
         @finish = nil
       end
-      curr = increment(curr.next)
-      @description = curr.text
-    else # Talk
-      @title += " (" + curr.text + ")"
-      curr = increment(curr.next)
-      @description = "Talk by " + @title
-      @title = curr.text
-      curr = increment(curr.next)
-      @description += "\n" + curr.text if !curr.nil?
-      @location = "Gates 104"
-      @start = date + " 6 PM"
-      @finish = nil
-    end
-    Event.create(:name => @title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => @location, 
-        :description => @description, :permalink => @group.source, :group_id => @group.id)
-  end
+      Event.create(:name => @title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => @location,
+          :description => @description, :permalink => @group.source, :group_id => @group.id)
 end

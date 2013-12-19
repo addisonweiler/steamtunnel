@@ -69,6 +69,6 @@ class Event < ActiveRecord::Base
   end
   
   def self.find_by_params(params)
-    
+    #TODO: Implement this
   end
 end
