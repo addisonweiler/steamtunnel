@@ -1,5 +1,9 @@
 class ChangePostgresStringToText < ActiveRecord::Migration
-  def change
+  def up
     change_column :events, :name, :text
+  end
+
+  def down
+    change_column :events, :name, :string
   end
 end
