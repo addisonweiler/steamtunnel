@@ -2,18 +2,18 @@
 
 Before you do anything with Ruby you have to load the correct version from command line 
 
- rvm list   //lists the version that I have 
+ rvm list //lists the version that I have 
  rvm use 1.9.2
- Open the (Bulletien) folder in sublime text >> config>>database.yml (changed all usernames to postgres and passwords to postgresql accordingly to the pgsdmin)
+ Open the (Bulletin) folder in sublime text >> config>>database.yml (changed all usernames to postgres and passwords to postgresql accordingly to the pgsdmin)
  bundle update
  rails server
-// go to url: 0.0.0.0:3000 (default rails port)
+ steamtunnel homepage accessible via: 0.0.0.0:3000 (default rails port)
 
 
 
 Scraper (lib>>tasks>>scrape.rake)
  Open new terminal tab
- Remember to be in Bulletin
+ cd to Bulletin folder
  rake  scrape_all //for all // bundle exec rake scrape_all //crashed
  bundle exec rake scrape_sports   //may have issues with the thumbnails in which case call “bundle exec rake db:migrate”
 
