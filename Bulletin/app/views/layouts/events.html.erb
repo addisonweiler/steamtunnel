@@ -39,13 +39,18 @@
         <div id="nav">
           <table><tr>
           <td><%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %></td>
-          <td><%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %></td>
-          <td><%= link_to 'Create Event', new_event_path, :class => "nav_link"  %></td>
+          <%if current_user && logged_in? #only display options for favorites and creating events if user is logged in.%>
+            <td><%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %></td>
+            <td><%= link_to 'Create Event', new_event_path, :class => "nav_link"  %></td>
+          <%end%>
           <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook),
           :class => "nav_link"  %></td> -->
           <td><%= link_to "Feedback", feedback_events_path, :class => "nav_link"  %></td>
-          <td><%= link_to('Logout', destroy_user_session_path, :method => :delete,
-           :class => "nav_link") %></td>
+          <%if current_user && logged_in? #only display options for favorites and creating events if user is logged in.%>
+            <td><%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "nav_link") %></td>
+          <%else%>
+            <td><%= link_to('Sign in (TODO)', destroy_user_session_path, :method => :delete, :class => "nav_link") %></td>
+          <%end%>
           </tr></table>
         </div>
         <!-- TODO how to use search?

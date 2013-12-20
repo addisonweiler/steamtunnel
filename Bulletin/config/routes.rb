@@ -1,4 +1,5 @@
 Web::Application.routes.draw do
+  root :to => 'events#index'
   resources :groups
 
   devise_for :users, :controllers => { :omniauth_callbacks => "my_devise/omniauth_callbacks",
@@ -86,5 +87,4 @@ Web::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
-  root :to => 'events#index'
 end

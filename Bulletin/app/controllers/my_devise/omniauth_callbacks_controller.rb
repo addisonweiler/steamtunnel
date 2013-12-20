@@ -36,6 +36,7 @@ class MyDevise::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       Event.pollUser(@user, group)
       sign_in_and_redirect @user, :event => :authentication
     else
+      puts "redirecting to new user registration."
       redirect_to new_user_registration_url
     end
   end

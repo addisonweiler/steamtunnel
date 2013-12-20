@@ -16,9 +16,10 @@
   
   <div class="footer">
       <div class="links">
-        <% if @favorites.include?(event) %>
+        <% if @favorites && @favorites.include?(event) %>
           <%= link_to "Unfavorite", favorite_event_path(event), :class => "unfavorite", :remote => true %>
-        <% else %>
+        <% elsif @favorites%>
+        <%#ensure favorites exists (which only happens if user is logged in.)%>
           <%= link_to "Favorite", favorite_event_path(event), :class => "favorite", :remote => true %>
         <% end %>
         <div class='date right'><%= "#{start_day}#{end_day}" %></div>

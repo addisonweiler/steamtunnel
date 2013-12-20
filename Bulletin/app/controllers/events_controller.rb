@@ -1,6 +1,6 @@
  class EventsController < ApplicationController
   layout 'events'
-  before_filter :authenticate_user!, :only => [:index, :stumble]
+  #before_filter :authenticate_user!, :only => [:index, :stumble]
   before_filter :get_memberships, :only => [:new, :create]
   before_filter :experiment_condition, :only => [:index]
   before_filter :initialize_selection, :only => [:index, :stumble, :search]
@@ -27,6 +27,7 @@
   
   def manage_social
     # Generalize individual events into FB Friends and General
+    return true unless current_user && logged_in?
     friendNames = [current_user.name]
     friendNames += current_user.friends if !current_user.friends.nil?
     @friendEvents = @generalEvents.joins(:group).where("groups.name in (?)", friendNames)
@@ -34,6 +35,8 @@
   
   def manage_selections
     # Selected groups drawn from user.selected (set initially in profile page)
+    @selected_groups = Group.all
+    return true unless current_user && logged_in?
     @selected_groups = current_user.selections
     @selected_groups_ids = @selected_groups.collect {|g| g.id}
   end
@@ -58,6 +61,7 @@
   end
 
   def initialize_selection
+    return true unless current_user && logged_in?
     if current_user.selections.empty? # TODO make introduced bool column for this?
       redirect_to interests_events_path
     end
@@ -134,6 +138,16 @@
   def index
     # All upcoming events except for Facebook events belonging to other people 
     # within chosen date range
+    puts "selected groups: "
+    puts @selected_groups
+    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
+    and events.start < '#{@dates[@selected_date][1]}'", 
+    @selected_groups_ids).order("start ASC")
+    #@events = Event.all
+    puts "events: "
+    puts @events
+
+    return true unless current_user && logged_in?
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
     and events.start < '#{@dates[@selected_date][1]}'
     and (not groups.facebook or groups.name = ?) and events.group_id in (?)", 
