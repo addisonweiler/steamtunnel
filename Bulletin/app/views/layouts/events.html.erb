@@ -10,12 +10,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>SteamTunneling</title>
   <meta name="author" content="Steven Diamond, Konstantine Buhler">
-  <!-- Date: 2011-09-20 
-  
+  <!-- Date: 2011-09-20
+
   <script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-      searcher = new Searcher();
-    });
+  $(document).ready(function () {
+  searcher = new Searcher();
+  });
   </script>-->
   <!-- Google Analytics -->
   <script type="text/javascript">
@@ -34,72 +34,82 @@
 </head>
 <body>
 
-<div id="wrapper">
-  <div id="header">
-    <div id="nav">
-      <table><tr>
-        <td><%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %></td>
+<div id="header">
+  <div class="nav">
+    <table>
+      <tr>
+        <td>
+          <%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %>
+        </td>
         <%if current_user #only display options for favorites and creating events if user is logged in.%>
-            <td><%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %></td>
-            <td><%= link_to 'Create Event', new_event_path, :class => "nav_link"  %></td>
-        <%end%>
-        <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook),
-                            :class => "nav_link"  %></td> -->
-        <td><%= link_to "Feedback", feedback_events_path, :class => "nav_link"  %></td>
-        <%if current_user #only display options for favorites and creating events if user is logged in.%>
-            <td><%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "nav_link") %></td>
-        <%else%>
-            <td> <table>
-              <%= form_for("user", :url => user_session_path) do |f| %>
-                  <tr>
-                    <td> <b> Username: </b> </td> <td> <%= f.text_field :email %> </td>
-                    <td> <%= f.submit 'Sign in' %> </td>
-                    <td> <%= link_to "Forgot your password?", new_password_path('user') %> </td>
-                  </tr>
-                  <tr>
-                    <td> <b> Password: </b> </td> <td> <%= f.password_field :password %> </td>
-                    <td> <%= button_to "Sign up", new_registration_path('user'), :id => "sign_up", :method => :get %></td>
-                    <td><%= link_to "No confirmation?", new_confirmation_path('user'),
-                                    :id => "confirmation" %></td>
-                  </tr>
-                  <tr>
-                    <td> <%= f.label :remember_me %> </td> <td><%= f.check_box :remember_me %> </td>
-
-
-
-              <% end %>
-            </table>
+            <td>
+              <%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %>
+            </td>
+            <td>
+              <%= link_to 'Create Event', new_event_path, :class => "nav_link"  %>
             </td>
         <%end%>
-      </tr></table>
-    </div>
-
-    <%= form_for("user", :url => user_session_path) do |f| %>
-        <%= f.text_field :email %>
-        <%= f.password_field :password %>
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me %>
-        <%= f.submit 'Sign in' %>
-        <%= link_to "Forgot your password?", new_password_path('user') %>
-    <% end %>
-
-    <!-- TODO how to use search?
-    <div id="search-wrapper">
-      <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
-      <div id="results">
-      </div>
-    </div>
-    -->
+        <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "nav_link"  %></td> -->
+        <td>
+          <%= link_to "Feedback", feedback_events_path, :class => "nav_link" %>
+        </td>
+        <%if current_user #only display options for favorites and creating events if user is logged in.%>
+            <td>
+              <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "nav_link") %>
+        </td>
+      </tr>
+    </table>
   </div>
-  <div id="content">
-
-    <!-- TODO find a place for this devise stuff -->
-    <%=raw "<p class='notice'>#{notice}</p>" if notice %>
-    <%=raw "<p class='alert'>#{alert}</p>" if alert %>
-
-    <%= yield %>
-
+</div>
+        <%else%>
+        </td>
+      </tr>
+    </table>
   </div>
+  <div>
+    <p class="sign_in"> Login </p>
+  </div>
+</div>
+        <%end%>
+
+<!-- TODO how to use search?
+<div id="search-wrapper">
+<input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
+<div id="results">
+</div>
+</div>
+-->
+<div id="content">
+
+  <!-- TODO find a place for this devise stuff -->
+  <%=raw "<p class='notice'>#{notice}</p>" if notice %>
+  <%=raw "<p class='alert'>#{alert}</p>" if alert %>
+
+  <%= yield %>
+
+</div>
 </div>
 </body>
 </html>
+
+<!--
+                <table id="popup">
+                  <%= form_for("user", :url => user_session_path) do |f| %>
+                      <tr>
+                        <td> <b> Username: </b> </td> <td> <%= f.text_field :email %> </td>
+                        <td> <%= f.submit 'Sign in' %> </td>
+                        <td> <%= link_to "Forgot your password?", new_password_path('user') %> </td>
+                      </tr>
+                      <tr>
+                        <td> <b> Password: </b> </td> <td> <%= f.password_field :password %> </td>
+                        <td> <%= button_to "Sign up", new_registration_path('user'), :id => "sign_up", :method => :get %></td>
+                        <td><%= link_to "No confirmation?", new_confirmation_path('user'),
+                                        :id => "confirmation" %></td>
+                      </tr>
+                      <tr>
+                        <td> <%= f.label :remember_me %> </td> <td><%= f.check_box :remember_me %> </td>
+                  <% end %>
+                </tr>
+                </table>
+
+-->

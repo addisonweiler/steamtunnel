@@ -44,6 +44,9 @@ input[name="commit"]{
     label[for="user_remember_me"]{
       font-size: 50%;
     }
+#nav{
+
+}
 
 #sign_in{
   color: #27AAE2;
