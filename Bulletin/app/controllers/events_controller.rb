@@ -11,6 +11,18 @@
   
   EXPERIMENTS = ["stumble", "social", "search", "standard"]
 
+  def resource_name
+    :user
+  end
+
+  def resource
+    @resource ||= User.new
+  end
+
+  def devise_mapping
+    @devise_mapping ||= Devise.mappings[:user]
+  end
+
   ### HELPERS
   # Refactored out of index for show_favorites
   def manage_groups
