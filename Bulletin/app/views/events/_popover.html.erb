@@ -1,0 +1,30 @@
+<div id="sign_in_popover">
+  <table id="popup">
+    <%= form_for("user", :url => user_session_path) do |f| %>
+        <tr>
+          <td> <b> Username: </b> </td> <td> <%= f.text_field :email %> </td>
+        </tr>
+        <tr>
+          <td> <b> Password: </b> </td> <td> <%= f.password_field :password %> </td>
+        </tr>
+        <tr>
+          <td> <%= f.submit 'Sign in' %> </td>
+          <td colspan="2"> <%= f.label :remember_me %> &nbsp; <%= f.check_box :remember_me %> </td>
+
+        </tr>
+        <tr>
+
+          <td> <%= button_to "Sign up", new_registration_path('user'), :id => "sign_up", :method => :get %></td>
+
+        </tr>
+
+        <tr>
+          <td colspan="2"> <%= link_to "Forgot your password?", new_password_path('user') %> </td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= link_to "No confirmation?", new_confirmation_path('user'),
+                          :id => "confirmation" %></td>
+    <% end %>
+    </tr>
+  </table>
+</div>

@@ -4,12 +4,14 @@
   <%= stylesheet_link_tag "application" %>
   <%= stylesheet_link_tag "specific/events" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "bootstrap" %>
   <%= javascript_include_tag "jquery.sausage.js" %>
+
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>SteamTunneling</title>
-  <meta name="author" content="Steven Diamond, Konstantine Buhler">
+  <meta name="author" content="Steven Diamond, Konstantine Buhler, Addison Weiler, John Luttig">
   <!-- Date: 2011-09-20
 
   <script type="text/javascript" charset="utf-8">
@@ -30,7 +32,18 @@
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
+      //Popover
+      $(document).ready(function() {
+          $("[rel='popover']").popover({
+              placement : 'bottom', // top, bottom, left or right
+              html: 'true',
+              content : "<%= escape_javascript(render(:partial => 'events/popover')) %>"
+          });
+      });
+
+
   </script>
+
 </head>
 <body>
 
@@ -67,7 +80,7 @@
     </table>
   </div>
   <div>
-    <p class="sign_in"> Login </p>
+    <a rel='popover'class="sign_in"> Login </a>
   </div>
 </div>
         <%end%>
@@ -81,7 +94,8 @@
 -->
 <div id="content">
 
-  <!-- TODO find a place for this devise stuff -->
+
+
   <%=raw "<p class='notice'>#{notice}</p>" if notice %>
   <%=raw "<p class='alert'>#{alert}</p>" if alert %>
 
@@ -91,25 +105,3 @@
 </div>
 </body>
 </html>
-
-<!--
-                <table id="popup">
-                  <%= form_for("user", :url => user_session_path) do |f| %>
-                      <tr>
-                        <td> <b> Username: </b> </td> <td> <%= f.text_field :email %> </td>
-                        <td> <%= f.submit 'Sign in' %> </td>
-                        <td> <%= link_to "Forgot your password?", new_password_path('user') %> </td>
-                      </tr>
-                      <tr>
-                        <td> <b> Password: </b> </td> <td> <%= f.password_field :password %> </td>
-                        <td> <%= button_to "Sign up", new_registration_path('user'), :id => "sign_up", :method => :get %></td>
-                        <td><%= link_to "No confirmation?", new_confirmation_path('user'),
-                                        :id => "confirmation" %></td>
-                      </tr>
-                      <tr>
-                        <td> <%= f.label :remember_me %> </td> <td><%= f.check_box :remember_me %> </td>
-                  <% end %>
-                </tr>
-                </table>
-
--->
