@@ -1,16 +1,13 @@
  class EventsController < ApplicationController
   layout 'events'
-  #before_filter :authenticate_user!, :only => [:index, :stumble]
+  #before_filter :authenticate_user!, :only => [:index]
   before_filter :get_memberships, :only => [:new, :create]
-  before_filter :experiment_condition, :only => [:index]
-  before_filter :initialize_selection, :only => [:index, :stumble, :search]
-  before_filter :manage_groups, :only => [:index, :show_favorites, :stumble, :search] # only display selected group
-  before_filter :manage_selections, :only => [:index, :stumble, :search]
+  before_filter :initialize_selection, :only => [:index, :search]
+  before_filter :manage_groups, :only => [:index, :show_favorites, :search] # only display selected group
+  before_filter :manage_selections, :only => [:index, :search]
   before_filter :manage_social, :only => [:index, :show_favorites]
-  before_filter :initialize_date, :only => [:index, :stumble, :search]
+  before_filter :initialize_date, :only => [:index, :search]
   
-  EXPERIMENTS = ["stumble", "social", "search", "standard"]
-
   def resource_name
     :user
   end
@@ -57,21 +54,6 @@
     @memberships = current_user.groups.where(:facebook => false)
   end
 
-  # Redirect to one of stumble, social, or search versions of main page
-  # Call appropriate before filters
-  def experiment_condition
-    if params.has_key?(:experiment) and EXPERIMENTS.include?(params[:experiment])
-      session[:experiment] = params[:experiment]
-    end
-    if session[:experiment] == "stumble"
-      redirect_to stumble_events_path
-    elsif session[:experiment] == "search"
-      redirect_to search_events_path
-    elsif session[:experiment] == "social"
-      # TODO
-    end
-  end
-
   def initialize_selection
     return true unless current_user
     if current_user.selections.empty? # TODO make introduced bool column for this?
@@ -90,58 +72,6 @@
     else
       @date_changed = false
       @selected_date = session["date"] || "Today"
-    end
-  end
-
-  ### ACTIONS
-  
-  # Experiment conditions
-
-  def search
-    @q = params[:q]
-    if !params.has_key?("date")
-      @selected_date = session["date"] || "This Week"
-    end
-
-    if @q.present?
-      @events = Event.search(@q, :include => :groups).find_all { |e|
-        #e.start >= @dates[@selected_date][0] and e.start < @dates[@selected_date][1]
-        true
-      }
-    else
-      @events = []
-    end
-    @favorites = current_user.favorites.all
-
-    respond_to do |format|
-      format.html # stumble.html.erb
-      format.json { render :json => @events }
-      format.js
-    end
-  end
-
-  def stumble
-    # Date This Week by default
-    if !params.has_key?("date")
-      @selected_date = session["date"] || "This Week"
-    end
-    
-    if !session.has_key?(:offset)
-      session[:offset] = rand(10000)
-    else
-      session[:offset] += 1
-    end
-    # All upcoming events except for Facebook events belonging to other people 
-    # within chosen date range
-    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
-    and events.start < '#{@dates[@selected_date][1]}'")
-    @stumble_event = @events.blank? ? nil : @events[session[:offset] % @events.count]
-    #debugger
-    @favorites = current_user.favorites
-    respond_to do |format|
-      format.html # stumble.html.erb
-      format.json { render :json => @events }
-      format.js
     end
   end
   

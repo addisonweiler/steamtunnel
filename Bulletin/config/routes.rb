@@ -5,7 +5,7 @@ Web::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "my_devise/omniauth_callbacks",
   :registrations => "my_devise/registrations"  }
 
-  get ':experiment/' => 'events#index'
+  #get ':experiment/' => 'events#index'
 
   resources :events do
     collection do
@@ -17,16 +17,13 @@ Web::Application.routes.draw do
       get 'interests'
       post 'save_interests'
       post 'select_date'
-      # Experiment conditions
-      get 'stumble'
-      get 'search'
     end
     member do
       get 'favorite'
     end
   end
 
-  get "experiment/:name/:id" => "experiments#index"
+  #get "experiment/:name/:id" => "experiments#index"
 
   match "email" => "groups#email"
   match 'static/:action' => 'static#:action'

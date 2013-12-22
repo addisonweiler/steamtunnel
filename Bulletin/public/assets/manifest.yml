@@ -26,7 +26,6 @@ application.js: application-269b22df8a4dcd8f8ec7679f55ed4e0e.js
 application.css: application-986bfeafb9c2931f087aa33ce321dcaf.css
 events/endless_page.js: events/endless_page-801b7d2c31725e604fa2fc2efafabf7b.js
 events/events.js: events/events-2d23079d705e9f3630edf767639336f6.js
-events/experiment.js: events/experiment-cb7583db5d4c574f3bc5a50a37c55cab.js
 events/profile.js: events/profile-eb5f18975f3bc847cb208667f7cd38dc.js
 events/show_favorites.js: events/show_favorites-9acdd13a30a0f799d3116f55af5ad816.js
 specific/confirm.css: specific/confirm-58364605b849bd77a7d771d006e21718.css
