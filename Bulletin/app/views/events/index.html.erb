@@ -1,9 +1,8 @@
 <% javascript "events/events.js" %>
-
 <div class="left main">
   <div id="DateSelector">
     <select id="date_selected">
-      <%= options_for_select @dates.keys, :selected => @selected_date %>
+        <%= options_for_select @dates.keys, :selected => @selected_date %>
     </select>
   </div>
 
@@ -14,7 +13,6 @@
         <%= render @events %>
     <% end %>
   </div>
-
 </div>
 
 <div id="Panel" >

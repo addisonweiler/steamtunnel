@@ -2,15 +2,14 @@ h1 {
 	visibility: hidden;
 }
 
-
 .new_event{
-	margin-top: 6%;
-    margin-left:44%;
+	margin-top: 8%;
+    margin-left: 5%;
 }
 
 label {
 	 font-size: 120%;
-	 margin-left: 0%%;
+	 margin-left: 0%;
 	 padding:15px;
      font-family: "HelveticaNeue-Bold", "Helvetica Neue Light";
      color: #27AAE2;
@@ -145,8 +144,3 @@ input[name="commit"]{
 #error_explanation h2 {
     visibility: hidden;
 }
-
-
-
-
-

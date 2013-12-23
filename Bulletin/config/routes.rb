@@ -27,6 +27,7 @@ Web::Application.routes.draw do
 
   match "email" => "groups#email"
   match 'static/:action' => 'static#:action'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

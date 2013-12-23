@@ -14,7 +14,7 @@
     </h4>
   </div>
   
-  <div class="footer">
+  <div class="event-footer">
       <div class="links">
         <% if @favorites.include?(event) %>
           <%= link_to "Unfavorite", favorite_event_path(event), :class => "unfavorite", :remote => true %>

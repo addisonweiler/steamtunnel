@@ -1,4 +1,4 @@
- class EventsController < ApplicationController
+class EventsController < ApplicationController
   layout 'events'
   #before_filter :authenticate_user!, :only => [:index]
   before_filter :get_memberships, :only => [:new, :create]
@@ -7,7 +7,7 @@
   before_filter :manage_selections, :only => [:index, :search]
   before_filter :manage_social, :only => [:index, :show_favorites]
   before_filter :initialize_date, :only => [:index, :search]
-  
+
   def resource_name
     :user
   end
@@ -31,9 +31,9 @@
     @groups = Group.where(:personal => false).order("name ASC").all
     @generalEvents = Event.joins(:group).where("groups.personal")
     # Hash precomputed to avoid model call in view
-    @groupNames = Hash[@allGroups.collect {|g| [g.id, g.name] }] 
+    @groupNames = Hash[@allGroups.collect {|g| [g.id, g.name] }]
   end
-  
+
   def manage_social
     # Generalize individual events into FB Friends and General
     return true unless current_user
@@ -41,7 +41,7 @@
     friendNames += current_user.friends if !current_user.friends.nil?
     @friendEvents = @generalEvents.joins(:group).where("groups.name in (?)", friendNames)
   end
-  
+
   def manage_selections
     # Selected groups drawn from user.selected (set initially in profile page)
     @selected_groups = Group.all
@@ -49,7 +49,7 @@
     @selected_groups = current_user.selections
     @selected_groups_ids = @selected_groups.collect {|g| g.id}
   end
-  
+
   def get_memberships
     @memberships = current_user.groups.where(:facebook => false)
   end
@@ -74,7 +74,7 @@
       @selected_date = session["date"] || "Today"
     end
   end
-  
+
   # GET /events
   # GET /events.json
   def index
@@ -82,9 +82,9 @@
     # within chosen date range
     puts "selected groups: "
     puts @selected_groups
-    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
-    and events.start < '#{@dates[@selected_date][1]}'", 
-    @selected_groups_ids).order("start ASC")
+    puts @dates[@selected_date]
+    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
+    and events.start < '#{@dates[@selected_date][1]}'", @selected_groups_ids).order("start ASC")
     #@events = Event.all
     puts "events: "
     puts @events
@@ -92,9 +92,9 @@
     return true unless current_user
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
     and events.start < '#{@dates[@selected_date][1]}'
-    and (not groups.facebook or groups.name = ?) and events.group_id in (?)", 
-    current_user.fb_group, @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
-    
+    and (not groups.facebook or groups.name = ?) and events.group_id in (?)",
+                                        current_user.fb_group, @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
+
     @favorites = current_user.favorites.all
     respond_to do |format|
       format.html # index.html.erb
@@ -137,10 +137,10 @@
   # Profile
   def profile
     @groups = Group.where('not personal and (not facebook or name = ?)',
-     current_user.fb_group).order("name ASC").all
+                          current_user.fb_group).order("name ASC").all
     @selected_groups = current_user.selections
     respond_to do |format|
-      format.html 
+      format.html
     end
   end
 
@@ -198,7 +198,7 @@
   # POST /events.json
   def create
     @event = Event.new(params[:event])
-    if @event.permalink 
+    if @event.permalink
       if @event.permalink.length == 0
         @event.permalink = nil
       elsif !@event.permalink.include?("http://")
@@ -208,6 +208,8 @@
     @event.group_id = Group.find_by_name(params[:group][:name]).id
     respond_to do |format|
       if @event.save
+        puts "EVENT:"
+        puts @event
         format.html { redirect_to events_path, :notice => 'Event was successfully created.' }
         format.json { render :json => @event, :status => :created, :location => @event }
       else
