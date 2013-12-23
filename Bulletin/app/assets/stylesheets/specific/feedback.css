@@ -1,14 +1,5 @@
 #FeedbackTable {
-  top: 20%;
-  left: 10%;
-  position: absolute;
-}
-
-#feedback {
-    height: 100px;
-    width: 500px;
-}
-
-#FeedbackTable td {
-    padding-top: 10px;
+  top: 30%;
+  left: 30%;
+  position: fixed;
 }

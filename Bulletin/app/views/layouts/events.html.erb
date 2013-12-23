@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "bootstrap" %>
   <%= javascript_include_tag "jquery.sausage.js" %>
-  <%= javascript_include_tag "popover" %>
+
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -19,9 +19,9 @@
   searcher = new Searcher();
   });
   </script>-->
-
   <!-- Google Analytics -->
   <script type="text/javascript">
+
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-29079055-1']);
       _gaq.push(['_trackPageview']);
@@ -31,7 +31,19 @@
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+
+      //Popover
+      $(document).ready(function() {
+          $("[rel='popover']").popover({
+              placement : 'bottom', // top, bottom, left or right
+              html: 'true',
+              content : "<%= escape_javascript(render(:partial => 'events/popover')) %>"
+          });
+      });
+
+
   </script>
+
 </head>
 <body>
 
@@ -57,44 +69,39 @@
         <%if current_user #only display options for favorites and creating events if user is logged in.%>
             <td>
               <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "nav_link") %>
-            </td>
-            </tr>
-            </table>
-            </div>
-            </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
         <%else%>
-            </td>
-            </tr>
-            </table>
-            </div>
-            <div>
-              <a rel='popover'class="sign_in"> Login </a>
-            </div>
-            </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <a rel='popover'class="sign_in"> Login </a>
+  </div>
+</div>
         <%end%>
-        <!-- TODO how to use search?
-        <div id="search-wrapper">
-        <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
-        <div id="results">
-        </div>
-        </div>
-        -->
-        <div id="content">
-          <%=raw "<p class='notice'>#{notice}</p>" if notice %>
-          <%=raw "<p class='alert'>#{alert}</p>" if alert %>
-          <%= yield %>
-        </div>
-        </div>
 
-        </body>
-        <!-- TODO: Work in Progress -->
-        <div id="footer">
-          <table>
-            <tr>
-              <td> Footer</td>
-              <td> Goes </td>
-              <td> Here</td>
-            </tr>
-          </table>
-        </div>
+<!-- TODO how to use search?
+<div id="search-wrapper">
+<input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
+<div id="results">
+</div>
+</div>
+-->
+<div id="content">
+
+
+
+  <%=raw "<p class='notice'>#{notice}</p>" if notice %>
+  <%=raw "<p class='alert'>#{alert}</p>" if alert %>
+
+  <%= yield %>
+
+</div>
+</div>
+</body>
 </html>

@@ -30,7 +30,6 @@ body {
     background-attachment: fixed;
     background-size: cover;
     font-family: "Gill Sans", Helvetica, sans-serif;
-    height: 100%;
 }
 
 #boilerplate {
@@ -102,20 +101,6 @@ body {
     background: -moz-linear-gradient(90deg, #bce2f7 0%, #d4ecf9 100%) #FFFFFF;
     background: -webkit-gradient(linear, left bottom, left top, from(#bce2f7), to(#d4ecf9)) #FFFFFF;
     z-index: 12;
-    float: left;
-}
-
-#footer{
-    margin-top: 50px;
-    top: 100%;
-    height: 80px;
-    bottom:0;
-    position: absolute;
-    width: 100%;
-    background: black;
-    color: white;
-    font: 13px/1.5em Arial, Helvetica, sans-serif;
-    box-shadow: 0 1px 2px black;
     float: left;
 }
 
@@ -227,11 +212,12 @@ img.ical {
 }
 
 /* Encapsulation for event */
-.event-footer {
+.footer {
     border-top: 10px ;
     padding-top: 5px;
     margin-top: 5px;
     font-size: 100% ;
+
 }
 
 .right_details{
