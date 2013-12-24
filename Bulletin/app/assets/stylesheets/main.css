@@ -45,11 +45,7 @@ body {
 
 
 #search-wrapper {
-    position: fixed;
-    float: right;
-    margin-top: -50px;
-    margin-right: 100px;
-    margin-left: 800px;
+
 }
 
 #search-input {
@@ -155,11 +151,6 @@ img.ical {
     font-size: 100%;
 }
 
-/*  .event:hover {
-    background-color: red;
-  }
-*/
-
 .label {
     font-size: 80%;
     text-align: left;
@@ -224,7 +215,22 @@ img.ical {
     margin-top: 9px;
     font-size: 100%;
     margin-bottom: 10px;
-    overflow-y: scroll
+    overflow-y: scroll;
+}
+
+#change_password_form{
+    position: absolute;
+    margin-top: 100px;
+    border-radius: 0px;
+    background-color: white;
+    border-style:solid;
+    border-width:1px;
+    opacity:.8;
+    padding: 10px;
+    box-shadow: #333 0px 4px 15px;
+    font-size: 100%;
+    width: 60%;
+    margin-left: 5%;
 }
 
 

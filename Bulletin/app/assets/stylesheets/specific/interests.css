@@ -13,9 +13,6 @@
   text-shadow: 0 1px 0 #ffffff;
 }
 
-td {
-  width: 150px;
-}
 
 input[name="commit"] {
   font-size: 140%;

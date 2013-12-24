@@ -2,46 +2,91 @@
 <html>
 <head>
   <%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag "specific/users" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "bootstrap" %>
+  <%= javascript_include_tag "jquery.sausage.js" %>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
   <meta name="google-site-verification" content="PEP5adCpmu2vE4ow4IKm1p0zIH_xszdJ0xfl5IWbmao" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>SteamTunneling</title>
-	<meta name="author" content="Alexander Atallah">
-	<!-- Date: 2011-09-20 -->
+  <meta name="author" content="Alexander Atallah">
+  <!-- Date: 2011-09-20 -->
   <!-- Google Analytics -->
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-29079055-1']);
-  _gaq.push(['_trackPageview']);
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-29079055-1']);
+      _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+      (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
 
-</script>
+      $(document).ready(function() {
+          $("[rel='popover_profile']").popover({
+              placement : 'bottom',
+              html: 'true',
+              content : "<%= escape_javascript(render(:partial => 'events/popover_profile')) %>"
+          });
+      });
+
+  </script>
 </head>
 <body>
-	
-	<div id="wrapper">
-			<div id="header">
-        <!-- TODO find a place for this devise stuff -->
-        <%=raw "<p class='notice'>#{notice}</p>" if notice and notice.length > 0 %>
-        <%=raw "<p class='alert'>#{alert}</p>" if alert and alert.length > 0 %>
-			</div>
-			<div class="main">
+<div id="wrapper">
+  <!-- TODO find a place for this devise stuff -->
+  <%=raw "<p class='notice'>#{notice}</p>" if notice and notice.length > 0 %>
+  <%=raw "<p class='alert'>#{alert}</p>" if alert and alert.length > 0 %>
+</div>
 
-        <%= yield %>
+<!--
+<div id="header">
+  <div class="nav">
+    <table>
+      <tr>
+        <td>
+          <%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %>
+        </td>
+        <%if current_user #only display options for favorites and creating events if user is logged in.%>
+            <td>
+              <%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %>
+            </td>
+            <td>
+              <%= link_to 'Create Event', new_event_path, :class => "nav_link" %>
+            </td>
+        <%else%>
+            <td>
+              <%= link_to 'Sign Up', new_registration_path('user'), :class => "nav_link" %>
+            </td>
+        <%end%>
+        <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "nav_link"  %></td>
+        <td>
+          <%= link_to "Feedback", feedback_events_path, :class => "nav_link" %>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-			</div>
-	  </div>
-    <div id="boilerplate">
-      <%= link_to "Privacy Policy", "#{root_url}static/privacy" %> |
-      <%= link_to "Terms of Service", "#{root_url}static/terms" %>
-    </div>
+  <div>
+    <%if current_user #TODO move logout to popover?%>
+        <a rel='popover_profile'class="sign_in"> Welcome, <%=current_user.name%>! </a>
+    <%else%>
+        <a rel='popover_sign_in'class="sign_in"> Login </a>
+    <%end%>
+  </div>
+</div>
+-->
+
+<%= yield %>
+
+
+<div id="boilerplate">
+  <%= link_to "Privacy Policy", "#{root_url}static/privacy" %> |
+  <%= link_to "Terms of Service", "#{root_url}static/terms" %>
+</div>
 </body>
 </html>

@@ -13,10 +13,10 @@
   <div class="groupSidebar">
     <div>
       <% @groups.each do |group| %>
-        <div class="GroupCheckBox" id=<%= "group-#{group.id}" %> >
-          <%= check_box_tag group.id, group.id, @selected_groups.include?(group) %>
-          <%= label_tag group.id, group.name, :class => "label" %>
-        </div>
+          <div class="GroupCheckBox" id=<%= "group-#{group.id}" %> >
+            <%= check_box_tag group.id, group.id, @selected_groups.include?(group) %>
+            <%= label_tag group.id, group.name, :class => "label" %>
+          </div>
       <% end %>
     </div>
   </div>

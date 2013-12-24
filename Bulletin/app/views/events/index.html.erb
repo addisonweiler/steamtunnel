@@ -1,10 +1,18 @@
 <% javascript "events/events.js" %>
 
 <div class="left main">
-  <div id="DateSelector">
-    <select id="date_selected">
-      <%= options_for_select @dates.keys, :selected => @selected_date %>
-    </select>
+  <div class="filter_toolbar">
+    <div id="DateSelector">
+      <select id="date_selected">
+        <%= options_for_select @dates.keys, :selected => @selected_date %>
+      </select>
+    </div>
+    <!--
+    <div id="search-wrapper">
+      <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
+      <div id="results">
+      </div>
+    </div> -->
   </div>
 
   <div class='page'>

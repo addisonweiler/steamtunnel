@@ -206,10 +206,6 @@
         @event.permalink = "http://"+@event.permalink
       end
     end
-    puts "name:"
-    puts :name.id
-    puts "group:"
-    puts :group.id
     @event.group_id = Group.find_by_name(params[:group][:name]).id
     puts "event id:"
     puts @event.group_id
