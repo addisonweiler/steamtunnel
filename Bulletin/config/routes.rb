@@ -1,11 +1,8 @@
 Web::Application.routes.draw do
-  root :to => 'events#index'
   resources :groups
 
   devise_for :users, :controllers => { :omniauth_callbacks => "my_devise/omniauth_callbacks",
-  :registrations => "my_devise/registrations"  }
-
-  #get ':experiment/' => 'events#index'
+  :registrations => "my_devise/registrations"}
 
   resources :events do
     collection do
@@ -22,11 +19,12 @@ Web::Application.routes.draw do
       get 'favorite'
     end
   end
-
-  #get "experiment/:name/:id" => "experiments#index"
-
   match "email" => "groups#email"
   match 'static/:action' => 'static#:action'
+  match 'edit_interests' => 'events#interests'
+  match 'edit_groups' => 'events#profile'
+  #match 'edit_account' => 'my_devise/registrations#edit'
+  root :to => 'events#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

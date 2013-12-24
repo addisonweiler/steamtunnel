@@ -18,72 +18,77 @@
   $(document).ready(function () {
   searcher = new Searcher();
   });
-  </script>-->
-  <!-- Google Analytics -->
-  <script type="text/javascript">
+</script>-->
+<!-- Google Analytics -->
+<script type="text/javascript">
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-29079055-1']);
-      _gaq.push(['_trackPageview']);
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-29079055-1']);
+_gaq.push(['_trackPageview']);
 
-      (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
       //Popover
       $(document).ready(function() {
-          $("[rel='popover']").popover({
-              placement : 'bottom', // top, bottom, left or right
+        $("[rel='popover_sign_in']").popover({
+              placement : 'bottom',
               html: 'true',
-              content : "<%= escape_javascript(render(:partial => 'events/popover')) %>"
-          });
+              content : "<%= escape_javascript(render(:partial => 'events/popover_sign_in')) %>"
+            });
+      });
+
+      $(document).ready(function() {
+        $("[rel='popover_profile']").popover({
+              placement : 'bottom',
+              html: 'true',
+              content : "<%= escape_javascript(render(:partial => 'events/popover_profile')) %>"
+            });
       });
 
 
-  </script>
+      </script>
 
-</head>
-<body>
+    </head>
+    <body>
 
-<div id="header">
-  <div class="nav">
-    <table>
-      <tr>
-        <td>
-          <%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %>
-        </td>
-        <%if current_user #only display options for favorites and creating events if user is logged in.%>
-            <td>
-              <%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %>
-            </td>
-            <td>
-              <%= link_to 'Create Event', new_event_path, :class => "nav_link"  %>
-            </td>
-        <%end%>
-        <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "nav_link"  %></td> -->
-        <td>
-          <%= link_to "Feedback", feedback_events_path, :class => "nav_link" %>
-        </td>
-        <%if current_user #only display options for favorites and creating events if user is logged in.%>
-            <td>
-              <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => "nav_link") %>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-        <%else%>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div>
-    <a rel='popover'class="sign_in"> Login </a>
-  </div>
-</div>
-        <%end%>
+      <div id="header">
+        <div class="nav">
+          <table>
+            <tr>
+              <td>
+                <%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %>
+              </td>
+              <%if current_user #only display options for favorites and creating events if user is logged in.%>
+              <td>
+                <%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %>
+              </td>
+              <td>
+                <%= link_to 'Create Event', new_event_path, :class => "nav_link" %>
+              </td>
+              <%else%>
+              <td>
+                <%= link_to 'Sign Up', new_registration_path('user'), :class => "nav_link" %>
+              </td>
+              <%end%>
+              <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "nav_link"  %></td> -->
+              <td>
+                <%= link_to "Feedback", feedback_events_path, :class => "nav_link" %>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <%if current_user #TODO move logout to popover?%>
+            <a rel='popover_profile'class="sign_in"> Welcome, <%=current_user.name%>! </a>
+          <%else%>
+            <a rel='popover_sign_in'class="sign_in"> Login </a>
+          <%end%>
+        </div>
+      </div>
 
 <!-- TODO how to use search?
 <div id="search-wrapper">

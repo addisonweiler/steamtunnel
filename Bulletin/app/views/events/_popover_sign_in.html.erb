@@ -10,14 +10,7 @@
         <tr>
           <td> <%= f.submit 'Sign in' %> </td>
           <td colspan="2"> <%= f.label :remember_me %> &nbsp; <%= f.check_box :remember_me %> </td>
-
         </tr>
-        <tr>
-
-          <td> <%= button_to "Sign up", new_registration_path('user'), :id => "sign_up", :method => :get %></td>
-
-        </tr>
-
         <tr>
           <td colspan="2"> <%= link_to "Forgot your password?", new_password_path('user') %> </td>
         </tr>

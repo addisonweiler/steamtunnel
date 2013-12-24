@@ -80,6 +80,7 @@
   def index
     # All upcoming events except for Facebook events belonging to other people 
     # within chosen date range
+    #TODO add filters on homepage
     puts "selected groups: "
     puts @selected_groups
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
@@ -88,13 +89,12 @@
     #@events = Event.all
     puts "events: "
     puts @events
-
     return true unless current_user
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
-    and events.start < '#{@dates[@selected_date][1]}'
-    and (not groups.facebook or groups.name = ?) and events.group_id in (?)", 
-    current_user.fb_group, @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
-    
+    and events.start < '#{@dates[@selected_date][1]}' and (events.group_id >= 10 or events.group_id in (?))", 
+    @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
+    #checks groups_id > 10; these represent user-created events - allow user to pick category?
+    #and (not groups.facebook or groups.name = ?) previously in @events = statement
     @favorites = current_user.favorites.all
     respond_to do |format|
       format.html # index.html.erb
@@ -197,6 +197,7 @@
   # POST /events
   # POST /events.json
   def create
+    puts "creating event"
     @event = Event.new(params[:event])
     if @event.permalink 
       if @event.permalink.length == 0
@@ -205,7 +206,13 @@
         @event.permalink = "http://"+@event.permalink
       end
     end
+    puts "name:"
+    puts :name.id
+    puts "group:"
+    puts :group.id
     @event.group_id = Group.find_by_name(params[:group][:name]).id
+    puts "event id:"
+    puts @event.group_id
     respond_to do |format|
       if @event.save
         format.html { redirect_to events_path, :notice => 'Event was successfully created.' }
@@ -275,7 +282,7 @@
     tag_ids = @tags.collect {|t| t.id}
     @groups = Group.joins(:tags).where('tags.id in (?)', tag_ids)
     current_user.selections = @groups
-    current_user.selections += Group.find_all_by_name("Friends") # Who doesn't like friends?
+    current_user.selections += Group.find_all_by_name("Friends") # What does this do?
     respond_to do |format|
       format.html { redirect_to events_path }
     end
