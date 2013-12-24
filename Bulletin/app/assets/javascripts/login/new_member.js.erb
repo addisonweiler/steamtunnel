@@ -1,5 +1,10 @@
+function endsWith(str, suffix) {
+  <%puts "email: "%>
+  console.log(str);
+    return str.toLowerCase().indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
 $(document).ready( function(){
-  // Change Error Text
   <% url = Rails.application.routes.url_helpers %>
   var path = "<%= url.new_user_password_path %>";
   $('#error_explanation').children('ul').children().each( function() {
