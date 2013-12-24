@@ -15,12 +15,12 @@
     <%= select("group", "name", @memberships.collect {|g| g.name }) %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name , "Event Name" %><br />
     <%= f.text_field :name, :size => 55 %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description, :size => "40x10" %>
+    <%= f.text_area :description, :size => "53x10" %>
   </div>
   <div class="field">
     <%= f.label :location %><br />
@@ -38,6 +38,7 @@
     <%= f.label :finish %><br />
     <%= f.datetime_select :finish, :ampm => true, :default => 1.days.from_now, :minute_step => 5 %>
   </div>
+<!--<paste _tags code here>-->
   <div class="actions">
     <%= f.submit %>
   </div>

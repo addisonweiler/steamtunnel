@@ -39,7 +39,7 @@ Web::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
   
   # Devise config
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
@@ -48,5 +48,5 @@ Web::Application.configure do
   config.facebook_app_id = 136112333735
   config.facebook_app_secret = 'a1c742b8f35266a4b5fe611a42e21bfa'
   config.facebook_app_scope = {:scope => 'offline_access,user_events,user_groups,rsvp_event'}
-  
+
 end

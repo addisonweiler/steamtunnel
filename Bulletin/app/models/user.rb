@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates_format_of :email, :with => /\A.+@stanford.edu\Z/i #ensure email is proper stanford email address
+  validates_format_of :email, :with => /\[^@\s]+@stanford.edu\Z/i #ensure email is proper stanford email address
 	has_and_belongs_to_many :groups
   has_and_belongs_to_many :favorites, :class_name => "Event", :join_table => :favorites_users
   has_and_belongs_to_many :selections, :class_name => "Group", :join_table => :selections_users
