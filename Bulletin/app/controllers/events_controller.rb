@@ -181,7 +181,7 @@
   # GET /events/new
   # GET /events/new.json
   def new
-    #@tags = Tag.where(:visible => true).order("name ASC").all
+    @tags = Tag.where(:visible => true).order("name ASC").all
     @event = Event.new
     respond_to do |format|
       format.html # new.html.erb

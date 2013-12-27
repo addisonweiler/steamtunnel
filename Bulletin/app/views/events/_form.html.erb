@@ -38,7 +38,24 @@
     <%= f.label :finish %><br />
     <%= f.datetime_select :finish, :ampm => true, :default => 1.days.from_now, :minute_step => 5 %>
   </div>
-<!--<paste _tags code here>-->
+  <div>
+    <table>
+      <% count = 0 %>
+      <% @tags.each do |tag| %>
+          <% if count % 3 == 0 %>
+              <tr>
+          <% end %>
+          <td><div class="tag">
+            <%= check_box_tag tag.name %>
+            <%= label_tag tag.name, tag.name %>
+          </div></td>
+          <% count += 1 %>
+          <% if count % 3 == 0 %>
+              </tr>
+          <% end %>
+      <% end %>
+    </table>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
