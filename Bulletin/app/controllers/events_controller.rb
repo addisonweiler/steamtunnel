@@ -212,8 +212,15 @@
     puts @event.group_id
     respond_to do |format|
       if @event.save
-        format.html { redirect_to events_path, :notice => 'Event was successfully created.' }
-        format.json { render :json => @event, :status => :created, :location => @event }
+        #Create the tag(s) for the event TODO: FIX THIS
+        eventTag = Event_Tag.new(:event_id => @event.id, :tag_id => 1, :tag_name => 1)
+        if eventTag.save
+          format.html { redirect_to events_path, :notice => 'Event was successfully created.' }
+          format.json { render :json => @event, :status => :created, :location => @event }
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => eventTag.errors, :status => :unprocessable_entity }
+        end
       else
         format.html { render :action => "new" }
         format.json { render :json => @event.errors, :status => :unprocessable_entity }

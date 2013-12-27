@@ -4,6 +4,10 @@ task :cleanup_event_unicode => :environment do
   Event.all.each do |event|
     # TODO figure out how to encode unicode in db
     if !event.name.scan(/&#[0-9]+;/).empty?
+      tags = EventTags.find_all_by_event_id(event.id)
+      tags.each do |tag|
+        tag.delete
+      end
       event.delete
     end
   #  event.name = numberToUnicode(event.name)

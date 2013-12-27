@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
 	belongs_to :group
+  has_many :event_tags
 
   # Indexing for the ThinkingSphinx search engine
   define_index do
@@ -67,7 +68,7 @@ class Event < ActiveRecord::Base
       next_date.utc.strftime('%Y-%m-%d %H:%M:%S UTC')]
     return @dates
   end
-  
+
   def self.find_by_params(params)
     #TODO: Implement this
   end

@@ -10,8 +10,8 @@ require 'open-uri'
 
 # Collection of scrapes
 task :scrape_all => :environment do
-  Rake::Task["scrape_lively_arts"].invoke #Works fine
-  Rake::Task["scrape_bases"].invoke #Works fine
+  Rake::Task["scrape_lively_arts"].invoke #Todo: No events created from this
+  Rake::Task["scrape_bases"].invoke #TODO: No events created from this
   #Rake::Task["scrape_sports"].invoke #TODO: Find an alternative site
   #Rake::Task["scrape_sig"].invoke
   #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
@@ -22,7 +22,51 @@ task :scrape_all => :environment do
   Rake::Task["cleanup_event_unicode"].invoke
 end
 
-# Scrape CDC 
+# Screen scrape lively arts with mechanize
+task :scrape_lively_arts => :environment do
+  @group = Group.find_by_name("Lively Arts")
+
+  agent = Mechanize.new
+  page = agent.get(@group.source)
+  links = page.links.select {|l| l.text == "info" or l.text == "free" or l.text == "buy"}
+  links.each do |l|
+    infopage = l.click
+    @permalink = infopage.uri.to_s
+    @title = infopage.search(".eventTitle").text
+    puts @title
+    # datetime contains time and location
+    dt = infopage.search(".datetime")
+    @time = dt.children[0].text
+    @location = dt.search("a").text
+    # Combine all p's after "Tell a friend" into description
+    paragraphs = infopage.search("#eventCol").search("p")
+    textArr = []
+    paragraphs.each do |p|
+      if p.attributes["class"].nil? or not p.attributes["class"].value.include? "relevent"
+        textArr << p.text
+      end
+    end
+    index = textArr.index{|text| text.include? "Tell a Friend"}
+    @description = ""
+    textArr.each_with_index do |text, ind|
+      if ind > index
+        @description += text
+        @description += "\n"
+      end
+    end
+    @description.strip!
+    @description.gsub!("\r\n", " ")
+    # Add spaces after periods with no space
+    @description.gsub!(/\.(\w)/, '\1')
+
+    Event.create(:name => @title, :description => @description, :location => @location,
+                 :start => Event.PSTtoUTC(@time), :group_id => @group.id, :permalink => @permalink)
+
+
+  end
+end
+
+# Scrape CDC
 task :scrape_cdc => :environment do
   group = Group.find_by_name("CDC")
   url = "https://stanford-csm.symplicity.com/utils/handleDynamicCalendarRequests.php?" \
@@ -96,7 +140,6 @@ task :scrape_student_groups => :environment do
 end
 
 
-
 # Scrape RSS feed at events.stanford.edu
 task :scrape_events => :environment do
   group = Group.find_by_name("Stanford Events")
@@ -125,6 +168,7 @@ task :scrape_events => :environment do
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/21/rss.xml", group) # Environment
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/22/rss.xml", group) # Engineering
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/23/rss.xml", group) # Humanities
+
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/24/rss.xml", group) # Health/Wellness
   #scrape_event_feed("http://events.stanford.edu/xml/byCategory/17/rss.xml", group) # PHD Orals
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/1/rss.xml", group) # University Events
@@ -155,55 +199,21 @@ def scrape_event_feed(source, group)
     end
     description.gsub!(/\r\n/, "\n")
     description.strip!
-    Event.create(:name => title, :description => description, :location => location,
+    event = Event.create(:name => title, :description => description, :location => location,
      :start => Event.PSTtoUTC(date), :group_id => group.id, :permalink => item.link)
+
+    #Create tag for the event
+    event_id = event.id
+    tag_id = GroupsTags.find_by_group_id(group.id).tag_id
+    tag_name = Tag.find_by_id(tag_id).name
+    puts "Tag: " + tag_name
+
+    EventTags.create(:event_id => event_id, :tag_id => tag_id, :tag_name => tag_name)
+
     # Old way
     #separated = description.scan(/Date:(.*)<br\/>\n*Location:(.*\n*.*\n*.*\n*.*)<br\/>\n*([\s\S]*)/)
   end
 end
-
-# Screen scrape lively arts with mechanize
-task :scrape_lively_arts => :environment do
-  @group = Group.find_by_name("Lively Arts")
-
-  agent = Mechanize.new
-  page = agent.get(@group.source)
-  links = page.links.select {|l| l.text == "info" or l.text == "free" or l.text == "buy"}
-  links.each do |l|
-  infopage = l.click
-  @permalink = infopage.uri.to_s
-  @title = infopage.search(".eventTitle").text
-  puts @title
-  # datetime contains time and location
-  dt = infopage.search(".datetime")
-  @time = dt.children[0].text
-  @location = dt.search("a").text
-  # Combine all p's after "Tell a friend" into description
-  paragraphs = infopage.search("#eventCol").search("p")
-  textArr = []
-  paragraphs.each do |p|
-    if p.attributes["class"].nil? or not p.attributes["class"].value.include? "relevent"
-      textArr << p.text
-    end
-  end
-  index = textArr.index{|text| text.include? "Tell a Friend"}
-  @description = ""
-  textArr.each_with_index do |text, ind|
-    if ind > index
-      @description += text
-      @description += "\n"
-    end
-  end
-  @description.strip!
-  @description.gsub!("\r\n", " ")
-  # Add spaces after periods with no space
-  @description.gsub!(/\.(\w)/, '\1')
-
-  Event.create(:name => @title, :description => @description, :location => @location,
-   :start => Event.PSTtoUTC(@time), :group_id => @group.id, :permalink => @permalink)
-  end
-end
-
 
 # Screen scrape http://bases.stanford.edu/events/ with mechanize
 # TODO location and specific time, if possible given unstandardized formatting
