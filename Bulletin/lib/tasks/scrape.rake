@@ -202,16 +202,21 @@ def scrape_event_feed(source, group)
     event = Event.create(:name => title, :description => description, :location => location,
      :start => Event.PSTtoUTC(date), :group_id => group.id, :permalink => item.link)
 
-    #Create tag for the event
-    event_id = event.id
-    tag_id = GroupsTags.find_by_group_id(group.id).tag_id
-    tag_name = Tag.find_by_id(tag_id).name
-    puts "Tag: " + tag_name
-
-    EventTags.create(:event_id => event_id, :tag_id => tag_id, :tag_name => tag_name)
-
     # Old way
     #separated = description.scan(/Date:(.*)<br\/>\n*Location:(.*\n*.*\n*.*\n*.*)<br\/>\n*([\s\S]*)/)
+
+    #Create tag for the event
+    event_id = event.id
+    groupTags = GroupsTags.find_by_group_id(group.id)
+
+    if !groupTags.nil?
+      tag_id = groupTags.tag_id
+      tag_name = Tag.find_by_id(tag_id).name
+      puts "Tag: " + tag_name
+      EventTags.create(:event_id => event_id, :tag_id => tag_id, :tag_name => tag_name)
+    end
+
+
   end
 end
 

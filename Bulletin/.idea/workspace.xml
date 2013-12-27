@@ -23,10 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="events_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
+      <file leaf-file-name="seeds.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db/seeds.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="215" column="19" selection-start="6528" selection-end="6595" vertical-scroll-proportion="-50.627453" vertical-offset="643" max-vertical-offset="4500">
+            <state line="32" column="0" selection-start="1578" selection-end="1578" vertical-scroll-proportion="-13.2" vertical-offset="150" max-vertical-offset="1020">
               <folding />
             </state>
           </provider>
@@ -35,25 +35,7 @@
       <file leaf-file-name="scrape.rake" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/tasks/scrape.rake">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="44" selection-start="426" selection-end="426" vertical-scroll-proportion="0.48128343" vertical-offset="30" max-vertical-offset="5655">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="groups_tags.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/groups_tags.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="42" selection-end="42" vertical-scroll-proportion="-1.2" vertical-offset="0" max-vertical-offset="120">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="event.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/event.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="54" selection-start="2559" selection-end="2559" vertical-scroll-proportion="-3.4705882" vertical-offset="828" max-vertical-offset="1215">
+            <state line="204" column="13" selection-start="8585" selection-end="8585" vertical-scroll-proportion="0.157754" vertical-offset="3001" max-vertical-offset="5730">
               <folding />
             </state>
           </provider>
@@ -111,7 +93,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-32" />
+    <option name="x" value="9" />
     <option name="y" value="22" />
     <option name="width" value="1260" />
     <option name="height" value="736" />
@@ -218,24 +200,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="migrate" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bulletin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bulletin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -255,24 +219,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bulletin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bulletin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -459,8 +405,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-32" y="22" width="1260" height="736" extended-state="0" />
-    <editor active="true" />
+    <frame x="9" y="22" width="1260" height="736" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -468,7 +414,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32756132" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28809524" sideWeight="0.74960876" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28809524" sideWeight="0.74960876" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25039124" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -610,13 +556,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="1" selection-start="2678" selection-end="2678" vertical-scroll-proportion="0.84210527" vertical-offset="355" max-vertical-offset="1020">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20111123215245_create_events.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="21" selection-start="79" selection-end="79" vertical-scroll-proportion="0.07263923" vertical-offset="0" max-vertical-offset="413">
@@ -634,13 +573,6 @@
     <entry file="file://$PROJECT_DIR$/app/models/membership.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="415">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="54" selection-start="2559" selection-end="2559" vertical-scroll-proportion="-3.4705882" vertical-offset="828" max-vertical-offset="1215">
           <folding />
         </state>
       </provider>
@@ -708,16 +640,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/seeds.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1578" selection-end="1578" vertical-scroll-proportion="-13.2" vertical-offset="150" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="54" selection-start="2559" selection-end="2559" vertical-scroll-proportion="2.5968993" vertical-offset="0" max-vertical-offset="1215">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/groups_tags.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="42" selection-end="42" vertical-scroll-proportion="-1.2" vertical-offset="0" max-vertical-offset="120">
+        <state line="2" column="0" selection-start="42" selection-end="42" vertical-scroll-proportion="0.07263923" vertical-offset="0" max-vertical-offset="413">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/tasks/scrape.rake">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="44" selection-start="426" selection-end="426" vertical-scroll-proportion="0.48128343" vertical-offset="30" max-vertical-offset="5655">
+        <state line="204" column="13" selection-start="8585" selection-end="8585" vertical-scroll-proportion="0.157754" vertical-offset="3001" max-vertical-offset="5730">
           <folding />
         </state>
       </provider>
