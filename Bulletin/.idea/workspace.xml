@@ -23,10 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="events_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="events_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="230" column="90" selection-start="7393" selection-end="7393" vertical-scroll-proportion="0.55368423" vertical-offset="3187" max-vertical-offset="4725">
+            <state line="218" column="25" selection-start="6660" selection-end="6660" vertical-scroll-proportion="-1.627451" vertical-offset="3187" max-vertical-offset="4725">
               <folding />
             </state>
           </provider>
@@ -41,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="_form.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="32" selection-start="1207" selection-end="1207" vertical-scroll-proportion="-2.0408163" vertical-offset="455" max-vertical-offset="1170">
+            <state line="50" column="35" selection-start="1533" selection-end="1533" vertical-scroll-proportion="0.3265306" vertical-offset="590" max-vertical-offset="1140">
               <folding />
             </state>
           </provider>
@@ -80,10 +80,10 @@
         <option value="$PROJECT_DIR$/lib/tasks/utilities.rake" />
         <option value="$PROJECT_DIR$/app/models/groups_tags.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
-        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
         <option value="$PROJECT_DIR$/lib/tasks/scrape.rake" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/events/_form.html.erb" />
       </list>
     </option>
   </component>
@@ -95,7 +95,7 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="24" />
+    <option name="x" value="20" />
     <option name="y" value="22" />
     <option name="width" value="1260" />
     <option name="height" value="736" />
@@ -499,7 +499,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="24" y="22" width="1260" height="736" extended-state="0" />
+    <frame x="20" y="22" width="1260" height="736" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -651,13 +651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="32" selection-start="1207" selection-end="1207" vertical-scroll-proportion="-2.0408163" vertical-offset="455" max-vertical-offset="1170">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/seeds.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="44" column="44" selection-start="2071" selection-end="2071" vertical-scroll-proportion="0.2930328" vertical-offset="517" max-vertical-offset="1035">
@@ -674,7 +667,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="230" column="90" selection-start="7393" selection-end="7393" vertical-scroll-proportion="0.55368423" vertical-offset="3187" max-vertical-offset="4725">
+        <state line="218" column="25" selection-start="6660" selection-end="6660" vertical-scroll-proportion="-1.627451" vertical-offset="3187" max-vertical-offset="4725">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/events/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="35" selection-start="1533" selection-end="1533" vertical-scroll-proportion="0.3265306" vertical-offset="590" max-vertical-offset="1140">
           <folding />
         </state>
       </provider>
