@@ -1,4 +1,4 @@
- class EventsController < ApplicationController
+class EventsController < ApplicationController
   layout 'events'
   #before_filter :authenticate_user!, :only => [:index]
   before_filter :get_memberships, :only => [:new, :create]
@@ -7,7 +7,7 @@
   before_filter :manage_selections, :only => [:index, :search]
   before_filter :manage_social, :only => [:index, :show_favorites]
   before_filter :initialize_date, :only => [:index, :search]
-  
+
   def resource_name
     :user
   end
@@ -31,9 +31,9 @@
     @groups = Group.where(:personal => false).order("name ASC").all
     @generalEvents = Event.joins(:group).where("groups.personal")
     # Hash precomputed to avoid model call in view
-    @groupNames = Hash[@allGroups.collect {|g| [g.id, g.name] }] 
+    @groupNames = Hash[@allGroups.collect {|g| [g.id, g.name] }]
   end
-  
+
   def manage_social
     # Generalize individual events into FB Friends and General
     return true unless current_user
@@ -41,7 +41,7 @@
     friendNames += current_user.friends if !current_user.friends.nil?
     @friendEvents = @generalEvents.joins(:group).where("groups.name in (?)", friendNames)
   end
-  
+
   def manage_selections
     # Selected groups drawn from user.selected (set initially in profile page)
     @selected_groups = Group.all
@@ -49,7 +49,7 @@
     @selected_groups = current_user.selections
     @selected_groups_ids = @selected_groups.collect {|g| g.id}
   end
-  
+
   def get_memberships
     @memberships = current_user.groups.where(:facebook => false)
   end
@@ -74,7 +74,7 @@
       @selected_date = session["date"] || "Today"
     end
   end
-  
+
   # GET /events
   # GET /events.json
   def index
@@ -84,15 +84,15 @@
     puts "selected groups: "
     puts @selected_groups
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
-    and events.start < '#{@dates[@selected_date][1]}'", 
-    @selected_groups_ids).order("start ASC")
+    and events.start < '#{@dates[@selected_date][1]}'",
+                                        @selected_groups_ids).order("start ASC")
     #@events = Event.all
     puts "events: "
     puts @events
     return true unless current_user
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
-    and events.start < '#{@dates[@selected_date][1]}' and (events.group_id >= 10 or events.group_id in (?))", 
-    @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
+    and events.start < '#{@dates[@selected_date][1]}' and (events.group_id >= 10 or events.group_id in (?))",
+                                        @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
     #checks groups_id > 10; these represent user-created events - allow user to pick category?
     #and (not groups.facebook or groups.name = ?) previously in @events = statement
     @favorites = current_user.favorites.all
@@ -137,10 +137,10 @@
   # Profile
   def profile
     @groups = Group.where('not personal and (not facebook or name = ?)',
-     current_user.fb_group).order("name ASC").all
+                          current_user.fb_group).order("name ASC").all
     @selected_groups = current_user.selections
     respond_to do |format|
-      format.html 
+      format.html
     end
   end
 
@@ -178,13 +178,14 @@
     end
   end
 
+
   # GET /events/new
   # GET /events/new.json
   def new
     @tags = Tag.where(:visible => true).order("name ASC").all
     @event = Event.new
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render :json => @event }
     end
   end
@@ -198,35 +199,49 @@
   # POST /events
   # POST /events.json
   def create
-    puts "creating event"
+    puts "Creating event"
     @event = Event.new(params[:event])
-    if @event.permalink 
+    event_tags = params[:tags] #Could be nil if no tags are selected, TODO: Do we require tags? No for now
+
+    if @event.permalink
       if @event.permalink.length == 0
         @event.permalink = nil
       elsif !@event.permalink.include?("http://")
         @event.permalink = "http://"+@event.permalink
       end
     end
+
     @event.group_id = Group.find_by_name(params[:group][:name]).id
-    puts "event id:"
-    puts @event.group_id
     respond_to do |format|
       if @event.save
         #Create the tag(s) for the event TODO: FIX THIS
-        eventTag = Event_Tag.new(:event_id => @event.id, :tag_id => 1, :tag_name => 1)
-        if eventTag.save
+
+        if !event_tags.nil?
+          event_tags.each do |tag|
+            tag_id = Tag.find_by_name(tag).id
+            @eventTag = EventTags.new(:event_id => @event.id, :tag_id => tag_id, :tag_name => tag)
+            if !@eventTag.save
+              format.html { render :action => "new"}
+              format.json { render :json => @event.errors, :status => :unprocessable_entity, :locals => {:tags => ["hello"]}}
+              @tags = Tag.where(:visible => true).order("name ASC").all
+              format.json { render :json => @tags }
+            end
+          end
           format.html { redirect_to events_path, :notice => 'Event was successfully created.' }
           format.json { render :json => @event, :status => :created, :location => @event }
         else
-          format.html { render :action => "new" }
-          format.json { render :json => eventTag.errors, :status => :unprocessable_entity }
+          format.html { redirect_to events_path, :notice => 'Event was successfully created.' }
+          format.json { render :json => @event, :status => :created, :location => @event }
         end
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @event.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new"}
+        format.json { render :json => @event.errors, :status => :unprocessable_entity, :locals => {:tags => ["hello"]}}
+        @tags = Tag.where(:visible => true).order("name ASC").all
+        format.json { render :json => @tags }
       end
     end
   end
+
 
   # PUT /events/1
   # PUT /events/1.json

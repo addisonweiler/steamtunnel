@@ -60,3 +60,4 @@ Tag.find_or_create_by_name(:name => "Sports")
 Tag.find_or_create_by_name(:name => "New", :visible => false)
 Tag.find_or_create_by_name(:name => "Facebook", :visible => false)
 #Tag.find_or_create_by_name(:name => "User-Created", :visible => true)
+
