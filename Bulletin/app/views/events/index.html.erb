@@ -7,6 +7,19 @@
         <%= options_for_select @dates.keys, :selected => @selected_date %>
       </select>
     </div>
+    <div>
+    <%= form_tag save_interests_events_path, :method => "post" do %>
+        <table>
+          <% @tags.each do |tag| %>
+              <td><div class="tag">
+                <%= check_box_tag tag.name %>
+                <%= label_tag tag.name, tag.name %>
+              </div></td>
+          <% end %>
+          <tr><td> <%= submit_tag "Reload" %> </td></tr>
+        </table>
+    <% end %>
+    </div>
     <!--
     <div id="search-wrapper">
       <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
@@ -22,7 +35,6 @@
         <%= render @events %>
     <% end %>
   </div>
-
 </div>
 
 <div id="Panel" >

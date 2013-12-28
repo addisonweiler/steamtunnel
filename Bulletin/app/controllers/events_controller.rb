@@ -7,6 +7,7 @@ class EventsController < ApplicationController
   before_filter :manage_selections, :only => [:index, :search]
   before_filter :manage_social, :only => [:index, :show_favorites]
   before_filter :initialize_date, :only => [:index, :search]
+  before_filter :initialize_tag_selection, :only => [:index, :search]
 
   def resource_name
     :user
@@ -72,6 +73,24 @@ class EventsController < ApplicationController
     else
       @date_changed = false
       @selected_date = session["date"] || "Today"
+    end
+  end
+
+  def initialize_tag_selection
+    @selected_filters = Tag.where(:visible => true).order("name ASC").all
+    @tags = Tag.where(:visible => true).order("name ASC").all
+    tag_ids = @tags.collect {|t| t.id}
+    @selected_filters =  tag_ids
+    if params.has_key?("selected_filters")
+      puts "found selected filters in params"
+      @tags = Tag.where(:visible => true).order("name ASC").all.select {|t| params[t.name]}
+      tag_ids = @tags.collect {|t| t.id}
+      @filters_changed = true
+      session["selected_filters"] = params["selected_filters"]
+      @selected_filters = params["selected_filters"]
+    else
+      @filters_changed = false
+      @selected_filters =  tag_ids
     end
   end
 
