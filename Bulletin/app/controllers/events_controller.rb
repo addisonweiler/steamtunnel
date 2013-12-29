@@ -77,10 +77,9 @@ class EventsController < ApplicationController
   end
 
   def initialize_tag_selection
-    @selected_filters = Tag.where(:visible => true).order("name ASC").all
     @tags = Tag.where(:visible => true).order("name ASC").all
     tag_ids = @tags.collect {|t| t.id}
-    @selected_filters =  tag_ids
+    @selected_filters =  tag_ids.collect {|t| t.to_s}
     if params.has_key?("selected_filters")
       puts "found selected filters in params"
       @tags = Tag.where(:visible => true).order("name ASC").all.select {|t| params[t.name]}
@@ -90,7 +89,7 @@ class EventsController < ApplicationController
       @selected_filters = params["selected_filters"]
     else
       @filters_changed = false
-      @selected_filters =  tag_ids
+      @selected_filters =  tag_ids.collect {|t| t.to_s}
     end
   end
 
@@ -102,10 +101,11 @@ class EventsController < ApplicationController
     #TODO add filters on homepage
     puts "selected groups: "
     puts @selected_groups
-    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
-    and events.start < '#{@dates[@selected_date][1]}'",
-                                        @selected_groups_ids).order("start ASC")
-    #@events = Event.all
+    puts 'selected filters (index): ' + @selected_filters.to_s
+    @tags = Tag.where(:visible => true).order("name ASC").all
+    #TODO to the following line: check if one of the event's tags is in @selected_filters
+    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
+    and events.start < '#{@dates[@selected_date][1]}'").order("start ASC")
     puts "events: "
     puts @events
     return true unless current_user
@@ -131,7 +131,7 @@ class EventsController < ApplicationController
 
   # Called by checking/unchecking groups in profile
   def select_groups
-    # (De)Select All
+    # (De)select All
     if params[:selection_data].has_key?(:all)
       if params[:selection_data][:all] == "true"
         current_user.selections = Group.all
@@ -229,12 +229,21 @@ class EventsController < ApplicationController
         @event.permalink = "http://"+@event.permalink
       end
     end
-
     @event.group_id = Group.find_by_name(params[:group][:name]).id
     respond_to do |format|
       if @event.save
         #Create the tag(s) for the event TODO: FIX THIS
 
+        #add "user-created" tag to each user-created event
+        user_created_tag_id = Tag.find_or_create_by_name("User-created").id
+        @userCreatedEventTag = EventTags.new(:event_id => @event.id, :tag_id => user_created_tag_id, :tag_name => "user-created")
+        if !@userCreatedEventTag.save
+          format.html { render :action => "new"}
+          format.json { render :json => @event.errors, :status => :unprocessable_entity, :locals => {:tags => ["hello"]}}
+          @tags = Tag.where(:visible => true).order("name ASC").all
+          format.json { render :json => @tags }
+        end
+        #add tags that user selected
         if !event_tags.nil?
           event_tags.each do |tag|
             tag_id = Tag.find_by_name(tag).id
@@ -266,7 +275,6 @@ class EventsController < ApplicationController
   # PUT /events/1.json
   def update
     @event = Event.find(params[:id])
-
     respond_to do |format|
       if @event.update_attributes(params[:event])
         format.html { redirect_to @event, :notice => 'Event was successfully updated.' }
@@ -315,7 +323,18 @@ class EventsController < ApplicationController
     end
   end
 
+  def select_filters
+    puts "selecting filters"
+    @selected_filters = params[:selected_filters]
+    puts "selected filters: " + @selected_filters.to_s
+    #TODO if user logged in, add the selected tags to interests
+    respond_to do |format|
+      format.html { redirect_to events_path(:selected_filters => @selected_filters) }
+    end
+  end
+
   def save_interests
+    puts "saving interests"
     @tags = Tag.all.select {|t| params[t.name] }
     tag_ids = @tags.collect {|t| t.id}
     @groups = Group.joins(:tags).where('tags.id in (?)', tag_ids)

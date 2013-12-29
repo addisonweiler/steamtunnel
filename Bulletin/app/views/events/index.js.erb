@@ -4,6 +4,12 @@
     <%else %>
         $(".page").html("<%= escape_javascript(render(@events)) %>");
     <% end %>
+<% elsif @filters_changed #TODO make this work %>
+    <% if @events.empty? %>
+        $(".page").html("<div id=\"NoEventsFound\"> No events found </div>")
+    <%else %>
+        $(".page").html("<%= escape_javascript(render(@events)) %>");
+    <% end %>
 <% else %>
     <% if @events.empty? %>
         $(".page").html("<div id=\"NoEventsFound\"> No events found </div>")
@@ -12,4 +18,3 @@
     <% end %>
 <% end %>
 bindEvents();
-

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :favorites, :class_name => "Event", :join_table => :favorites_users
   has_and_belongs_to_many :selections, :class_name => "Group", :join_table => :selections_users
   serialize :friends # FB Friends
-
+  before_save { self.email = email.downcase }
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

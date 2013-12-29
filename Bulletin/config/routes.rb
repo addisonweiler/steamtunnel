@@ -13,6 +13,7 @@ Web::Application.routes.draw do
       get 'profile'
       get 'interests'
       post 'save_interests'
+      post 'select_filters'
       post 'select_date'
     end
     member do
