@@ -30,6 +30,13 @@ class Event < ActiveRecord::Base
 	    end
   end
 
+  def self.SportTime(time_str)
+    Time.zone = 'Pacific Time (US & Canada)'
+    pst = Time.zone.parse(time_str)
+    puts 'pst: ' + pst.to_s
+    return pst.to_s
+  end
+
   # Convert time string in PST to UTC Time object
   def self.PSTtoUTC(time_str)
     return nil if time_str.nil? 

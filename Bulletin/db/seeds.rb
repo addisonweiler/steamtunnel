@@ -14,7 +14,7 @@ lectures = Tag.find_or_create_by_name(:name => "Lectures")
 stanford_events.tags << lectures if !stanford_events.tags.include?(lectures)
 
 lively_arts = Group.find_or_create_by_name(:name => "Lively Arts",
- :source => "http://livelyarts.stanford.edu/month_list.php?filter=all")
+ :source => "http://live.stanford.edu/calendar/all/all/all/all/all")
 lively_arts.thumbnail = "LivelyArts.png"
 lively_arts.save
 performances = Tag.find_or_create_by_name(:name => "Performances")

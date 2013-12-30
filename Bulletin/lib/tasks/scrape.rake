@@ -10,59 +10,53 @@ require 'open-uri'
 
 # Collection of scrapes
 task :scrape_all => :environment do
-  Rake::Task["scrape_lively_arts"].invoke #Todo: No events created from this
-  Rake::Task["scrape_bases"].invoke #TODO: No events created from this
-  #Rake::Task["scrape_sports"].invoke #TODO: Find an alternative site
-  #Rake::Task["scrape_sig"].invoke
+  Rake::Task['scrape_lively_arts'].invoke
+  #Rake::Task['scrape_bases'].invoke #TODO: No events created from this
+  Rake::Task["scrape_sports"].invoke
+  #Rake::Task["scrape_sig"].invoke #TODO: test
   #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
-  #Rake::Task["scrape_cdc"].invoke #TODO: Doesn't work, need alternative
-  Rake::Task["scrape_events"].invoke
-  Rake::Task["scrape_dept_groups"].invoke
-  Rake::Task["scrape_student_groups"].invoke
-  Rake::Task["cleanup_event_unicode"].invoke
+  #Rake::Task["scrape_cdc"].invoke #Empty calendar, events @ http://studentaffairs.stanford.edu/cdc/services/career-fair-schedule#wincf
+  Rake::Task['scrape_events'].invoke
+  Rake::Task['scrape_dept_groups'].invoke
+  Rake::Task['scrape_student_groups'].invoke
+  Rake::Task['cleanup_event_unicode'].invoke
 end
 
 # Screen scrape lively arts with mechanize
 task :scrape_lively_arts => :environment do
   @group = Group.find_by_name("Lively Arts")
-
   agent = Mechanize.new
+  puts 'group source: ' + @group.source
   page = agent.get(@group.source)
-  links = page.links.select {|l| l.text == "info" or l.text == "free" or l.text == "buy"}
+  links = page.links_with(:text => "", :href => %r{/calendar/}) #select links that lead to a url that contains '/calendar/'
   links.each do |l|
     infopage = l.click
     @permalink = infopage.uri.to_s
-    @title = infopage.search(".eventTitle").text
+    @title = infopage.at('div.page-header').text.strip
     puts @title
-    # datetime contains time and location
-    dt = infopage.search(".datetime")
-    @time = dt.children[0].text
-    @location = dt.search("a").text
-    # Combine all p's after "Tell a friend" into description
-    paragraphs = infopage.search("#eventCol").search("p")
+    @time = infopage.at('div.span4').at('div.performances').at('h3').text
+    @location = infopage.at('div.span4').at('div.performances').at('div.location').text
+    infopage.at('div.span4').at('div.block').at('div.block').css('br').each{ |br| br.replace "\n" }
+    pricing = infopage.at('div.span4').at('div.block').at('div.block').text.strip
+    paragraphs = infopage.search('div.span8').search('div.field').search("p")
     textArr = []
+    textArr << pricing
     paragraphs.each do |p|
       if p.attributes["class"].nil? or not p.attributes["class"].value.include? "relevent"
         textArr << p.text
       end
     end
-    index = textArr.index{|text| text.include? "Tell a Friend"}
     @description = ""
-    textArr.each_with_index do |text, ind|
-      if ind > index
-        @description += text
-        @description += "\n"
-      end
+    textArr.each do |text|
+      @description += text
+      @description += "\n"
     end
     @description.strip!
     @description.gsub!("\r\n", " ")
     # Add spaces after periods with no space
     @description.gsub!(/\.(\w)/, '\1')
-
     Event.create(:name => @title, :description => @description, :location => @location,
                  :start => Event.PSTtoUTC(@time), :group_id => @group.id, :permalink => @permalink)
-
-
   end
 end
 
@@ -252,25 +246,28 @@ end
 # Scrape top sports events, create a group for each sport RSS http://www.gostanford.com/rss/rss-index.html
 task :scrape_sports => :environment do
   #source = "http://www.gostanford.com/main/Schedule.dbml"
-  source = "http://www.gostanford.com/event-toolbar-rss.xml" # url or local file
+  source = "http://www.gostanford.com/rss.dbml?db_oem_id=30600&media=schedules" # url or local file
+
   content = "" # raw content of rss feed will be loaded here
   open(source) do |s| content = s.read end
   rss = RSS::Parser.parse(content, false)
   coder = HTMLEntities.new
   rss.items.each do |item|
-    data = item.title.split(",")
-    title = coder.decode(data[0])
+    title = item.title.split('(')[0]
     puts title
     sport = title.split(":")[0]
-    #date = data[1]
+    pubdate = item.title.split('(')[1].split(')')[0]
+    time = item.pubDate.to_s[17, 8]
+    date = Event.SportTime(pubdate + ' ' + time)
+    description = item.description.split('>')[1].split('<')[0] #text between <p> delimiters
     group = Group.find_by_name_or_create(sport)
     group.source = item.link
     group.save
     # Tag the groups
     sportsTag = Tag.find_by_name("Sports")
     group.tags << sportsTag if !group.tags.include?(sportsTag)
-    Event.create(:name => title, :location => coder.decode(item.description),
-     :start => Event.PSTtoUTC(item.pubDate.to_s), :group_id => group.id, :permalink => item.link)
+    Event.create(:name => title, :description => description, :location => coder.decode(item.description),
+     :start => date, :group_id => group.id, :permalink => item.link)
   end
 end
 
