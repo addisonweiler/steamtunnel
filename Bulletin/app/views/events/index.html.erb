@@ -1,14 +1,13 @@
 <% javascript "events/events.js" %>
 
 <div class="left main">
-  <div class="filter_toolbar">
+  <div id="filter_toolbar">
     <div id="DateSelector">
       <select id="date_selected">
         <%= options_for_select @dates.keys, :selected => @selected_date %>
       </select>
     </div>
     <div>
-    <%= puts "selected filters(html index): " + @selected_filters.to_s %>
     <%= form_tag select_filters_events_path, :method => "post" do %>
         <table>
           <% if @selected_filters == nil %>
@@ -16,12 +15,12 @@
               <%@selected_filters = {} %>
           <% end %>
           <% @tags.each do |tag| %>
-              <td><div class="tag">
+              <td><div id="<%=tag.name%>_tag">
                 <%= check_box_tag "selected_filters[]", tag.id, @selected_filters.include?(tag.id.to_s) %>
                 <%= label_tag tag.name, tag.name %>
               </div></td>
           <% end %>
-          <tr><td> <%= submit_tag "Reload" %> </td></tr>
+          <!-- <tr><td> <%= submit_tag "Reload" %> </td></tr> -->
         </table>
     <% end %>
     </div>

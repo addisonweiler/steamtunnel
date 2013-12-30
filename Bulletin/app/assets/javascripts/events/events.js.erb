@@ -4,63 +4,126 @@
 
 //# Change text when favorite link clicked on
 $(document).ready( function() {
-  bindEvents();
-  // Fading notices
-  $('p.notice, p.alert').delay(500).fadeIn('normal', function() {
-      $(this).delay(2500).fadeOut();
-   });
-  $('#date_selected').change(postDateSelection)
+    bindEvents();
+    // Fading notices
+    $('p.notice, p.alert').delay(500).fadeIn('normal', function() {
+        $(this).delay(2500).fadeOut();
+    });
+    $('#date_selected').change(postDateSelection);
+
+    $('#Career_tag').change(postFilterSelection);
+    $('#Lectures_tag').change(postFilterSelection);
+    $('#Parties_tag').change(postFilterSelection);
+    $('#Performances_tag').change(postFilterSelection);
+    $('#Politics_tag').change(postFilterSelection);
+    $('#Sports_tag').change(postFilterSelection);
+    $('#Tech_tag').change(postFilterSelection);
+    $('#User-created_tag').change(postFilterSelection);
 });
 
 bindEvents = function() {
-  $('.favorite, .unfavorite').bind('click', toggleFavorite); // Favorites button in details panel
-  $('.event').bind('click', fillDetails);
+    $('.favorite, .unfavorite').bind('click', toggleFavorite); // Favorites button in details panel
+    $('.event').bind('click', fillDetails);
 }
 
 // Details panel for event box clicked
 fillDetails = function(e) {
-  if($(e.target).is(".favorite") || $(e.target).is(".unfavorite")){
-    return;
-  }
-  var title = $(this).children(".title").text();
-  $("#detailsTitle").text(title)
-  var links = $(this).children(".footer").children(".links").html();
-  $("#detailsLinks").html(links)
-  var location = $(this).children(".footer").children(".location").html()
-  $("#detailsLocation").html(location)
-  var description = $(this).children(".description").text();
-  $("#detailsDescription").text(description)
-  var infolink = $(this).children(".info").html()
-  $("#detailsInfo").html(infolink)
-  var group = $(this).children(".footer").children(".group").text();
-  $("#detailsGroup").text(group)
+    if($(e.target).is(".favorite") || $(e.target).is(".unfavorite")){
+        return;
+    }
+    var title = $(this).children(".title").text();
+    $("#detailsTitle").text(title)
+    var links = $(this).children(".footer").children(".links").html();
+    $("#detailsLinks").html(links)
+    var location = $(this).children(".footer").children(".location").html()
+    $("#detailsLocation").html(location)
+    var description = $(this).children(".description").text();
+    $("#detailsDescription").text(description)
+    var infolink = $(this).children(".info").html()
+    $("#detailsInfo").html(infolink)
+    var group = $(this).children(".footer").children(".group").text();
+    $("#detailsGroup").text(group)
 
-  $('#detailsLinks > a').click(toggleFavorite)
+    $('#detailsLinks > a').click(toggleFavorite)
 }
 
 // Changes text of Favorite link, both in event stream and in details
 // TODO Favoriting detailed event should update link both in stream and in details
 toggleFavorite = function(e) {
-  if($(e.target).is("a") ){
-    var text = (e.target.innerHTML == "Favorite") ? "Unfavorite" : "Favorite"
-    e.target.innerHTML = text
-    e.target.className = 
-      e.target.className.replace( /(?:^|\s)favorite(?!\S)/ , text.toLowerCase() )
-  }
+    if($(e.target).is("a") ){
+        var text = (e.target.innerHTML == "Favorite") ? "Unfavorite" : "Favorite"
+        e.target.innerHTML = text
+        e.target.className =
+                e.target.className.replace( /(?:^|\s)favorite(?!\S)/ , text.toLowerCase() )
+    }
 }
 
-
 postDateSelection = function() {
-  elem = $(this).children(':selected')
-  var value = $(elem).text()
-  var date = {"date": value};
-  // Post so cookie can store checked routes
-  <% url = Rails.application.routes.url_helpers %>
-  var path = "<%= url.events_path %>";
-  $.ajax({
+    //Gets the date
+    elem = $(this).children(':selected');
+    var value = $(elem).text();
+    var date = {"date": value};
+
+    console.log(date)
+    // Post so cookie can store checked routes
+    <% url = Rails.application.routes.url_helpers %>
+    var path = "<%= url.events_path %>";
+    $.ajax({
         url: path + "?date=" + value,
         type: 'get',
         dataType: 'script',
-        success: bindEvents,
-      });
+        success: bindEvents
+    });
+}
+
+postFilterSelection = function() {
+    var f = ""
+
+    if (document.getElementById("Lectures_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=1"
+    }
+
+    if (document.getElementById("Performances_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=2"
+    }
+
+    if (document.getElementById("Career_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=3"
+    }
+
+    if (document.getElementById("Politics_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=4"
+    }
+
+    if (document.getElementById("Tech_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=5"
+    }
+
+    if (document.getElementById("Parties_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=6"
+    }
+
+    if (document.getElementById("Sports_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=7"
+    }
+
+    if (document.getElementById("User-created_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=10"
+    }
+
+    //Gets the date
+    elem = document.getElementById("date_selected")
+    var value = $(elem).val()
+    var date = {"date": value};
+
+    // Post so cookie can store checked routes
+    <% url = Rails.application.routes.url_helpers %>
+    var path = "<%= url.events_path %>";
+    console.log(path + "?date=" + value + f)
+    $.ajax({
+        url: path + "?date=" + value + f,
+        type: 'get',
+        dataType: 'script',
+        success: bindEvents
+    });
 }

@@ -81,7 +81,6 @@ class EventsController < ApplicationController
     tag_ids = @tags.collect {|t| t.id}
     @selected_filters =  tag_ids.collect {|t| t.to_s}
     if params.has_key?("selected_filters")
-      puts "found selected filters in params"
       @tags = Tag.where(:visible => true).order("name ASC").all.select {|t| params[t.name]}
       tag_ids = @tags.collect {|t| t.id}
       @filters_changed = true
@@ -98,23 +97,42 @@ class EventsController < ApplicationController
   def index
     # All upcoming events except for Facebook events belonging to other people 
     # within chosen date range
-    #TODO add filters on homepage
-    puts "selected groups: "
-    puts @selected_groups
-    puts 'selected filters (index): ' + @selected_filters.to_s
     @tags = Tag.where(:visible => true).order("name ASC").all
-    #TODO to the following line: check if one of the event's tags is in @selected_filters
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
     and events.start < '#{@dates[@selected_date][1]}'").order("start ASC")
-    puts "events: "
-    puts @events
+
     return true unless current_user
-    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}' 
+
+    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
     and events.start < '#{@dates[@selected_date][1]}' and (events.group_id >= 10 or events.group_id in (?))",
                                         @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
     #checks groups_id > 10; these represent user-created events - allow user to pick category?
     #and (not groups.facebook or groups.name = ?) previously in @events = statement
     @favorites = current_user.favorites.all
+
+
+    selected_filters = params["selected_filters"]
+    if !params["selected_filters"].nil?
+      filtered_events = []
+      for event in @events
+        puts event.name
+        tags = EventTags.find_all_by_event_id(event.id)
+        t = []
+        for tag in tags
+          t << tag.tag_id.to_s
+        end
+        if !selected_filters.nil?
+          intersection = t & selected_filters
+        else
+          intersection = []
+        end
+        if !intersection.empty?
+          filtered_events << event
+        end
+      end
+      @events = filtered_events
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render :json => @events }
@@ -326,7 +344,6 @@ class EventsController < ApplicationController
   def select_filters
     puts "selecting filters"
     @selected_filters = params[:selected_filters]
-    puts "selected filters: " + @selected_filters.to_s
     #TODO if user logged in, add the selected tags to interests
     respond_to do |format|
       format.html { redirect_to events_path(:selected_filters => @selected_filters) }
