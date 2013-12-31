@@ -6,6 +6,7 @@ Devise.setup do |config|
 
   #Facebook
   config.omniauth :facebook, Rails.configuration.facebook_app_id, Rails.configuration.facebook_app_secret, Rails.configuration.facebook_app_scope
+  puts Rails.configuration.facebook_app_id
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
