@@ -1,7 +1,7 @@
 class MyDevise::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     puts "HELLO WORLD"
-=begin
+begin
     # You need to implement the method below in your model
     # TODO better way to do levels of authentication?
     session["devise.facebook_data"] = request.env["omniauth.auth"]
@@ -41,6 +41,6 @@ class MyDevise::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       puts "redirecting to new user registration."
       redirect_to new_user_registration_url
     end
-=end
+end
   end
 end

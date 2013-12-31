@@ -20,13 +20,25 @@ class Event < ActiveRecord::Base
 	    @rest = Koala::Facebook::API.new(user.fb_token)
       events = @rest.rest_call("events.get")     
 	    events.each do |e|
+        puts e.to_s
         puts 'getting fb event'
+        name = e['name']
+        puts 'ename: ' + name
+        location = e["location"]
+        puts 'location: ' + location
+        eid = e["eid"]
+        puts 'eid: ' + eid.to_s
+        description = e["description"]
+        puts 'description: ' + description
+        gid = group.id
+        puts 'group id: ' + gid.to_s
+
 	      if !e["eid"].nil? and !self.find_by_fb_id(e["eid"])
           # TODO how get permalink for FB events?
-	        self.create(:name => e["name"], :start => Time.at(e["start_time"]),
-	                     :finish => Time.at(e["end_time"]), :location => e["location"],
-	                     :fb_id => e["eid"], :description => e["description"], 
-                       :group_id => group.id)
+	        self.create(:name => name, :start => (e['start_time'] != nil ? Time.parse(e["start_time"]).to_s : nil),
+	                     :finish => (e['end_time'] != nil ? Time.parse(e["end_time"]).to_s : nil), :location => location,
+	                     :fb_id => eid.to_s, :description => description,
+                       :group_id => gid)
 	      end
 	    end
   end

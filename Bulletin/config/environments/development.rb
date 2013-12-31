@@ -45,8 +45,8 @@ Web::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Facebook
-  config.facebook_app_id = 136112333735
-  config.facebook_app_secret = 'a1c742b8f35266a4b5fe611a42e21bfa'
+  config.facebook_app_id = 1400676113513229
+  config.facebook_app_secret = '490888e7f5d62875afc406ef38a44d91'
   config.facebook_app_scope = {:scope => 'offline_access,user_events,user_groups,rsvp_event'}
 
 end
