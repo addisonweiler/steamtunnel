@@ -88,9 +88,10 @@ task :scrape_cdc => :environment do
     else
       @title = info[0][0].strip
     end
-    Event.create(:name => @title, :description => @description, :location => @location,
+    event = Event.create(:name => @title, :description => @description, :location => @location,
      :start => Event.PSTtoUTC(event["start_date"]), :finish => Event.PSTtoUTC(event["end_date"]),
      :group_id => group.id, :permalink => group.source)
+    tagEvent(event, group)
   end
 end
 
@@ -196,21 +197,7 @@ def scrape_event_feed(source, group)
     description.strip!
     event = Event.create(:name => title, :description => description, :location => location,
      :start => Event.PSTtoUTC(date), :group_id => group.id, :permalink => item.link)
-
-    # Old way
-    #separated = description.scan(/Date:(.*)<br\/>\n*Location:(.*\n*.*\n*.*\n*.*)<br\/>\n*([\s\S]*)/)
-
-    #Create tag for the event
-    groupTags = GroupsTags.find_by_group_id(group.id)
-
-    if !groupTags.nil?
-      tag_id = groupTags.tag_id
-      tag_name = Tag.find_by_id(tag_id).name
-      puts "Tag: " + tag_name
-      EventTags.create(:event_id => event.id, :tag_id => tag_id, :tag_name => tag_name)
-    end
-
-
+    tagEvent(event, group)
   end
 end
 
@@ -270,8 +257,9 @@ task :scrape_sports => :environment do
     # Tag the groups
     sportsTag = Tag.find_by_name("Sports")
     group.tags << sportsTag if !group.tags.include?(sportsTag)
-    Event.create(:name => title, :description => description, :location => location,
+    event = Event.create(:name => title, :description => description, :location => location,
      :start => date, :group_id => group.id, :permalink => item.link)
+    tagEvent(event, group)
   end
 end
 
@@ -395,6 +383,18 @@ task :scrape_acm => :environment do
         @start = date + " 6 PM"
         @finish = nil
       end
-      Event.create(:name => @title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => @location,
+      event = Event.create(:name => @title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => @location,
           :description => @description, :permalink => @group.source, :group_id => @group.id)
+      tagEvent(event, @group)
+end
+
+def tagEvent(event, group)
+  groupTags = GroupsTags.find_by_group_id(group.id)
+
+  if !groupTags.nil?
+    tag_id = groupTags.tag_id
+    tag_name = Tag.find_by_id(tag_id).name
+    puts "Tag: " + tag_name
+    EventTags.create(:event_id => event.id, :tag_id => tag_id, :tag_name => tag_name)
+  end
 end
