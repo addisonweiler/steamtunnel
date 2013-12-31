@@ -33,7 +33,7 @@ cdc.tags << career if !cdc.tags.include?(career)
 
 politics = Tag.find_or_create_by_name(:name => "Politics")
 sig = Group.find_or_create_by_name(:name => "SIG",
- :source => "http://www.stanford.edu/group/SIG/cgi-bin/index.php/events")
+ :source => "feed://www.stanford.edu/group/SIG/cgi-bin/wordpress/?feed=rss2")
 sig.thumbnail = "SIG.png"
 sig.save
 sig.tags << politics if !sig.tags.include?(politics)

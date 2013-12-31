@@ -11,15 +11,15 @@ require 'open-uri'
 # Collection of scrapes
 task :scrape_all => :environment do
   Rake::Task['scrape_lively_arts'].invoke
-  #Rake::Task['scrape_bases'].invoke #TODO: No events created from this
-  Rake::Task["scrape_sports"].invoke
-  #Rake::Task["scrape_sig"].invoke #TODO: test
-  #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
-  #Rake::Task["scrape_cdc"].invoke #Empty calendar, events @ http://studentaffairs.stanford.edu/cdc/services/career-fair-schedule#wincf
+  Rake::Task['scrape_sports'].invoke
   Rake::Task['scrape_events'].invoke
   Rake::Task['scrape_dept_groups'].invoke
   Rake::Task['scrape_student_groups'].invoke
   Rake::Task['cleanup_event_unicode'].invoke
+  #Rake::Task['scrape_bases'].invoke #TODO: No events created from this
+  #Rake::Task["scrape_sig"].invoke #sig hasn't posted events in awhile, not updating scraper until they start
+  #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
+  #Rake::Task["scrape_cdc"].invoke #Empty calendar, events @ http://studentaffairs.stanford.edu/cdc/services/career-fair-schedule#wincf
 end
 
 # Screen scrape lively arts with mechanize
@@ -274,51 +274,74 @@ end
 # Screen scrape SIG with mechanize (http://www.stanford.edu/group/SIG/cgi-bin/index.php/events)
 task :scrape_sig => :environment do
   @group = Group.find_by_name("SIG")
-  agent = Mechanize.new
-  page = agent.get(@group.source)
-  items = page.search("p.MsoNormal")
-  start = 0
-  items.each_with_index do |item, ind|
-    if item.text.include? "This Week"
-      start = ind
-      break
-    end
+  source = 'http://www.stanford.edu/group/SIG/cgi-bin/wordpress/?feed=rss2'
+  content = "" # raw content of rss feed will be loaded here
+  open(source) do |s| content = s.read end
+  rss = RSS::Parser.parse(content, false)
+  coder = HTMLEntities.new
+  rss.items.each do |item|
+    #title = item.title.split('(')[0]
+    puts item
+    #sport = title.split(":")[0]
+    #pubdate = item.title.split('(')[1].split(')')[0]
+    #time = item.pubDate.to_s[17, 8]
+    #date = Event.SportTime(pubdate + ' ' + time)
+    #description = item.description.split('>')[1].split('<')[0] #text between <p> delimiters
+    #group = Group.find_by_name_or_create(sport)
+    #group.source = item.link
+    #group.save
+                                                               # Tag the groups
+    #sportsTag = Tag.find_by_name("Sports")
+    #group.tags << sportsTag if !group.tags.include?(sportsTag)
+    #Event.create(:name => title, :description => description, :location => coder.decode(item.description),
+    #             :start => date, :group_id => group.id, :permalink => item.link)
   end
-  # Walk over page, finding event segments
-  curr = items[start + 1]
-  while(true) do
-    debugger
-    curr = increment(curr)
-    if curr.text =~ /http/ # One event is all within a paragraph
-      saved = curr.next
-      curr = curr.children[0]
-    elsif curr.text.include? "Do you want"
-      break
-    end
-    title = curr.text
-    puts title
-    curr = increment(curr.next)
-    date = curr.text
-    curr = increment(curr.next)
-    if curr.text.include? "-"
-      times = curr.text.split("-")
-      @start = date + " " + times[0] + times[1][-2, 2] # am/pm
-      @finish = date + " " + times[1]
-    else
-      @start = date + " " + curr.text
-      @finish = nil
-    end 
-    curr = increment(curr.next)
-    location = curr.text
-    curr = increment(curr.next)
-    description = curr.text
-    curr = increment(curr.next)
-    permalink = curr.text.scan(/http.*/)[0]
-    Event.create(:name => title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => location, 
-        :description => description, :permalink => permalink, :group_id => @group.id)
-    curr = saved || curr.next
-    saved = nil
-  end
+  #
+  #agent = Mechanize.new
+  #page = agent.get(@group.source)
+  #items = page.search("p.MsoNormal")
+  #start = 0
+  #items.each_with_index do |item, ind|
+  #  if item.text.include? "This Week"
+  #    start = ind
+  #    break
+  #  end
+  #end
+  ## Walk over page, finding event segments
+  #curr = items[start + 1]
+  #while(true) do
+  #  debugger
+  #  curr = increment(curr)
+  #  if curr.text =~ /http/ # One event is all within a paragraph
+  #    saved = curr.next
+  #    curr = curr.children[0]
+  #  elsif curr.text.include? "Do you want"
+  #    break
+  #  end
+  #  title = curr.text
+  #  puts title
+  #  curr = increment(curr.next)
+  #  date = curr.text
+  #  curr = increment(curr.next)
+  #  if curr.text.include? "-"
+  #    times = curr.text.split("-")
+  #    @start = date + " " + times[0] + times[1][-2, 2] # am/pm
+  #    @finish = date + " " + times[1]
+  #  else
+  #    @start = date + " " + curr.text
+  #    @finish = nil
+  #  end
+  #  curr = increment(curr.next)
+  #  location = curr.text
+  #  curr = increment(curr.next)
+  #  description = curr.text
+  #  curr = increment(curr.next)
+  #  permalink = curr.text.scan(/http.*/)[0]
+  #  Event.create(:name => title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => location,
+  #      :description => description, :permalink => permalink, :group_id => @group.id)
+  #  curr = saved || curr.next
+  #  saved = nil
+  #end
 end
 
 # Helper method for nokogiri/mechanize nodes
