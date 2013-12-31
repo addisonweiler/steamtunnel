@@ -43,7 +43,6 @@
   <%=raw "<p class='alert'>#{alert}</p>" if alert and alert.length > 0 %>
 </div>
 
-<!--
 <div id="header">
   <div class="nav">
     <table>
@@ -53,19 +52,21 @@
         </td>
         <%if current_user #only display options for favorites and creating events if user is logged in.%>
             <td>
-              <%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %>
+              <%= link_to 'Favorites', show_favorites_events_path, :class => "nav_link" %>
             </td>
             <td>
               <%= link_to 'Create Event', new_event_path, :class => "nav_link" %>
+            </td>
+            <td>
+              <%= link_to 'Connect with Facebook', user_omniauth_authorize_path(:facebook), :class => "nav_link" %>
             </td>
         <%else%>
             <td>
               <%= link_to 'Sign Up', new_registration_path('user'), :class => "nav_link" %>
             </td>
         <%end%>
-        <!--<td><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "nav_link"  %></td>
         <td>
-          <%= link_to "Feedback", feedback_events_path, :class => "nav_link" %>
+          <%= link_to 'Feedback', feedback_events_path, :class => "nav_link" %>
         </td>
       </tr>
     </table>

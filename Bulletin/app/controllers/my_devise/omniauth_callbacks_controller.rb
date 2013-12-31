@@ -21,7 +21,7 @@ class MyDevise::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       group = Group.find_by_name(name)
       if group.nil?
         group = Group.create(:name => name, :facebook => true)
-        group.users << @user # TODO should people be member's of their FB group?
+        group.users << @user # TODO should people be members of their FB group?
         group.tags << Tag.find_by_name("Facebook")
         group.thumbnail = "Facebook.png"
         @user.selections << group

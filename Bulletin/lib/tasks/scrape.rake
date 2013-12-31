@@ -16,6 +16,7 @@ task :scrape_all => :environment do
   Rake::Task['scrape_dept_groups'].invoke
   Rake::Task['scrape_student_groups'].invoke
   Rake::Task['cleanup_event_unicode'].invoke
+
   #Rake::Task['scrape_bases'].invoke #TODO: No events created from this
   #Rake::Task["scrape_sig"].invoke #sig hasn't posted events in awhile, not updating scraper until they start
   #Rake::Task["scrape_acm"].invoke #TODO: Find alternative, website no longer updated
@@ -253,6 +254,7 @@ task :scrape_sports => :environment do
   rss = RSS::Parser.parse(content, false)
   coder = HTMLEntities.new
   rss.items.each do |item|
+    puts 'item: ' + item.to_s
     title = item.title.split('(')[0]
     puts title
     sport = title.split(":")[0]
@@ -260,13 +262,15 @@ task :scrape_sports => :environment do
     time = item.pubDate.to_s[17, 8]
     date = Event.SportTime(pubdate + ' ' + time)
     description = item.description.split('>')[1].split('<')[0] #text between <p> delimiters
+    locpart1 = description.split('-')[0]
+    location = locpart1[2, (locpart1.length - 3)]
     group = Group.find_by_name_or_create(sport)
     group.source = item.link
     group.save
     # Tag the groups
     sportsTag = Tag.find_by_name("Sports")
     group.tags << sportsTag if !group.tags.include?(sportsTag)
-    Event.create(:name => title, :description => description, :location => coder.decode(item.description),
+    Event.create(:name => title, :description => description, :location => location,
      :start => date, :group_id => group.id, :permalink => item.link)
   end
 end
