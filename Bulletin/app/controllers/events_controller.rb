@@ -74,6 +74,7 @@ class EventsController < ApplicationController
       @date_changed = false
       @selected_date = session["date"] || "Today"
     end
+    puts @selected_date
   end
 
   def initialize_tag_selection
@@ -98,6 +99,7 @@ class EventsController < ApplicationController
     # All upcoming events except for Facebook events belonging to other people 
     # within chosen date range
     @tags = Tag.where(:visible => true).order("name ASC").all
+
     @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
     and events.start < '#{@dates[@selected_date][1]}'").order("start ASC")
 
@@ -109,7 +111,6 @@ class EventsController < ApplicationController
     #checks groups_id > 10; these represent user-created events - allow user to pick category?
     #and (not groups.facebook or groups.name = ?) previously in @events = statement
     @favorites = current_user.favorites.all
-
 
     selected_filters = params["selected_filters"]
     if !params["selected_filters"].nil?
@@ -132,6 +133,8 @@ class EventsController < ApplicationController
       end
       @events = filtered_events
     end
+
+    puts @events
 
     respond_to do |format|
       format.html # index.html.erb
