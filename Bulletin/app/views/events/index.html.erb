@@ -1,13 +1,26 @@
 <% javascript "events/events.js" %>
 
 <div class="left main">
-  <div id="filter_toolbar">
-    <div id="DateSelector">
-      <select id="date_selected">
-        <%= options_for_select @dates.keys, :selected => @selected_date %>
-      </select>
-    </div>
-    <div>
+  <table>
+    <tr>
+      <td>
+        <div id="filter_toolbar">
+          <div id="DateSelector">
+            <select id="date_selected">
+              <%= options_for_select @dates.keys, :selected => @selected_date %>
+            </select>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div id="search-wrapper">
+          <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 />
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div>
     <%= form_tag select_filters_events_path, :method => "post" do %>
         <table>
           <% if @selected_filters == nil %>
@@ -23,14 +36,8 @@
           <!-- <tr><td> <%= submit_tag "Reload" %> </td></tr> -->
         </table>
     <% end %>
-    </div>
-    <!--
-    <div id="search-wrapper">
-      <input type="search" id="search-input" placeholder="Search Everything" autosave='plaza-search' results = 5 incremental="incremental" />
-      <div id="results">
-      </div>
-    </div> -->
   </div>
+
 
   <div class='page'>
     <% if @events.empty? %>

@@ -56,8 +56,9 @@ task :scrape_lively_arts => :environment do
     @description.gsub!("\r\n", " ")
     # Add spaces after periods with no space
     @description.gsub!(/\.(\w)/, '\1')
-    Event.create(:name => @title, :description => @description, :location => @location,
+    event = Event.create(:name => @title, :description => @description, :location => @location,
                  :start => Event.PSTtoUTC(@time), :group_id => @group.id, :permalink => @permalink)
+    tagEvent(event, @group)
   end
 end
 
@@ -396,5 +397,14 @@ def tagEvent(event, group)
     tag_name = Tag.find_by_id(tag_id).name
     puts "Tag: " + tag_name
     EventTags.create(:event_id => event.id, :tag_id => tag_id, :tag_name => tag_name)
+
+    #Check to see if "Food" applies
+    matchString = '[D|d]rink|[F|f]ood|[I|i]ke|[F|f]ree|[D|d]inner|[L|l]unch|[S|s]nack'
+    a = /matchString/.match(event.name)
+    b = /matchString/.match(event.description)
+    if !a.nil? or !b.nil?
+      tag_id = Tag.find_by_name("Food")
+      EventTags.create(:event_id => event.id, :tag_id => tag_id, :tag_name => "Food")
+    end
   end
 end

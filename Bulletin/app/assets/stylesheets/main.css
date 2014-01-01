@@ -49,7 +49,7 @@ body {
 }
 
 #search-input {
-    width: 180px;
+    width: 150px;
     border: 0;
     margin-left: 52px;
     font-size: 13px;
@@ -212,6 +212,9 @@ img.ical {
 }
 
 .right_details{
+    position:fixed;
+    height: 80%;
+    width: 25%;
     margin-top: 9px;
     font-size: 100%;
     margin-bottom: 10px;

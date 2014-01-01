@@ -100,20 +100,22 @@ class EventsController < ApplicationController
     # within chosen date range
     @tags = Tag.where(:visible => true).order("name ASC").all
 
-    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
+    if !current_user
+      @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
     and events.start < '#{@dates[@selected_date][1]}'").order("start ASC")
-
-    return true unless current_user
-
-    @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
+    else
+      #User is logged in
+      @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
     and events.start < '#{@dates[@selected_date][1]}' and (events.group_id >= 10 or events.group_id in (?))",
-                                        @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
-    #checks groups_id > 10; these represent user-created events - allow user to pick category?
-    #and (not groups.facebook or groups.name = ?) previously in @events = statement
-    @favorites = current_user.favorites.all
+                                          @selected_groups_ids).order("start ASC") # TODO fix pagination .page(params[:page]).per(10)
+      #checks groups_id > 10; these represent user-created events - allow user to pick category?
+      #and (not groups.facebook or groups.name = ?) previously in @events = statement
+      @favorites = current_user.favorites.all
+    end
 
-    selected_filters = params["selected_filters"]
+    #Filter by selected filters
     if !params["selected_filters"].nil?
+      selected_filters = params["selected_filters"]
       filtered_events = []
       for event in @events
         puts event.name
@@ -134,7 +136,19 @@ class EventsController < ApplicationController
       @events = filtered_events
     end
 
-    puts @events
+    #Filter by search term
+    if !params["search_term"].nil?
+      search_term = params["search_term"].downcase
+      filtered_events = []
+      for event in @events
+        description = (event.description).downcase
+        name = (event.name).downcase
+        if description.include?(search_term) or name.include?(search_term)
+          filtered_events << event
+        end
+      end
+      @events = filtered_events
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -253,7 +267,6 @@ class EventsController < ApplicationController
     @event.group_id = Group.find_by_name(params[:group][:name]).id
     respond_to do |format|
       if @event.save
-        #Create the tag(s) for the event TODO: FIX THIS
 
         #add "user-created" tag to each user-created event
         user_created_tag_id = Tag.find_or_create_by_name("User-created").id

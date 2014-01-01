@@ -9,7 +9,7 @@ $(document).ready( function() {
     $('p.notice, p.alert').delay(500).fadeIn('normal', function() {
         $(this).delay(2500).fadeOut();
     });
-    $('#date_selected').change(postDateSelection);
+    $('#date_selected').change(postFilterSelection);
 
     $('#Career_tag').change(postFilterSelection);
     $('#Lectures_tag').change(postFilterSelection);
@@ -19,6 +19,9 @@ $(document).ready( function() {
     $('#Sports_tag').change(postFilterSelection);
     $('#Tech_tag').change(postFilterSelection);
     $('#User-created_tag').change(postFilterSelection);
+    $('#Food_tag').change(postFilterSelection);
+    $('#search-input').change(postFilterSelection);
+
 });
 
 bindEvents = function() {
@@ -58,25 +61,25 @@ toggleFavorite = function(e) {
     }
 }
 
+/*
 postDateSelection = function() {
     //Gets the date
     elem = $(this).children(':selected');
     var value = $(elem).text();
     var date = {"date": value};
 
-    console.log(date)
     // Post so cookie can store checked routes
     <% url = Rails.application.routes.url_helpers %>
     var path = "<%= url.events_path %>";
     $.ajax({
-        url: path + "?date=" + value,
+        url: path + "?date=" + value + getSelectedDates(),
         type: 'get',
         dataType: 'script',
         success: bindEvents
     });
-}
+}*/
 
-postFilterSelection = function() {
+function getSelectedDates() {
     var f = ""
 
     if (document.getElementById("Lectures_tag").children[0].checked) {
@@ -111,17 +114,30 @@ postFilterSelection = function() {
         f += "&selected_filters%5B%5D=10"
     }
 
+    if (document.getElementById("Food_tag").children[0].checked) {
+        f += "&selected_filters%5B%5D=11"
+    }
+    return f;
+}
+
+function getSearchTerm(){
+    var term = document.getElementById("search-input").value;
+    if (term == "") return "";
+    return "&search_term=" + term
+}
+
+postFilterSelection = function() {
     //Gets the date
-    elem = document.getElementById("date_selected")
-    var value = $(elem).val()
+    elem = document.getElementById("date_selected");
+    var value = $(elem).val();
     var date = {"date": value};
 
     // Post so cookie can store checked routes
     <% url = Rails.application.routes.url_helpers %>
     var path = "<%= url.events_path %>";
-    console.log(path + "?date=" + value + f)
+    console.log(path + "?date=" + value + getSelectedDates() + getSearchTerm());
     $.ajax({
-        url: path + "?date=" + value + f,
+        url: path + "?date=" + value + getSelectedDates() + getSearchTerm(),
         type: 'get',
         dataType: 'script',
         success: bindEvents
