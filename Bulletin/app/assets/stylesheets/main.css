@@ -137,8 +137,8 @@ img.ical {
 }
 
 .main{
-    width: 60%;
-    margin-left: 5%;
+    width: 63%;
+    margin-left: 3%;
     margin-top: 100px;
     margin-bottom: 100px;
     border-radius: 0px;
@@ -213,12 +213,17 @@ img.ical {
 
 .right_details{
     position:fixed;
-    height: 80%;
+    height: 75%;
     width: 25%;
-    margin-top: 9px;
+    margin-top: 5px;
     font-size: 100%;
     margin-bottom: 10px;
     overflow-y: scroll;
+    background: -moz-linear-gradient(270deg, #ffffff 0%, #ececec 100%) #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ececec)) #ffffff;
+    border: 1px solid #707070;
+    text-shadow: 0 1px 0 #ffffff;
+    padding: 10px;
 }
 
 #change_password_form{

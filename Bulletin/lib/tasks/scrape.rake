@@ -57,7 +57,7 @@ task :scrape_lively_arts => :environment do
     # Add spaces after periods with no space
     @description.gsub!(/\.(\w)/, '\1')
     event = Event.create(:name => @title, :description => @description, :location => @location,
-                 :start => Event.PSTtoUTC(@time), :group_id => @group.id, :permalink => @permalink)
+                         :start => Event.PSTtoUTC(@time), :group_id => @group.id, :permalink => @permalink)
     tagEvent(event, @group)
   end
 end
@@ -90,8 +90,8 @@ task :scrape_cdc => :environment do
       @title = info[0][0].strip
     end
     event = Event.create(:name => @title, :description => @description, :location => @location,
-     :start => Event.PSTtoUTC(event["start_date"]), :finish => Event.PSTtoUTC(event["end_date"]),
-     :group_id => group.id, :permalink => group.source)
+                         :start => Event.PSTtoUTC(event["start_date"]), :finish => Event.PSTtoUTC(event["end_date"]),
+                         :group_id => group.id, :permalink => group.source)
     tagEvent(event, group)
   end
 end
@@ -100,7 +100,7 @@ end
 task :scrape_dept_groups => :environment do
   group = Group.find_by_name("Stanford Events")
   scrape_groups("http://events.stanford.edu/byOrganization/departmentalOrganizationList.shtml",
-  group)
+                group)
 end
 
 # Helper for scrape dept groups and scrape student groups
@@ -128,7 +128,7 @@ def scrape_groups(url, group=nil)
     #end
     scrape_event_feed(source, group)
   end
-  
+
 end
 
 # Scrape student groups and events from http://events.stanford.edu/byOrganization/studentOrganizationList.shtml
@@ -141,34 +141,34 @@ end
 task :scrape_events => :environment do
   group = Group.find_by_name("Stanford Events")
   performances = Group.find_by_name("Lively Arts")
-  # By Category
+
   scrape_event_feed("http://events.stanford.edu/xml/rss.xml", group) # Featured
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/0/rss.xml", group) # All Arts
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/1/rss.xml", group) # University Events
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/2/rss.xml", group) # Lectures
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/3/rss.xml", group) # Conferences
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/4/rss.xml", performances) # Performance
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/5/rss.xml", performances) # Dance
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/6/rss.xml", performances) # Drama/Theater
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/7/rss.xml", group) # Exhibition
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/19/rss.xml", group) # Classes
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/12/rss.xml", group) # Meeting
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/15/rss.xml", group) # Tour
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/8/rss.xml", performances) # Film
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/9/rss.xml", performances) # Music
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/10/rss.xml", group) # Recreational Sports
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/11/rss.xml", group) # Public Service
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/12/rss.xml", group) # Meeting
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/13/rss.xml", group) # Religious
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/14/rss.xml", group) # Social
-  # By Subject
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/0/rss.xml", group) # All Arts
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/9/rss.xml", performances) # Music
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/6/rss.xml", performances) # Drama/Theater
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/5/rss.xml", performances) # Dance
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/20/rss.xml", group) # Visual Arts
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/8/rss.xml", performances) # Film
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/11/rss.xml", group) # Public Service
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/15/rss.xml", group) # Tour
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/16/rss.xml", group) # Religions services
+
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/18/rss.xml", group) # International
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/19/rss.xml", group) # Classes
+  scrape_event_feed("http://events.stanford.edu/xml/byCategory/20/rss.xml", group) # Visual Arts
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/21/rss.xml", group) # Environment
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/22/rss.xml", group) # Engineering
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/23/rss.xml", group) # Humanities
-
   scrape_event_feed("http://events.stanford.edu/xml/byCategory/24/rss.xml", group) # Health/Wellness
-  #scrape_event_feed("http://events.stanford.edu/xml/byCategory/17/rss.xml", group) # PHD Orals
-  scrape_event_feed("http://events.stanford.edu/xml/byCategory/1/rss.xml", group) # University Events
+
 end
 
 def scrape_event_feed(source, group)
@@ -197,7 +197,7 @@ def scrape_event_feed(source, group)
     description.gsub!(/\r\n/, "\n")
     description.strip!
     event = Event.create(:name => title, :description => description, :location => location,
-     :start => Event.PSTtoUTC(date), :group_id => group.id, :permalink => item.link)
+                         :start => Event.PSTtoUTC(date), :group_id => group.id, :permalink => item.link)
     tagEvent(event, group)
   end
 end
@@ -206,6 +206,7 @@ end
 # TODO location and specific time, if possible given unstandardized formatting
 task :scrape_bases => :environment do
   @group = Group.find_by_name("BASES")
+  puts @group.source
 =begin TODO fix this
   agent = Mechanize.new
   page = agent.get(@group.source)
@@ -225,7 +226,7 @@ task :scrape_bases => :environment do
     debugger
     event_page = link.click
     permalink = event_page.uri.to_s
-    Event.create(:name => @titles[i].text, :start => Event.PSTtoUTC(date), :description => description, 
+    Event.create(:name => @titles[i].text, :start => Event.PSTtoUTC(date), :description => description,
       :permalink => permalink,  :group_id => @group.id)
   end
 =end
@@ -259,7 +260,7 @@ task :scrape_sports => :environment do
     sportsTag = Tag.find_by_name("Sports")
     group.tags << sportsTag if !group.tags.include?(sportsTag)
     event = Event.create(:name => title, :description => description, :location => location,
-     :start => date, :group_id => group.id, :permalink => item.link)
+                         :start => date, :group_id => group.id, :permalink => item.link)
     tagEvent(event, group)
   end
 end
@@ -283,7 +284,7 @@ task :scrape_sig => :environment do
     #group = Group.find_by_name_or_create(sport)
     #group.source = item.link
     #group.save
-                                                               # Tag the groups
+    # Tag the groups
     #sportsTag = Tag.find_by_name("Sports")
     #group.tags << sportsTag if !group.tags.include?(sportsTag)
     #Event.create(:name => title, :description => description, :location => coder.decode(item.description),
@@ -339,54 +340,58 @@ end
 
 # Helper method for nokogiri/mechanize nodes
 def increment(curr)
-   while !curr.nil? and curr.text.strip.length <= 4 do
-      curr = curr.next
-    end
-    return curr
+  while !curr.nil? and curr.text.strip.length <= 4 do
+    curr = curr.next
+  end
+  return curr
 end
 
 # Screen scrape Stanford ACM http://stanfordacm.com/
-# TODO better permalink?
 task :scrape_acm => :environment do
-      date = time.text
-      if Time.parse(date) < Time.parse("Aug 31") # Set correct year
-        date += " 2013 "
-      end
-      curr = increment(time.next).children[0]
-      curr = increment(curr.next)
-      @title = curr.text
-      break if @title.include? "Slot is open"
-      puts @title
-      curr = increment(curr.next)
-      if curr.text.include? "AM" or curr.text.include? "PM" # Event vs. talk
-        print "\n REACHED HERE1 \n"
-        data = curr.text.split("@")
-        @location = data[1]
-        if data[0].include? "-"
-          data = data[0].split("-")
-          @start = date + " " + data[0]
-          @finish = date + " " + data[1]
-        else
-          @start = date + " " + data[0]
-          @finish = nil
-        end
-        curr = increment(curr.next)
-        @description = curr.text
-      else # Talk
-        print "\n REACHED HERE2 \n"
-        @title += " (" + curr.text + ")"
-        #curr = increment(curr.next)
-        #@description = "Talk by " + @title
-        @title = curr.text
-        #curr = increment(curr.next)
-        #@description += "\n" + curr.text if !curr.nil?
-        #@location = "Gates 104"
-        @start = date + " 6 PM"
+  @group = Group.find_by_name("ACM")
+  agent = Mechanize.new
+  page = agent.get(@group.source)
+  times = page.search("time") # Each event/speaker begins with a time
+  times.each do |time|
+    date = time.text
+    puts time
+    puts date
+=begin
+    curr = increment(time.next).children[0]
+    curr = increment(curr.next)
+    @title = curr.text
+    break if @title.include? "Slot is open"
+    puts @title
+    curr = increment(curr.next)
+    if curr.text.include? "AM" or curr.text.include? "PM" # Event vs. talk
+      data = curr.text.split("@")
+      @location = data[1]
+      if data[0].include? "-"
+        data = data[0].split("-")
+        @start = date + " " + data[0]
+        @finish = date + " " + data[1]
+      else
+        @start = date + " " + data[0]
         @finish = nil
       end
-      event = Event.create(:name => @title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => @location,
-          :description => @description, :permalink => @group.source, :group_id => @group.id)
-      tagEvent(event, @group)
+      curr = increment(curr.next)
+      @description = curr.text
+    else # Talk
+      @title += " (" + curr.text + ")"
+      curr = increment(curr.next)
+      @description = "Talk by " + @title
+      @title = curr.text
+      curr = increment(curr.next)
+      @description += "\n" + curr.text if !curr.nil?
+      @location = "Gates 104"
+      @start = date + " 6 PM"
+      @finish = nil
+    end
+
+    Event.create(:name => @title, :start => Event.PSTtoUTC(@start), :finish => Event.PSTtoUTC(@finish), :location => @location,
+                 :description => @description, :permalink => @group.source, :group_id => @group.id)
+=end
+  end
 end
 
 def tagEvent(event, group)
