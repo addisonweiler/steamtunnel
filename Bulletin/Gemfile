@@ -73,3 +73,5 @@ gem 'newrelic_rpm'
 gem 'kaminari'
 
 gem 'devise-encryptable'
+
+gem 'bootstrap-sass', '2.1'
