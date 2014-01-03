@@ -17,12 +17,12 @@
   <div class="footer">
       <div class="links">
         <% if @favorites && @favorites.include?(event) %>
-          <%= link_to "Unfavorite", favorite_event_path(event), :class => "unfavorite", :remote => true %>
+          <%= link_to "Unfavorite", favorite_event_path(event), :class => "btn btn-small right", :remote => true %>
         <% elsif @favorites%>
         <%#ensure favorites exists (which only happens if user is logged in.)%>
-          <%= link_to "Favorite", favorite_event_path(event), :class => "favorite", :remote => true %>
+          <%= link_to "Favorite", favorite_event_path(event), :class => "btn btn-small right", :remote => true %>
         <% end %>
-        <div class='date right'><%= "#{start_day}#{end_day}" %></div>
+        <div class='date'><%= "#{start_day}#{end_day}" %></div>
       </div>
       <div class="location">
           <strong>Location:</strong>&nbsp;<%=event.location %>

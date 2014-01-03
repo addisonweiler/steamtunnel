@@ -36,6 +36,8 @@ fillDetails = function(e) {
     }
     var title = $(this).children(".title").text();
     $("#detailsTitle").text(title)
+    console.log($(this).children(".footer").children(".links").html())
+
     var links = $(this).children(".footer").children(".links").html();
     $("#detailsLinks").html(links)
     var location = $(this).children(".footer").children(".location").html()

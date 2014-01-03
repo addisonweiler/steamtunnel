@@ -30,73 +30,62 @@ searcher = new Searcher();
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-
-    //Popover
-    $(document).ready(function() {
-        $("[rel='popover_sign_in']").popover({
-            placement : 'bottom',
-            html: 'true',
-            content : "<%= escape_javascript(render(:partial => 'events/popover_sign_in')) %>"
-        });
-    });
-
-    $(document).ready(function() {
-        $("[rel='popover_profile']").popover({
-            placement : 'bottom',
-            html: 'true',
-            content : "<%= escape_javascript(render(:partial => 'events/popover_profile')) %>"
-        });
-    });
-
-
 </script>
 
 <body>
 
-<div id="header">
-  <div class="nav">
-    <table>
-      <tr>
-        <td>
-          <%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %>
-        </td>
-        <%if current_user #only display options for favorites and creating events if user is logged in.%>
-            <td>
-              <%= link_to "Favorites", show_favorites_events_path, :class => "nav_link" %>
-            </td>
-            <td>
-              <%= link_to 'Create Event', new_event_path, :class => "nav_link" %>
-            </td>
-            <td>
-              <%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "nav_link"  %>
-            </td>
-      <%else%>
-            <td>
-              <%= link_to 'Sign Up', new_registration_path('user'), :class => "nav_link" %>
-            </td>
-        <%end%>
-        <td>
-          <%= link_to "Feedback", feedback_events_path, :class => "nav_link" %>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div>
-    <%if current_user #TODO move logout to popover?%>
-        <a rel='popover_profile'class="sign_in"> Welcome, <%=current_user.name%>! </a>
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+  <ul class="nav navbar-nav">
+    <li id="logo_image"><%= link_to image_tag("STLogo.png"), events_path %></li>
+
+    <%if current_user #only display options for favorites and creating events if user is logged in.%>
+        <li class="link"><%= link_to "Favorites", show_favorites_events_path, :class => "navbar-link" %></li>
+        <li class="link"><%= link_to 'Create Event', new_event_path, :class => "navbar-link" %></li>
+        <li class="link"><%= link_to "Connect with Facebook", user_omniauth_authorize_path(:facebook), :class => "navbar-link"  %></li>
     <%else%>
-        <a rel='popover_sign_in'class="sign_in"> Login </a>
+        <li class="link"><%= link_to 'Sign Up', new_registration_path('user'), :class => "navbar-link" %></li>
     <%end%>
-  </div>
-</div>
+    <li class="link"><%= link_to "Feedback", feedback_events_path, :class => "navbar-link" %></li>
+  </ul>
+
+  <ul class="nav dropdown">
+    <%if current_user %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <%=current_user.name %> </a>
+          <ul class="dropdown-menu">
+            <%= form_for('user', :url => user_session_path) do |f| %>
+                <li class="navbar-left"><%= link_to 'Edit Groups', profile_events_path, class: 'btn btn-small popover_logged_in' %></li>
+                <li class="navbar-left"><%= link_to 'Edit Interests', interests_events_path, class: 'btn btn-small popover_logged_in' %></li>
+                <li class="navbar-left"><%= link_to 'Account Settings', edit_user_registration_path, class: 'btn btn-small popover_logged_in' %></li>
+                <li class="navbar-left"><%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-small btn-danger popover_logged_in', :method => :delete %></li>
+            <% end %>
+          </ul>
+        </li>
+    <% else %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+          <ul class="dropdown-menu">
+            <%= form_for('user', :url => user_session_path) do |f| %>
+                <li class="navbar-left"><b> Username: </b> </td> <td> <%= f.text_field :email %> </li>
+                <li class="navbar-left"><td> <b> Password: </b> </td> <td> <%= f.password_field :password %> </li>
+                <li class="navbar-left"><%= f.submit 'Sign in', :class => 'btn btn-primary' %></li>
+
+                <li class="navbar-left"> <%= f.label :remember_me %> &nbsp; <%= f.check_box :remember_me %> </li>
+
+                <li class="navbar-left"> <%= link_to "Forgot your password?", new_password_path('user') %> </li>
+                <li class="navbar-left"><%= link_to "No confirmation?", new_confirmation_path('user'),
+                                                    :id => "confirmation" %></li>
+            <% end %>
+          </ul>
+        </li>
+    <%end%>
+  </ul>
+</nav>
 
 <div id="content">
   <%=raw "<p class='notice'>#{notice}</p>" if notice %>
   <%=raw "<p class='alert'>#{alert}</p>" if alert %>
-
   <%= yield %>
-
-</div>
 </div>
 </body>
 </html>
