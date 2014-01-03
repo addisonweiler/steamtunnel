@@ -1,10 +1,10 @@
-<%= stylesheet "specific/feedback" %>
+<%= stylesheet 'specific/feedback' %>
 
 <table id="FeedbackTable">
-<%= form_tag :controller => "events", :action => "send_feedback" do %>
-  <tr><td><%= label_tag :feedback, "Thank you for your feedback!" %></td></tr>
-  <tr><td><%= text_area_tag :feedback, "", :size => "40x10" %></td></tr>
-  <tr><td><%= submit_tag "Submit" %></td></tr>
+<%= form_tag :controller => 'events', :action => 'send_feedback' do %>
+  <tr><td><%= label_tag :feedback, 'Thank you for your feedback!' %></td></tr>
+  <tr><td><%= text_area_tag :feedback, '', :size => '40x10' %></td></tr>
+  <tr><td><%= submit_tag 'Submit Feedback', class: 'btn btn-large' %></td></tr>
 <% end %>
   <tr><td><p>You can also email us at feedback@steamtunneling.com</p></td></tr>
 </table>

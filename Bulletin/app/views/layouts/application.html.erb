@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <%= stylesheet_link_tag "application" %>
-  <%= stylesheet_link_tag "specific/users" %>
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "bootstrap" %>
-  <%= javascript_include_tag "jquery.sausage.js" %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'specific/users' %>
+  <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'bootstrap' %>
+  <%= javascript_include_tag 'jquery.sausage.js' %>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
   <meta name="google-site-verification" content="PEP5adCpmu2vE4ow4IKm1p0zIH_xszdJ0xfl5IWbmao" />
@@ -43,13 +43,12 @@
   <%=raw "<p class='alert'>#{alert}</p>" if alert and alert.length > 0 %>
 </div>
 
-<!--
 <div id="header">
   <div class="nav">
     <table>
       <tr>
         <td>
-          <%= link_to image_tag("STLogo.png"), events_path, :id => "logo_image" %>
+          <%= link_to image_tag('STLogo.png'), events_path, :id => "logo_image" %>
         </td>
         <%if current_user #only display options for favorites and creating events if user is logged in.%>
             <td>
@@ -74,8 +73,8 @@
   </div>
 
   <div>
-    <%if current_user #TODO move logout to popover?%>
-        <a rel='popover_profile'class="sign_in"> Welcome, <%=current_user.name%>! </a>
+    <%if current_user %>
+        <a rel='popover_profile'class="sign_in"> Welcome, <%=current_user.name%> </a>
     <%else%>
         <a rel='popover_sign_in'class="sign_in"> Login </a>
     <%end%>
@@ -87,8 +86,8 @@
 
 
 <div id="boilerplate">
-  <%= link_to "Privacy Policy", "#{root_url}static/privacy" %> |
-  <%= link_to "Terms of Service", "#{root_url}static/terms" %>
+  <%= link_to 'Privacy Policy', "#{root_url}static/privacy" %> |
+  <%= link_to 'Terms of Service', "#{root_url}static/terms" %>
 </div>
 </body>
 </html>

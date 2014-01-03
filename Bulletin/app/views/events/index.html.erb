@@ -29,11 +29,10 @@
           <% end %>
           <% @tags.each do |tag| %>
               <td><div id="<%=tag.name%>_tag">
-                <%= check_box_tag "selected_filters[]", tag.id, @selected_filters.include?(tag.id.to_s) %>
+                <%= check_box_tag 'selected_filters[]', tag.id, @selected_filters.include?(tag.id.to_s) %>
                 <%= label_tag tag.name, tag.name %>
               </div></td>
           <% end %>
-          <!-- <tr><td> <%= submit_tag "Reload" %> </td></tr> -->
         </table>
     <% end %>
   </div>
