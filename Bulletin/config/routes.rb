@@ -1,8 +1,8 @@
 Web::Application.routes.draw do
   resources :groups
-
-  devise_for :users, :controllers => { :omniauth_callbacks => "my_devise/omniauth_callbacks",
-  :registrations => "my_devise/registrations"}
+  get 'users/sign_in' => 'events#index'
+  devise_for :users, :controllers => { :omniauth_callbacks => 'my_devise/omniauth_callbacks',
+  :registrations => 'my_devise/registrations'}
 
   resources :events do
     collection do

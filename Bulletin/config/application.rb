@@ -48,6 +48,8 @@ module Web
     # For devise, deploying Rails 3.1 on Heroku, forcing the application to not
     # access the DB or load models when precompiling assets.
     config.assets.initialize_on_precompile = false
-    
+
+    #ensure devise overloaded custom_failure is included
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end
