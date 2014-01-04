@@ -1,11 +1,29 @@
 @import "bootstrap";
 
-.popover_logged_in {
-  width: 150px !important;
+.logout_button li > a:hover, .logout_button li > a:focus, .logout_button:hover > a {
+  background-image: none !important;
+  background-color: red !important;
+}
+
+.popover_logged_out {
+  margin-top: 10px !important;
+  margin-left: 20px !important;
+  margin-right: 20px !important;
 }
 
 .btn {
   margin: 5px;
+}
+
+.popover_btn {
+  margin: 8%;
+  width: 84% !important;
+}
+
+.popover_checkbox {
+  margin-left: 20px !important;
+  margin-bottom: 20px !important;
+  vertical-align: top;
 }
 
 label {

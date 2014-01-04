@@ -2,7 +2,11 @@
 
 <div class="left main">
   <div class='page'>
-    <%= render @events %>
+      <% if @events.empty? %>
+          <div id="NoEventsFound"> No favorites found </div>
+      <% else %>
+          <%= render @events %>
+      <% end %>
   </div>
 <br />
 </div>

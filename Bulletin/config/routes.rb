@@ -1,6 +1,6 @@
 Web::Application.routes.draw do
   resources :groups
-  get 'users/sign_in' => 'events#index'
+  get 'users/sign_in' => 'events#index' #redirect default devise sign-in route to homepage
   devise_for :users, :controllers => { :omniauth_callbacks => 'my_devise/omniauth_callbacks',
   :registrations => 'my_devise/registrations'}
 

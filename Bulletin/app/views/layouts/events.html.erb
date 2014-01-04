@@ -54,27 +54,24 @@ searcher = new Searcher();
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <%=current_user.name %> </a>
           <ul class="dropdown-menu">
             <%= form_for('user', :url => user_session_path) do |f| %>
-                <li class="navbar-left"><%= link_to 'Edit Groups', profile_events_path, class: 'btn btn-small popover_logged_in' %></li>
-                <li class="navbar-left"><%= link_to 'Edit Interests', interests_events_path, class: 'btn btn-small popover_logged_in' %></li>
-                <li class="navbar-left"><%= link_to 'Account Settings', edit_user_registration_path, class: 'btn btn-small popover_logged_in' %></li>
-                <li class="navbar-left"><%= link_to 'Logout', destroy_user_session_path, class: 'btn btn-small btn-danger popover_logged_in', :method => :delete %></li>
+                <li class="navbar-left"><%= link_to 'Edit Groups', profile_events_path %></li>
+                <li class="navbar-left"><%= link_to 'Edit Interests', interests_events_path %></li>
+                <li class="navbar-left"><%= link_to 'Account Settings', edit_user_registration_path %></li>
+                <li class="navbar-left logout_button"><%= link_to 'Logout', destroy_user_session_path, :method => :delete%></li>
             <% end %>
           </ul>
         </li>
     <% else %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu pull-right">
             <%= form_for('user', :url => user_session_path) do |f| %>
-                <li class="navbar-left"><b> Username: </b> </td> <td> <%= f.text_field :email %> </li>
-                <li class="navbar-left"><td> <b> Password: </b> </td> <td> <%= f.password_field :password %> </li>
-                <li class="navbar-left"><%= f.submit 'Sign in', :class => 'btn btn-primary' %></li>
-
-                <li class="navbar-left"> <%= f.label :remember_me %> &nbsp; <%= f.check_box :remember_me %> </li>
-
-                <li class="navbar-left"> <%= link_to "Forgot your password?", new_password_path('user') %> </li>
-                <li class="navbar-left"><%= link_to "No confirmation?", new_confirmation_path('user'),
-                                                    :id => "confirmation" %></li>
+                <li class="navbar-left"><td> <%= f.text_field :email, class: 'popover_logged_out', :placeholder => 'Username' %> </li>
+                <li class="navbar-left"><td> <%= f.password_field :password, class: 'popover_logged_out', :placeholder => 'Password' %> </li>
+                <li class="navbar-left"><%= f.submit 'Sign in', class: 'btn btn-primary popover_btn' %></li>
+                <li class="navbar-left"><%= f.check_box :remember_me, class: 'popover_checkbox'%>&nbsp; Remember Me </li>
+                <li class="navbar-left"><%= link_to 'Forgot your password?', new_password_path('user') %> </li>
+                <li class="navbar-left"><%= link_to 'No confirmation?', new_confirmation_path('user'), :id => 'confirmation' %></li>
             <% end %>
           </ul>
         </li>
