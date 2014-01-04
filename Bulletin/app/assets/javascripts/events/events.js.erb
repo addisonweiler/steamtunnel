@@ -29,24 +29,37 @@ bindEvents = function() {
     $('.event').bind('click', fillDetails);
 }
 
+function strip(html)
+{
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+}
+
 // Details panel for event box clicked
 fillDetails = function(e) {
     if($(e.target).is(".favorite") || $(e.target).is(".unfavorite")){
         return;
     }
-    var title = $(this).children(".title").text();
-    $("#detailsTitle").text(title)
-    console.log($(this).children(".footer").children(".links").html())
 
-    var links = $(this).children(".footer").children(".links").html();
-    $("#detailsLinks").html(links)
-    var location = $(this).children(".footer").children(".location").html()
-    $("#detailsLocation").html(location)
-    var description = $(this).children(".description").text();
-    $("#detailsDescription").text(description)
+    var title = this.children[0].getElementsByTagName('td')[1].innerHTML;
+    $("#detailsTitle").html(title)
+
+    var date = this.children[0].getElementsByTagName('td')[2].innerHTML;
+    date = strip(date)
+    $("#detailsDate").html(date)
+
+    var location = this.children[0].getElementsByTagName('td')[3].innerHTML;
+    $("#detailsLocation").html(location);
+
+    var description = this.children[1].innerHTML;
+    $("#detailsDescription").html(description)
+
     var infolink = $(this).children(".info").html()
     $("#detailsInfo").html(infolink)
-    var group = $(this).children(".footer").children(".group").text();
+
+    var group = this.children[0].getElementsByTagName('td')[4].children[0].innerHTML
+    group = strip(group)
     $("#detailsGroup").text(group)
 
     $('#detailsLinks > a').click(toggleFavorite)

@@ -37,6 +37,25 @@
     <% end %>
   </div>
 
+
+  <!--
+    <div class="btn-group" data-toggle="buttons">
+    <%= form_tag select_filters_events_path, :method => "post" do %>
+        <% if @selected_filters == nil %>
+            <%= puts "selected filters doesn't exist yet." %>
+            <%@selected_filters = {} %>
+        <% end %>
+        <% @tags.each do |tag| %>
+            <label class="btn btn-primary" id="<%=tag.name%>_tag">
+              <%= check_box_tag 'selected_filters[]', tag.id, @selected_filters.include?(tag.id.to_s) %>
+              <%= label_tag tag.name, tag.name %>
+            </label>
+        <% end %>
+    <% end %>
+  </div>
+  -->
+
+
   <div class='page'>
     <% if @events.empty? %>
         <div id="NoEventsFound"> No events found </div>
@@ -48,10 +67,10 @@
 
 <div id="event_details" >
     <div id="detailsTitle"> Click an Event to See Details </div>
-    <div id="detailsLinks"></div>
+    <div id="detailsDate"></div>
     <div id="detailsLocation"></div>
     <div id="detailsDescription"> </div>
-    <div id="detailsInfo"></div>
     <div id="detailsGroup"></div>
+    <div id="detailsInfo"></div>
 </div>
 

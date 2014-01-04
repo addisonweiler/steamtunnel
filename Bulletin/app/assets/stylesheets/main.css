@@ -154,16 +154,7 @@ img.ical {
 }
 */
 
-/* All but first event */
-.event {
-    padding: 10px;
-    margin-top: 10px;
-    background: -moz-linear-gradient(270deg, #ffffff 0%, #ececec 100%) #ffffff;
-    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ececec)) #ffffff;
-    border: 1px solid #707070;
-    text-shadow: 0 1px 0 #ffffff;
-    cursor: pointer;
-}
+
 
 
 /* Date of event */
@@ -177,10 +168,6 @@ img.ical {
     margin-top: 8px;
 }
 
-.favorite{
-    float: right;
-    padding-left: 10px;
-}
 
 /* Event title */
 .event h4 {

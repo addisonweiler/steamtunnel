@@ -1,43 +1,46 @@
 <div class="event group-<%= generalized_event_id(event, @friendEvents,
- @generalEvents, @friendID, @generalID) %>" id="event-<%= event.id %>" >
-  <%= generalized_event_thumbnail(event, @friendEvents, @generalEvents, @friendID, @generalID) %>
-  <% 
+                                                 @generalEvents, @friendID, @generalID) %>" id="event-<%= event.id %>" >
+  <%
      start_day = event.start ? event.start.strftime("%a. %b. %e, %l:%M %p") : nil
      end_day = nil
-	 if event.finish
-		end_day = "-#{event.finish.strftime("%l:%M %p")}"
-	 end
-   %>
-  <div class="title">
-    <h4>
-      <%= event.name %>
-    </h4>
-  </div>
-  
-  <div class="footer">
-      <div class="links">
-        <% if @favorites && @favorites.include?(event) %>
-          <%= link_to "Unfavorite", favorite_event_path(event), :class => "btn btn-small right", :remote => true %>
-        <% elsif @favorites%>
-        <%#ensure favorites exists (which only happens if user is logged in.)%>
-          <%= link_to "Favorite", favorite_event_path(event), :class => "btn btn-small right", :remote => true %>
-        <% end %>
-        <div class='date'><%= "#{start_day}#{end_day}" %></div>
-      </div>
-      <div class="location">
-          <strong>Location:</strong>&nbsp;<%=event.location %>
-      </div>
-      <div class="group">
-        From <%= generalized_event_name(event, @friendEvents, 
-        @generalEvents , @friendID, @generalID, @groupNames) %>
-      </div>
-  </div>
-  <div class="description">
+     if event.finish
+       end_day = "-#{event.finish.strftime("%l:%M %p")}"
+     end
+  %>
+
+  <table id="event_table">
+    <tr>
+      <td class="event_thumbnail"><%= generalized_event_thumbnail(event, @friendEvents, @generalEvents, @friendID, @generalID) %></td>
+      <td class="event_title"> <%= event.name %></td>
+      <td><div class="event_date"><%= "#{start_day}#{end_day}" %></div></td>
+    </tr>
+
+    <tr><td class="event_location" colspan="3"> <strong>Location:</strong>&nbsp;<%=event.location %></td></tr>
+
+    <tr>
+      <td colspan="2"><div class="event_group"> From <%= generalized_event_name(event, @friendEvents,
+                                                                  @generalEvents , @friendID, @generalID, @groupNames) %></div></td>
+      <td>
+        <div class="favorite">
+          <% if @favorites && @favorites.include?(event) %>
+              <%= link_to "Unfavorite", favorite_event_path(event), :class => "btn btn-small right", :remote => true %>
+          <% elsif @favorites%>
+              <%#ensure favorites exists (which only happens if user is logged in.)%>
+              <%= link_to "Favorite", favorite_event_path(event), :class => "btn btn-small right", :remote => true %>
+          <% end %>
+        </div>
+      </td>
+
+    </tr>
+  </table>
+
+
+  <div class="event_description">
     <%= event.description %>
   </div>
   <div class="info" style="display:none;">
     <% if !event.permalink.nil? %>
-      <%= link_to 'More Info', event.permalink, :target => '_blank', class: 'btn btn-small' %>
+        <%= link_to 'More Info', event.permalink, :target => '_blank', class: 'btn btn-small' %>
     <% end %>
   </div>
 </div>
