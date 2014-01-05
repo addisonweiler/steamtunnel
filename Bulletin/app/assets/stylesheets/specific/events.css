@@ -308,3 +308,7 @@ select {
 .popover-content {
     padding: 9px 14px;
 }
+
+div.footer {
+    text-align: center;
+}

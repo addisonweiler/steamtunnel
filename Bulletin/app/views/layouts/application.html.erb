@@ -39,11 +39,8 @@
 </div>
 
 <%= yield %>
-
-
-<div id="boilerplate">
-  <%= link_to 'Privacy Policy', "#{root_url}static/privacy" %> |
-  <%= link_to 'Terms of Service', "#{root_url}static/terms" %>
-</div>
 </body>
+
+<%= render '/layouts/footer' %>
+
 </html>
