@@ -25,10 +25,7 @@
 }
 
 body {
-    background-image: url(/assets/MainPageBlank.png); /*Todo change to color, not image.*/
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    background-color: #9fd6f3;
     font-family: "Gill Sans", Helvetica, sans-serif;
 }
 

@@ -48,8 +48,8 @@ searcher = new Searcher();
   </ul>
 
   <ul class="nav dropdown">
-    <%if current_user %>
-        <li class="dropdown">
+    <li class="dropdown">
+      <%if current_user %>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <%=current_user.name %> </a>
           <ul class="dropdown-menu">
             <%= form_for('user', :url => user_session_path) do |f| %>
@@ -59,9 +59,7 @@ searcher = new Searcher();
                 <li class="navbar-left logout_button"><%= link_to 'Logout', destroy_user_session_path, :method => :delete%></li>
             <% end %>
           </ul>
-        </li>
-    <% else %>
-        <li class="dropdown">
+      <% else %>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
           <ul class="dropdown-menu pull-right">
             <%= form_for('user', :url => user_session_path) do |f| %>
@@ -76,7 +74,6 @@ searcher = new Searcher();
         </li>
     <%end%>
   </ul>
-
 </nav>
 
 <div id="content">

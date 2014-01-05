@@ -72,7 +72,7 @@ class EventsController < ApplicationController
       @selected_date = params["date"]
     else
       @date_changed = false
-      @selected_date = session["date"] || "Today"
+      @selected_date = session["date"] || 'Today'
     end
     puts @selected_date
   end
