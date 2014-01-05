@@ -10,7 +10,9 @@ $(document).ready( function() {
         $(this).delay(2500).fadeOut();
     });
     $('#date_selected').change(postFilterSelection);
+    $('#search-input').change(postFilterSelection);
 
+    /* If any of the buttons are pressed
     $('#Career_tag').change(postFilterSelection);
     $('#Lectures_tag').change(postFilterSelection);
     $('#Parties_tag').change(postFilterSelection);
@@ -20,7 +22,8 @@ $(document).ready( function() {
     $('#Tech_tag').change(postFilterSelection);
     $('#User-created_tag').change(postFilterSelection);
     $('#Food_tag').change(postFilterSelection);
-    $('#search-input').change(postFilterSelection);
+    */
+
 
 });
 
@@ -76,66 +79,49 @@ toggleFavorite = function(e) {
     }
 }
 
-/*
-postDateSelection = function() {
-    //Gets the date
-    elem = $(this).children(':selected');
-    var value = $(elem).text();
-    var date = {"date": value};
-
-    // Post so cookie can store checked routes
-    <% url = Rails.application.routes.url_helpers %>
-    var path = "<%= url.events_path %>";
-    $.ajax({
-        url: path + "?date=" + value + getSelectedDates(),
-        type: 'get',
-        dataType: 'script',
-        success: bindEvents
-    });
-}*/
-
 function getSelectedDates() {
-    var f = ""
+    var filter = ""
 
-    if (document.getElementById("Lectures_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=1"
+    if ($(document.getElementById("Lectures_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=1"
     }
 
-    if (document.getElementById("Performances_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=2"
+    if ($(document.getElementById("Performances_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=2"
     }
 
-    if (document.getElementById("Career_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=3"
+    if ($(document.getElementById("Career_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=3"
     }
 
-    if (document.getElementById("Politics_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=4"
+    if ($(document.getElementById("Politics_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=4"
     }
 
-    if (document.getElementById("Tech_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=5"
+    if ($(document.getElementById("Tech_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=5"
     }
 
-    if (document.getElementById("Parties_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=6"
+    if ($(document.getElementById("Parties_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=6"
     }
 
-    if (document.getElementById("Sports_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=7"
+    if ($(document.getElementById("Sports_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=7"
     }
 
-    if (document.getElementById("User-created_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=10"
+    if ($(document.getElementById("User-created_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=10"
     }
 
-    if (document.getElementById("Food_tag").children[0].checked) {
-        f += "&selected_filters%5B%5D=11"
+    if ($(document.getElementById("Food_tag").children[0]).hasClass("active")) {
+        filter += "&selected_filters%5B%5D=11"
     }
-    return f;
+    return filter;
 }
 
 function getSearchTerm(){
+    console.log("HELLO");
     var term = document.getElementById("search-input").value;
     if (term == "") return "";
     return "&search_term=" + term

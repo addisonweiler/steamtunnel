@@ -31,7 +31,6 @@ searcher = new Searcher();
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
 </script>
-
 <body>
 
 <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -77,6 +76,7 @@ searcher = new Searcher();
         </li>
     <%end%>
   </ul>
+
 </nav>
 
 <div id="content">
@@ -84,5 +84,6 @@ searcher = new Searcher();
   <%=raw "<p class='alert'>#{alert}</p>" if alert %>
   <%= yield %>
 </div>
+
 </body>
 </html>

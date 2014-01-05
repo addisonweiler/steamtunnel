@@ -102,6 +102,7 @@ ul.nav.dropdown{
     font-weight: bold;
     width: 65%;
     padding-left: 10px;
+    padding-right: 10px;
 }
 
 .event_date{

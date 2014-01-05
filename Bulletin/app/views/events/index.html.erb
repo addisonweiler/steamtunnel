@@ -20,41 +20,25 @@
     </tr>
   </table>
 
-  <div>
+  <div class="btn-group" data-toggle="buttons-checkbox">
     <%= form_tag select_filters_events_path, :method => "post" do %>
-        <table>
-          <% if @selected_filters == nil %>
-              <%= puts "selected filters doesn't exist yet." %>
-              <%@selected_filters = {} %>
-          <% end %>
-          <% @tags.each do |tag| %>
-              <td><div id="<%=tag.name%>_tag">
-                <%= check_box_tag 'selected_filters[]', tag.id, @selected_filters.include?(tag.id.to_s) %>
-                <%= label_tag tag.name, tag.name %>
-              </div></td>
-          <% end %>
-        </table>
-    <% end %>
-  </div>
-
-
-  <!--
-    <div class="btn-group" data-toggle="buttons">
-    <%= form_tag select_filters_events_path, :method => "post" do %>
+        <table><tr>
         <% if @selected_filters == nil %>
             <%= puts "selected filters doesn't exist yet." %>
             <%@selected_filters = {} %>
-        <% end %>
-        <% @tags.each do |tag| %>
-            <label class="btn btn-primary" id="<%=tag.name%>_tag">
-              <%= check_box_tag 'selected_filters[]', tag.id, @selected_filters.include?(tag.id.to_s) %>
-              <%= label_tag tag.name, tag.name %>
-            </label>
+        <% else %>
+            <% @tags.each do |tag| %>
+                <td>
+                    <div id="<%=tag.name%>_tag">
+                        <button type="button" class="btn active" value="<%=tag.id%>" id="selected_filters_"
+                                name="selected_filters[]" onclick="postFilterSelection()"><%=tag.name%></button>
+                    </div>
+                </td>
+            <% end %>
         <% end %>
     <% end %>
+    </tr></table>
   </div>
-  -->
-
 
   <div class='page'>
     <% if @events.empty? %>

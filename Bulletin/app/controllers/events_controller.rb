@@ -134,6 +134,8 @@ class EventsController < ApplicationController
         end
       end
       @events = filtered_events
+    else
+      @events = []
     end
 
     #Filter by search term
