@@ -36,19 +36,6 @@ h2 {
   visibility:hidden;
 }
 
-input[name="commit"]{
- margin-top: 20%;
- font-family: Helvetica-Bold, Arial, Sans-Serif; 
- font-size: 15px;
-  position: relative;
-  padding: 15px 30px;
- -webkit-box-shadow: 5px 5px 0 #667;
- -moz-box-shadow: 5px 5px 0 #667;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  margin: 0 10px 0 0;
-}
-
 #error_explanation{
   margin-top: -30px;
   color: #FF0000;
@@ -60,4 +47,10 @@ input[name="commit"]{
   background-color: transparent;
   display: inline;
   margin-right: 200px;
+}
+
+.large_label {
+    font-size: 250%;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }

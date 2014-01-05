@@ -1,0 +1,45 @@
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'specific/events' %>
+
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+  <ul class="nav navbar-nav">
+    <li id="logo_image"><%= link_to image_tag('STLogo.png'), events_path %></li>
+
+    <%if current_user #only display options for favorites and creating events if user is logged in.%>
+        <li class="link"><%= link_to 'Favorites', show_favorites_events_path, :class => 'navbar-link' %></li>
+        <li class="link"><%= link_to 'Create Event', new_event_path, :class => 'navbar-link' %></li>
+        <li class="link"><%= link_to 'Connect with Facebook', user_omniauth_authorize_path(:facebook), :class => 'navbar-link'  %></li>
+    <%else%>
+        <li class="link"><%= link_to 'Sign Up', new_registration_path('user'), :class => 'navbar-link' %></li>
+    <%end%>
+    <li class="link"><%= link_to 'Feedback', feedback_events_path, :class => 'navbar-link' %></li>
+  </ul>
+
+  <ul class="nav dropdown">
+    <li class="dropdown">
+      <%if current_user %>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome <%=current_user.name %> </a>
+          <ul class="dropdown-menu">
+            <%= form_for('user', :url => user_session_path) do |f| %>
+                <li class="navbar-left"><%= link_to 'Edit Groups', profile_events_path %></li>
+                <li class="navbar-left"><%= link_to 'Edit Interests', interests_events_path %></li>
+                <li class="navbar-left"><%= link_to 'Account Settings', edit_user_registration_path %></li>
+                <li class="navbar-left logout_button"><%= link_to 'Logout', destroy_user_session_path, :method => :delete%></li>
+            <% end %>
+          </ul>
+      <% else %>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+          <ul class="dropdown-menu pull-right">
+            <%= form_for('user', :url => user_session_path) do |f| %>
+                <li class="navbar-left"><td> <%= f.text_field :email, class: 'popover_logged_out', :placeholder => 'Username' %> </li>
+                <li class="navbar-left"><td> <%= f.password_field :password, class: 'popover_logged_out', :placeholder => 'Password' %> </li>
+                <li class="navbar-left"><%= f.submit 'Sign in', class: 'btn btn-primary popover_btn' %></li>
+                <li class="navbar-left"><%= f.check_box :remember_me, class: 'popover_checkbox'%>&nbsp; Remember Me </li>
+                <li class="navbar-left"><%= link_to 'Forgot your password?', new_password_path('user') %> </li>
+                <li class="navbar-left"><%= link_to 'No confirmation?', new_confirmation_path('user'), :id => 'confirmation' %></li>
+            <% end %>
+          </ul>
+          </li>
+      <%end%>
+      </ul>
+</nav>

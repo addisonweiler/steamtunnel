@@ -1,14 +1,24 @@
-<%= stylesheet "specific/confirm" %>
+<%= stylesheet 'specific/confirm' %>
+
 
 <h2>Resend confirmation instructions</h2>
-
+<div class='main'>
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
-
-  <div><%= f.label :email %>
-  <%= f.email_field :email %></div>
-
-  <div><%= f.submit "Resend confirmation instructions" %></div>
+      <tr>
+        <td>
+          <%= f.label "Didn't get a confirmation email?", class: 'large_label' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.email_field :email, placeholder: 'Email' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.submit 'Resend confirmation instructions', class: 'btn btn-primary' %>
+        </td>
+      </tr>
 <% end %>
-
-<%= render :partial => "devise/shared/home" %>
+</div>

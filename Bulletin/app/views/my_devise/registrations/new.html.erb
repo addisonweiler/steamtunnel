@@ -8,31 +8,27 @@
       <table>
         <tr>
           <td>
-            <%= f.label :email %>
-          </td>
-          <td>
-            <%= f.email_field :email %>
+            <%= f.label 'Steam Tunnel today!', class: 'large_label' %>
           </td>
         </tr>
         <tr>
           <td>
-            <%= f.label :password %>
-          </td>
-          <td>
-            <%= f.password_field :password %>
+            <%= f.email_field :email, placeholder: 'Stanford Email' %>
           </td>
         </tr>
         <tr>
           <td>
-            <%= f.label :password_confirmation %>
-          </td>
-          <td>
-            <%= f.password_field :password_confirmation %>
+            <%= f.password_field :password, placeholder: 'Password' %>
           </td>
         </tr>
         <tr>
           <td>
-            <%= f.submit 'Sign up', class: 'btn btn-large' %>
+            <%= f.password_field :password_confirmation, placeholder: 'Confirm Password' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.submit 'Sign up', class: 'btn btn-large btn-primary' %>
           </td>
         </tr>
       </table>

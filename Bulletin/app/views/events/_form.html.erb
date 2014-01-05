@@ -5,7 +5,6 @@
     <% if @event.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@event.errors.count, 'error') %> prohibited this event from being saved:</h2>
-
           <ul>
             <% @event.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
@@ -41,7 +40,6 @@
     <div>
       <table>
         <% count = 0 %>
-
         <% @tags.each do |tag| %>
             <% if tag.name != 'User-created' #don't let user pick "user-created" category %>
                 <% if count % 3 == 0 %>
@@ -65,7 +63,3 @@
       <%= f.submit 'Create', class: 'btn btn-large btn-primary' %>
     </div>
 <% end %>
-
-
-
-

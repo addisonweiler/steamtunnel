@@ -1,17 +1,24 @@
 <%= stylesheet 'specific/forgot_password' %>
 <h2 class="header">Forgot your password?</h2>
-
+<div class="main">
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
-
-  <div>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
-
-  <div>
-    <%= f.submit 'Send me reset password instructions' %>
-  </div>
+    <table>
+      <tr>
+        <td>
+          <%= f.label 'Forgot your password?', class: 'new_password large_label' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.email_field :email, placeholder: 'Email', class: 'new_password' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.submit 'Reset Password', class: 'btn btn-primary new_password' %>
+        </td>
+      </tr>
+    </table>
 <% end %>
-
-<%= render :partial => 'devise/shared/home' %>
+    </div>
