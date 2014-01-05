@@ -1,4 +1,4 @@
-<%= form_tag save_interests_events_path, :method => "post" do %>
+<%= form_tag save_interests_events_path, :method => 'post' do %>
   <table>
     <% count = 0 %>
     <% @tags.each do |tag| %>
@@ -14,6 +14,6 @@
         </tr>
       <% end %>
     <% end %>
-    <tr><td> <%= submit_tag "Get Started!" %> </td></tr>
+    <tr><td> <%= submit_tag 'Get Started!', class: 'btn btn-primary' %> </td></tr>
   </table>
 <% end %>
