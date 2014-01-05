@@ -52,6 +52,7 @@ ul.nav.dropdown{
 }
 
 #search-input {
+    margin-top: 10px;
     float: left;
     width: 200px;
     margin-left: 20px;
@@ -72,9 +73,24 @@ ul.nav.dropdown{
     cursor: pointer;
 }
 
-#filter_toolbar {
-    font-size: 100%;
+.filterButtons{
+    width: 10%;
 }
+
+/* Buttons for filtering */
+.btn-group{
+    margin-top: 5px;
+    margin-left: -5px;
+    margin-right: -5px;
+    width: 100%;
+}
+
+.btn {
+    font-size: 95%;
+}
+
+
+/* End Buttons */
 
 /* Event formatting */
 

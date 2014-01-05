@@ -11,19 +11,7 @@ $(document).ready( function() {
     });
     $('#date_selected').change(postFilterSelection);
     $('#search-input').change(postFilterSelection);
-
-    /* If any of the buttons are pressed
-    $('#Career_tag').change(postFilterSelection);
-    $('#Lectures_tag').change(postFilterSelection);
-    $('#Parties_tag').change(postFilterSelection);
-    $('#Performances_tag').change(postFilterSelection);
-    $('#Politics_tag').change(postFilterSelection);
-    $('#Sports_tag').change(postFilterSelection);
-    $('#Tech_tag').change(postFilterSelection);
-    $('#User-created_tag').change(postFilterSelection);
-    $('#Food_tag').change(postFilterSelection);
-    */
-
+    postFilterSelection();
 
 });
 
@@ -32,8 +20,7 @@ bindEvents = function() {
     $('.event').bind('click', fillDetails);
 }
 
-function strip(html)
-{
+function strip(html){
     var tmp = document.createElement("DIV");
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
@@ -79,55 +66,41 @@ toggleFavorite = function(e) {
     }
 }
 
-function getSelectedDates() {
+buttonPressed = function() {
+    var active = event.target.className.indexOf('active') == -1
+    var tag_value = $(event.target).text()
+
+    postFilterSelection(tag_value, active)
+}
+
+function getSelectedDates(tag_value, active) {
+    tag_value = tag_value + "_tag"
     var filter = ""
 
-    if ($(document.getElementById("Lectures_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=1"
-    }
+    var tagList = ["Lectures", "Performances", "Career", "Politics", "Tech", "Parties", "Sports", "User-created", "Food"]
+    var tagIds = [1, 2, 3, 4, 5, 6, 7, 10, 11]
 
-    if ($(document.getElementById("Performances_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=2"
-    }
+    for (var i = 0; i < tagList.length; i++ ){
+        var category = tagList[i]
 
-    if ($(document.getElementById("Career_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=3"
-    }
-
-    if ($(document.getElementById("Politics_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=4"
-    }
-
-    if ($(document.getElementById("Tech_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=5"
-    }
-
-    if ($(document.getElementById("Parties_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=6"
-    }
-
-    if ($(document.getElementById("Sports_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=7"
-    }
-
-    if ($(document.getElementById("User-created_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=10"
-    }
-
-    if ($(document.getElementById("Food_tag").children[0]).hasClass("active")) {
-        filter += "&selected_filters%5B%5D=11"
+        if (tag_value == (category + "_tag")){
+            if (active) filter += "&selected_filters%5B%5D=" + tagIds[i]
+        }
+        else{
+            if ($(document.getElementById(tagList[i] + "_tag").children[0]).hasClass("active"))
+                filter += "&selected_filters%5B%5D=" + tagIds[i]
+        }
     }
     return filter;
 }
 
 function getSearchTerm(){
-    console.log("HELLO");
     var term = document.getElementById("search-input").value;
     if (term == "") return "";
     return "&search_term=" + term
 }
 
-postFilterSelection = function() {
+postFilterSelection = function(tag_value, active) {
     //Gets the date
     elem = document.getElementById("date_selected");
     var value = $(elem).val();
@@ -135,12 +108,16 @@ postFilterSelection = function() {
 
     // Post so cookie can store checked routes
     <% url = Rails.application.routes.url_helpers %>
-    var path = "<%= url.events_path %>";
-    console.log(path + "?date=" + value + getSelectedDates() + getSearchTerm());
+    var path = "<%= url.events_path %>" + "?date=" + value +
+            getSelectedDates(tag_value, active) + getSearchTerm()
+
+    console.log(path);
     $.ajax({
-        url: path + "?date=" + value + getSelectedDates() + getSearchTerm(),
+        url: path,
         type: 'get',
         dataType: 'script',
         success: bindEvents
     });
 }
+
+

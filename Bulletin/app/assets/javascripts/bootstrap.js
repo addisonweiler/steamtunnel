@@ -233,6 +233,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
         }
 
         if (changed) this.$element.toggleClass('active')
+        this.$element.trigger('button-change');
     }
 
 
