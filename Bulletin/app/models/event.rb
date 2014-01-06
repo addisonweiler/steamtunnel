@@ -45,7 +45,11 @@ class Event < ActiveRecord::Base
 
   def self.SportTime(time_str)
     Time.zone = 'Pacific Time (US & Canada)'
-    pst = Time.zone.parse(time_str)
+    begin
+      pst = Time.zone.parse(time_str)
+    rescue
+      Date.strptime(time_str, '%m/%d/%Y').to_time
+    end
     puts 'pst: ' + pst.to_s
     return pst.to_s
   end
@@ -56,7 +60,7 @@ class Event < ActiveRecord::Base
     Time.zone = 'Pacific Time (US & Canada)'
     pst = Time.zone.parse(time_str)
     if pst.hour == 0 # Probably no hour given
-      pst = Time.zone.parse(pst.strftime("%Y-%m-%d 12:%M:%S %z"))
+      pst = Time.zone.parse(pst.strftime('%Y-%m-%d 12:%M:%S %z'))
     end
     Time.zone = 'UTC'
     return Time.zone.parse(pst.to_s)

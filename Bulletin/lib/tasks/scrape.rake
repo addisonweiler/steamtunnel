@@ -128,7 +128,6 @@ def scrape_groups(url, group=nil)
     #end
     scrape_event_feed(source, group)
   end
-
 end
 
 # Scrape student groups and events from http://events.stanford.edu/byOrganization/studentOrganizationList.shtml
@@ -248,8 +247,14 @@ task :scrape_sports => :environment do
     puts title
     sport = title.split(":")[0]
     pubdate = item.title.split('(')[1].split(')')[0]
-    time = item.pubDate.to_s[17, 8]
-    date = Event.SportTime(pubdate + ' ' + time)
+    if item.pubDate != nil
+      time = item.pubDate.to_s[17, 8]
+    end
+    #puts 'time: ' + time
+    timestring = pubdate + (time != nil ? ' ' + time : '')
+    puts 'timestring: ' + timestring
+    date = Event.SportTime(timestring)
+    puts 'date: ' + date.to_s
     description = item.description.split('>')[1].split('<')[0] #text between <p> delimiters
     locpart1 = description.split('-')[0]
     location = locpart1[2, (locpart1.length - 3)]

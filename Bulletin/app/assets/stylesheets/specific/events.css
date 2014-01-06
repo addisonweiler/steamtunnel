@@ -1,14 +1,14 @@
-body{
+body {
     background-color: #9fd6f3;
 }
 
-.notice{
+.notice {
     color: #27AAE2;
     background-color: yellow;
     position: fixed;
 }
 
-.alert{
+.alert {
     color: #27AAE2;
     background-color: yellow;
     position: fixed;
@@ -33,15 +33,15 @@ body{
     float: left;
 }
 
-.link{
+.link {
     padding-top: 9px;
 }
 
-.link:hover{
+.link:hover {
     font-size: 103%; /*TODO: fix this*/
 }
 
-ul.nav.dropdown{
+ul.nav.dropdown {
     margin-top: 9px;
     float:right;
 }
@@ -73,12 +73,12 @@ ul.nav.dropdown{
     cursor: pointer;
 }
 
-.filterButtons{
+.filterButtons {
     width: 10%;
 }
 
 /* Buttons for filtering */
-.btn-group{
+.btn-group {
     margin-top: 5px;
     margin-left: -5px;
     margin-right: -5px;
@@ -88,7 +88,6 @@ ul.nav.dropdown{
 .btn {
     font-size: 95%;
 }
-
 
 /* End Buttons */
 
@@ -104,7 +103,7 @@ ul.nav.dropdown{
     cursor: pointer;
 }
 
-#event_table{
+#event_table {
     width: 100%;
 }
 
@@ -113,11 +112,11 @@ ul.nav.dropdown{
     width: 50px;
 }
 
-.event_thumbnail{
+.event_thumbnail {
     width: 60px;
 }
 
-.event_title{
+.event_title {
     font-size: 120%;
     font-weight: bold;
     width: 65%;
@@ -125,7 +124,7 @@ ul.nav.dropdown{
     padding-right: 10px;
 }
 
-.event_date{
+.event_date {
     background-color: #c8e1e7;
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
@@ -137,13 +136,13 @@ ul.nav.dropdown{
     text-align: center;
 }
 
-.event_group{
+.event_group {
     padding-top: 10px;
     font-weight: bold;
     font-style: italic;
 }
 
-.event_location{
+.event_location {
     padding-top: 10px;
 }
 
@@ -151,13 +150,11 @@ ul.nav.dropdown{
     display: none;
 }
 
-
 /* End event formatting */
 
-
-
 /* Details Bar */
-#event_details{
+
+#event_details {
     position: fixed;
     left: 69%;
     height: 83%;
@@ -176,14 +173,14 @@ ul.nav.dropdown{
     padding-bottom: 5px;
 }
 
-#detailsTitle{
+#detailsTitle {
     font-size: 130%;
     padding-top: 10px;
     font-weight: bold;
     line-height: 120%;
 }
 
-#detailsDate{
+#detailsDate {
     background-color: #c8e1e7;
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.43);
@@ -197,24 +194,24 @@ ul.nav.dropdown{
     text-align: center;
 }
 
-#detailsLocation{
+#detailsLocation {
     float: left;
     padding-top: 10px;
 }
 
-#detailsDescription{
+#detailsDescription {
     float: left;
     padding-top: 10px;
     text-align:justify;
     text-justify:inter-word;
 }
 
-#detailsInfo{
+#detailsInfo {
     float:right;
     padding-top: 10px;
 }
 
-#detailsGroup{
+#detailsGroup {
     float: left;
     padding-top: 20px;
     font-weight: bold;
@@ -250,7 +247,7 @@ select {
     font-weight: bold;
 }
 
-.nav{
+.nav {
     float: left;
 }
 
