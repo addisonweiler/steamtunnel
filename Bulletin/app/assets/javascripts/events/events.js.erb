@@ -10,7 +10,7 @@ $(document).ready( function() {
         $(this).delay(2500).fadeOut();
     });
     $('#date_selected').change(postFilterSelection);
-    $('#search-input').change(postFilterSelection);
+    $('#search-input').change(postSearchResults);
     postFilterSelection();
 
 });
@@ -104,6 +104,7 @@ postFilterSelection = function(tag_value, active) {
     //Gets the date
     elem = document.getElementById("date_selected");
     var value = $(elem).val();
+    console.log(value)
     var date = {"date": value};
 
     // Post so cookie can store checked routes
@@ -120,4 +121,30 @@ postFilterSelection = function(tag_value, active) {
     });
 }
 
+function getDatesForSearch() {
+    var filter = ""
+
+    var tagList = ["Lectures", "Performances", "Career", "Politics", "Tech", "Parties", "Sports", "User-created", "Food"]
+    var tagIds = [1, 2, 3, 4, 5, 6, 7, 10, 11]
+
+    for (var i = 0; i < tagList.length; i++ ){
+        filter += "&selected_filters%5B%5D=" + tagIds[i]
+    }
+    return filter;
+}
+
+postSearchResults = function(tag_value, active) {
+    // Post so cookie can store checked routes
+    <% url = Rails.application.routes.url_helpers %>
+    var path = "<%= url.events_path %>" + "?date=This Month" +
+            getDatesForSearch() + getSearchTerm()
+
+    console.log(path);
+    $.ajax({
+        url: path,
+        type: 'get',
+        dataType: 'script',
+        success: bindEvents
+    });
+}
 
