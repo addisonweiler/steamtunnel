@@ -22,6 +22,8 @@
 .alert{
     color: #27AAE2;
     background-color: yellow;
+    z-index: 2000;
+    width: 100%;
 }
 
 body {
@@ -179,7 +181,6 @@ img.ical {
     padding-top: 5px;
     margin-top: 5px;
     font-size: 100% ;
-
 }
 
 
