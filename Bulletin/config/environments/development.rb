@@ -19,13 +19,12 @@ Web::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-     :address              => "smtp.gmail.com",
-     :port                 => 587,
+     :address              => "smtp.mandrillapp.com",
+     :port                 => 25,
      :domain               => 'localhost:3000',
-     :user_name            => 'welcome.steamtunneling@gmail.com',
-     :password             => 'steamcrusher',
-     :authentication       => 'plain',
-     :enable_starttls_auto => true
+     :user_name            => 'welcome.steamtunneling@mandrillapp.com',
+     :password             => '5R6ulF-alHjq47Ws8ykRNg',
+     :authentication       => 'plain'
   }
   
 

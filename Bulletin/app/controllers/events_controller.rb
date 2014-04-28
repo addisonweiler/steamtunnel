@@ -72,7 +72,7 @@ class EventsController < ApplicationController
       @selected_date = params["date"]
     else
       @date_changed = false
-      @selected_date = session["date"] || 'Today'
+      @selected_date = session["date"] || 'This Week'
     end
     puts @selected_date
   end
@@ -248,8 +248,8 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
+    @tags = Tag.where(:visible => true).order("name ASC").all
     @event = Event.find(params[:id])
-    @event = ["EVENT 1", "EVENT 2"]
   end
 
   # POST /events

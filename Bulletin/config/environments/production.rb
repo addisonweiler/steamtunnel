@@ -47,7 +47,7 @@ Web::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( events/* specific/*.css login/* jquery.sausage.js)
+  config.assets.precompile += %w( events/* specific/*.css login/* jquery.sausage.js bootstrap.js )
   
   # Care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
@@ -55,13 +55,12 @@ Web::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-     :address              => "smtp.gmail.com",
-     :port                 => 587,
+     :address              => "smtp.mandrillapp.com",
+     :port                 => 25,
      :domain               => 'steamtunneling.com',
-     :user_name            => 'welcome.steamtunneling@gmail.com',
-     :password             => 'steamcrusher',
-     :authentication       => 'plain',
-     :enable_starttls_auto => true
+     :user_name            => 'welcome.steamtunneling@mandrillapp.com',
+     :password             => '5R6ulF-alHjq47Ws8ykRNg',
+     :authentication       => 'plain'
   }
 
   # Enable threaded mode
@@ -71,15 +70,17 @@ Web::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  config.assets.compile = true
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
   # Devise config
   config.action_mailer.default_url_options = { :host => 'steamtunneling.com' }
-  
-  # Facebook config
-  config.facebook_app_id = 136112333735
-  config.facebook_app_secret = 'a1c742b8f35266a4b5fe611a42e21bfa'
+
+  # Facebook
+  config.facebook_app_id = 1400676113513229
+  config.facebook_app_secret = '490888e7f5d62875afc406ef38a44d91'
   config.facebook_app_scope = {:scope => 'offline_access,user_events,user_groups,rsvp_event'}
 
 end

@@ -20,8 +20,9 @@ group :development, :test do
 	gem 'ruby-debug19'
 end
 
-# Searching
-gem 'thinking-sphinx', '2.0.11'
+#
+## Searching
+#gem 'thinking-sphinx', '2.0.11'
 
 # Needed for scraping
 gem 'htmlentities'
@@ -54,9 +55,9 @@ gem 'jquery-rails'
 
 # for Heroku
 group :production do
+  #gem 'flying-sphinx'
   gem 'pg'
   gem 'thin'
-  gem 'flying-sphinx'
  # gem 'flying-sphinx',   '0.6.2'
 end
 
@@ -77,3 +78,5 @@ gem 'kaminari'
 gem 'devise-encryptable'
 
 gem 'bootstrap-sass', '2.1'
+
+gem 'execjs', '1.4.0'

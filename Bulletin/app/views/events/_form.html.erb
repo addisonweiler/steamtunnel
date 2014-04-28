@@ -1,6 +1,7 @@
 <%= stylesheet_link_tag 'application' %>
 <%= stylesheet_link_tag 'specific/events' %>
 
+<% puts 'event = ' + @event.to_s %>
 <%= form_for(@event) do |f| %>
     <% if @event.errors.any? %>
         <div id="error_explanation">
@@ -13,8 +14,12 @@
         </div>
     <% end %>
     <div class="field">
-      <%= f.label :group, 'Post As' %><br />
-      <%= select('group', 'name', @memberships.collect {|g| g.name }) %>
+      <% if current_user && (current_user.name == 'jluttig@stanford.edu' || current_user.name == 'buhler@stanford.edu') %>
+          <%= select('group', 'name', Group.all.collect {|g| g.name}) %>
+      <% else %>
+          <%= f.label :group, 'Post As' %><br />
+          <%= select('group', 'name', @memberships.collect {|g| g.name }) %>
+      <% end %>
     </div>
     <div class="field">
       <%= f.text_field :name, :size => 55, placeholder: 'Event Name' %>
@@ -27,6 +32,9 @@
     </div>
     <div class="field">
       <%= f.text_field :permalink, :size => 55, placeholder: 'Link to Additional Information' %>
+    </div>
+    <div class='field'>
+      <%= f.text_field :thumbnail_url, :size => 55, placeholder: 'Optional Image URL' %>
     </div>
     <div class="field">
       <%= f.label :start %><br />
@@ -55,10 +63,8 @@
                 <% end %>
             <% end %>
         <% end %>
-
       </table>
     </div>
-
     <div class="actions">
       <%= f.submit 'Create', class: 'btn btn-large btn-primary' %>
     </div>

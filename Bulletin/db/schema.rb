@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131226211630) do
+ActiveRecord::Schema.define(:version => 20140414163109) do
 
   create_table "event_tags", :force => true do |t|
     t.integer "event_id"
@@ -28,8 +28,9 @@ ActiveRecord::Schema.define(:version => 20131226211630) do
     t.datetime "updated_at"
     t.text     "location"
     t.integer  "group_id"
-    t.integer  "fb_id",       :limit => 8
+    t.integer  "fb_id",         :limit => 8
     t.text     "permalink"
+    t.string   "thumbnail_url"
   end
 
   create_table "favorites_users", :id => false, :force => true do |t|

@@ -1,14 +1,14 @@
 class Event < ActiveRecord::Base
 	belongs_to :group
   has_many :event_tags
-
-  # Indexing for the ThinkingSphinx search engine
-  define_index do
-    indexes name
-    indexes description
-    indexes location
-    has start, finish
-  end
+  #
+  ## Indexing for the ThinkingSphinx search engine
+  #define_index do
+  #  indexes name
+  #  indexes description
+  #  indexes location
+  #  has start, finish
+  #end
 
   # Validates that event is unique
   validates :name, :uniqueness => {:scope => :start, 

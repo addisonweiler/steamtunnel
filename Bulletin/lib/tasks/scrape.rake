@@ -11,6 +11,7 @@ require 'open-uri'
 # Collection of scrapes
 task :scrape_all => :environment do
   Rake::Task['scrape_lively_arts'].invoke
+  puts "HEREHERE"
   Rake::Task['scrape_sports'].invoke
   Rake::Task['scrape_events'].invoke
   Rake::Task['scrape_dept_groups'].invoke
@@ -258,12 +259,12 @@ task :scrape_sports => :environment do
     description = item.description.split('>')[1].split('<')[0] #text between <p> delimiters
     locpart1 = description.split('-')[0]
     location = locpart1[2, (locpart1.length - 3)]
-    group = Group.find_by_name_or_create(sport)
+    group = Group.find_by_name_or_create('Sports')
     group.source = item.link
     group.save
     # Tag the groups
     sportsTag = Tag.find_by_name("Sports")
-    group.tags << sportsTag if !group.tags.include?(sportsTag)
+    group.tags << sportsTag if group.tags.exclude?(sportsTag)
     event = Event.create(:name => title, :description => description, :location => location,
                          :start => date, :group_id => group.id, :permalink => item.link)
     tagEvent(event, group)

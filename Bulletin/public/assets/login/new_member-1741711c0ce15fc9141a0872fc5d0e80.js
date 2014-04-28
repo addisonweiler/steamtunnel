@@ -1,0 +1,1 @@
+$(document).ready(function(){var e="/users/password/new";$("#error_explanation").children("ul").children().each(function(){var a=$(this).text();if(-1!=a.indexOf("Email has already been taken")){var n="An Account Exists for this Email. Go to <a href="+e+">Reset Password</a> instead.";$(this).html(n)}})});

@@ -22,8 +22,10 @@ module EventsHelper
   end
   # TODO generalize this
   def generalized_event_thumbnail(event, friendEvents, generalEvents, friendID, generalID)
-    # TODO IMPORTANT this causes the cache hits to groups
-    if friendEvents && friendEvents.include?(event)
+    # TODO IMPORTANT this causes cache hits to groups
+    if event.thumbnail_url
+      return image_tag event.thumbnail_url, :class => 'thumbnail'
+    elsif friendEvents && friendEvents.include?(event)
       return image_tag "thumbnails/#{Group.find(friendID).thumbnail}", :class => "thumbnail"
     elsif generalEvents && generalEvents.include?(event)
       return image_tag "thumbnails/#{Group.find(generalID).thumbnail}", :class => "thumbnail"

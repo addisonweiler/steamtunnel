@@ -1,0 +1,1 @@
+!function(){function n(){return $(window).scrollTop()>$(document).height()-$(window).height()-200}var e=1,o=!1;$(window).scroll(function(){o||n()&&(o=!0,e++,$.ajax({url:"/events?page="+e,type:"get",dataType:"script",success:function(){$(window).sausage("draw"),o=!1}}))}),$(window).sausage()}();

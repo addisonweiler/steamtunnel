@@ -8,6 +8,7 @@
      end
   %>
 
+
   <table id="event_table">
     <tr>
       <td class="event_thumbnail"><%= generalized_event_thumbnail(event, @friendEvents, @generalEvents, @friendID, @generalID) %></td>
@@ -30,6 +31,9 @@
           <% end %>
         </div>
       </td>
+      <% if current_user && (current_user.name == 'jluttig@stanford.edu' || current_user.name == 'buhler@stanford.edu') %>
+          <%= link_to "Edit", edit_event_path(event), :class => 'btn btn-small right' %>
+      <% end %>
 
     </tr>
   </table>

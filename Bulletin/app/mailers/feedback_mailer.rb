@@ -1,5 +1,5 @@
 class FeedbackMailer < ActionMailer::Base
-  default from: "welcome.steamtunneling@gmail.com"
+  default from: "welcome.steamtunneling@mandrillapp.com"
   #default from: "johnluttig@gmail.com"
 
   def feedback_email(user, feedback)
