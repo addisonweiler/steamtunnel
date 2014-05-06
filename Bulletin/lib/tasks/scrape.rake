@@ -108,7 +108,7 @@ end
 def scrape_groups(url, group=nil)
   agent = Mechanize.new
   page = agent.get(url)
-  links = agent.page.links.select {|l| l.href ? (l.href.include? "byOrganization") : false } # pairs of Title/RSS links  #TODO CRASHES HERE, was { }|l| l.href.include? 'byOrganization' }
+  links = agent.page.links.select {|l| l.href.include? "byOrganization"} # pairs of Title/RSS links
   # Check for Dep't homepage
   content = page.search("#content_main").search("p")
   content.each_with_index do |dept, ind|
