@@ -103,6 +103,7 @@ class EventsController < ApplicationController
     if !current_user
       @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
     and events.start < '#{@dates[@selected_date][1]}'").order("start ASC")
+      puts 'event counts controller = ' @events.size
     else
       #User is logged in
       @events = Event.joins(:group).where("events.start >= '#{@dates[@selected_date][0]}'
